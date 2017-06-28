@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>充值管理平台-厂商财务结算（管理员or厂商）</title>
+    <!-- Le styles -->
+    <script type="text/javascript" src="assets/js/jquery.js"></script>
+
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/loader-style.css">
+    <link rel="stylesheet" href="assets/css/bootstrap.css">
+
+    <link rel="stylesheet" href="assets/js/button/ladda/ladda.min.css">
+
+    <link id="#layuicss-laydatecss" rel="stylesheet" href="./plugins/laydate/layui.css" media="all">
+
+    <link rel="stylesheet" href="assets/css/x0popup.min.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/public.css">
+
+    <!-- yangjy -->
+    <style>
+        .input-error{
+            color:red;
+        }
+
+        .label-input-date {
+            text-align: center;
+            padding-top: 7px;
+        }
+
+        .form-control.datepicker-for-history-check {
+            color: black;
+        }
+    </style>
+    <style type="text/css">
+        .button-demo, .progress-demo {
+            display: inline-block;
+            margin-right: 3px;
+            margin-bottom: 20px;
+        }
+
+        div.progress-bar {
+            position: relative;
+        }
+
+        span.number-bar-label {
+            display: block;
+            width: 100%;
+            height: 15px;
+            clip: auto;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .a-download, .a-download:hover, .a-download:visited {
+            cursor: pointer;
+            color: #f88b00;
+        }
+
+        .a-download:hover {
+            text-decoration: underline;
+        }
+
+        /*适用需要滚动的iframe页面*/
+        .footer-space2 {
+            margin-top: 20px;
+            width: 100%;
+            height: 40px !important;
+            text-align: center;
+            color: #999;
+        }
+
+        .footer-space2::before {
+            content: '世纪龙信息网络有限责任公司版权所有 服务声明';
+        }
+
+        /*适用需要滚动的iframe页面*/
+        .for-table {
+            width: 101%;
+            overflow-x: auto;
+        }
+
+        .table-time-input {
+            width: 150px;
+            height: 31px;
+            padding-left: 10px
+        }
+
+        select {
+            width: 150px !important;
+        }
+
+        #laydate_table {
+            display: none !important;
+        }
+
+        /* 表格样式 */
+        th {
+            border-bottom: 1px solid #cccccc;
+            text-align: center !important;
+        }
+
+        #check-btn {
+            display: inline-block;
+            margin-top: -2px;
+        }
+
+        #btn-select-manufacturer{
+            padding: 6px 0px !important;
+        }
+
+        /* table样式 start */
+        .table1{
+            width: 100%;
+            border-collapse: collapse;
+            border-left: 1px solid #dedede;
+            margin-top: 10px;
+            box-sizing: border-box;
+        }
+        .table1 th{
+            background-color: #dedede;
+            height: 38px;
+            color: #333333;
+            font-size: 12px;
+            text-align: center;
+            padding: 0 10px;
+            font-weight: normal;
+        }
+        .table1 th{
+            border-right: 1px solid #eeeeee;
+            border-bottom: 1px solid #eeeeee;
+        }
+        .table1 td{
+            height: 50px;
+            background-color: #ffffff;
+            color: #555555;
+            font-size: 12px;
+            text-align: center;
+            vertical-align: middle;
+            border-right: 1px solid #dedede;
+            border-bottom: 1px solid #dedede;
+            padding: 10px;
+        }
+        .table1 td.td-no-border{
+            border: 1px solid transparent;
+        }
+        /* table样式 end */
+
+        /* 月份、厂商选择button 组 样式 */
+        .y-btn-group{
+            
+        }
+        .y-btn-group input, .y-btn-group select{
+            border: 1px solid #c3c3c3;
+            color: #555555;
+        }
+        .y-btn-group label{
+            font-weight: normal;
+            color: #999999;
+        }
+        .y-btn-group>label{
+            margin-left: 30px;
+        }
+        .y-btn-group>button{
+            margin-left:30px;
+            margin-top: -5px;
+        }
+        .y-btn-group>button:last-of-type(1){
+            margin-left:15px;
+        }
+        #table-s-totalResult-tip{
+            margin-top: 10px;
+        }
+        .select-manufacturer-div{
+            display: inline-block;
+        }
+        .select-manufacturer-select{
+            margin-left: 12px;
+            height: 31px;
+            width: 200px !important;
+        }
+
+        /* 分页样式 start */
+        .pager2{
+            margin: 20px 0;
+            text-align: center;
+            list-style: none;
+            display: inline-block;
+            padding: 0px;
+        }
+        .pager2>li{
+            border: 1px solid #b0b0b0;
+            border-radius: 2px;
+            width: 19px;
+            height: 19px;
+            cursor: pointer;
+            display: inline-block;
+        }
+        .pager2>li:nth-child(n+2){
+            margin-left: 13px;
+        }
+        .pager2>li>span{
+            color: #b0b0b0;
+        }
+        .pager2>li.selected{
+            border: 1px solid #f88b00;
+            background-color: #f88b00;
+        }
+        .pager2>li.selected>span{
+            color: #ffffff;
+        }
+        /* 分页样式 end */
+    </style>
+    <!-- yangjy -->
+</head>
+
+<body>
+<!--  PAPER WRAP -->
+<div class="wrap-fluid">
+    <div class="container-fluid paper-wrap bevel tlbr">
+        <div class="row">
+            <div id="paper-top">
+                <h2 class="tittle-content-header">
+                    <span class="entypo-home"></span>
+                    <!--<span class="icon icon-chevron-right"></span>菜单-->
+                    <span class="icon icon-chevron-right"></span>财务结算
+                    <span class="icon icon-chevron-right"></span>
+                </h2>
+            </div>
+        </div>
+        <div class="content-wrap">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="body-nest" id="panel-earnAmountHistory" style="min-height:450px;padding: 30px 17px;">
+                    <!-- #check-btn2-group     #div-select-manufacturer-container   #select-date2      #check-btn2-1 #check-btn2-2-->
+                    <div id="check-btn1-group" class="y-btn-group" style="display:none;">
+                        <div class="select-manufacturer-div">
+                            <label>选择厂商角色:</label>
+                            <select class="select-manufacturer-select" placeholder="请选择角色" id="select_manufacturer" style="border:0px!important;border-radius:0;outline:1px solid #dedede "></select>
+                        </div>
+                            <label>选择月份：</label>
+                            <input class="layui-input table-time-input" placeholder="点击选择月份" style="width: 209px;" class="select-input" id="select-date2">
+
+                        <button type="button" class="btn btn-check" onclick="" style="border-radius: 0px;" id="check-btn2-1">查询账单</button>
+                        <button type="button" class="btn btn-check" onclick="" style="border-radius: 0px; margin-left: 15px;" id="check-btn2-2">查询详单</button>
+                    </div>
+                    <!-- 选择厂商 #check-btn1-group     #select-date1  #check-btn-->
+                    <div id="check-btn2-group" class="y-btn-group" style="display: none;">
+                        <label>选择月份：</label>
+                        <input class="layui-input table-time-input" placeholder="点击选择月份" style="width: 209px" class="select-input" id="select-date1">
+                        <button type="button" class="btn btn-check" onclick="" style="border-radius: 0px;" id="check-btn">查询 </button>
+                    </div>
+
+                        <!--显示查询结果的table行-->
+                        <div class="for-table">
+                            <!--管理员-月度账单 start-->
+                            <!-- <p class="input-error">&nbsp;</p> -->
+                            <p id="table-s-totalResult-tip2" style="margin-top:10px;"><span style="width:10px;height:10px;display:inline-block;background-color:#f88b00;"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当日订单，次日结算</p>
+
+                            <table class="table1" id="table-totalResult"
+                                   data-page-size="10" style="width:2000px;display:none;">
+                                <thead>
+                                <tr>
+                                    <th rowspan="2">客户编号</th>   <!--  -->
+                                    <th rowspan="2">客户名称</th>
+                                    <th rowspan="2">合同编号</th>
+                                    <th rowspan="2">收入年月</th>
+                                    <th colspan="8">充值模式</th>
+                                    <th colspan="3">卡管理费模式</th>
+                                    <th rowspan="2">平台总收入</th>           <!-- -->
+                                    <th rowspan="2">客户总收入</th>           <!-- -->
+                                </tr>
+                                <tr>
+                                    <th>充值流水</th>
+                                    <th>支付渠道</th>
+                                    <th>渠道成本</th>
+                                    <th>流量包成本</th>
+                                    <th>总毛利</th>           <!-- -->
+                                    <th>平台分成比例</th>           <!-- -->
+                                    <th>平台毛利</th>           <!-- -->
+                                    <th>客户毛利</th>           <!-- -->
+                                    <th>客户卡管理数量</th>           <!-- -->
+                                    <th>管理费（每张）</th>           <!-- -->
+                                    <th>平台管理费收入</th>           <!-- -->
+                                </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                            <!--管理员-月度账单 end-->
+                            <!-- 厂商-月度账单 start-->
+                            <p id="table-s-totalResult-tip" style="display:none;"><span style="width:10px;height:10px;display:inline-block;background-color:#f88b00;"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;总收入 = （充值流水 - 流量包成本合计）*分成比例</p>
+                            <table class="table1" id="table-s-totalResult"
+                                   data-page-size="10" style="display:none;">
+                                <thead>
+                                <tr>
+                                    <th rowspan="2">收支月份</th>
+                                    <th rowspan="2">合同编号</th>
+                                    <th colspan="2">收入</th>
+                                    <th colspan="2">支出</th>
+                                    <th rowspan="2">总收入(元)</th>
+                                </tr>
+                                <tr>
+                                    <th>充值流水(元)</th>
+                                    <th>分成比例(%)</th>
+                                    <th>流量包成本合计(元)</th>
+                                    <th>管理费合计(元)</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                            <!-- 厂商-月度账单 end-->
+
+                            <table class="table1" style="display:none;"
+                                   id="table-detailResult" data-page-size="10">
+                                <thead>
+                                <tr>
+                                    <th>订单号</th>
+                                    <th>流量包编号</th>
+                                    <th>流量包名称</th>
+                                    <th>流量包原价(元)</th>
+                                    <th>折扣</th>
+                                    <th>流量包成本价(元)</th>
+                                    <th>订单金额(元)</th>
+                                    <th>毛利(含手续费)(元)</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                            
+                        </div>
+                        <nav aria-label="..." style="text-align: center;">
+                                <ul class="pager2">
+                                </ul>
+                            </nav>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="footer-space2">
+</div>
+</div>
+
+<!-- MAIN EFFECT -->
+<script type="text/javascript" src="assets/js/preloader.js"></script>
+<script type="text/javascript" src="assets/js/bootstrap.js"></script>
+<script type="text/javascript" src="assets/js/app.js"></script>
+<script type="text/javascript" src="assets/js/load.js"></script>
+<script type="text/javascript" src="assets/js/main.js"></script>
+
+<script src="plugins/laydate/laydate.js"></script>
+
+<script type="text/javascript" src="assets/js/x0popup.min.js"></script>
+<script type="text/javascript" src="js/public.js"></script>
+<script src="js/mix.js"></script>
+
+<script type="text/javascript" src="js/manufacturerAmountSettlement.js"></script>
+
+<script type="text/javascript">
+	$(document).ready(function () {
+		var start1 = {
+			elem: '#select-date1',
+			format: 'YYYY/MM',
+			istoday: true, //是否显示今天
+			max: '2099/06', //最大月份
+		};
+		laydate(start1);
+        var start2 = {
+            elem: '#select-date2',
+            format: 'YYYY/MM',
+            istoday: true, //是否显示今天
+            max: '2099/06', //最大月份
+        };
+        laydate(start2);
+
+	});
+</script>
+</body>
+
+</html>

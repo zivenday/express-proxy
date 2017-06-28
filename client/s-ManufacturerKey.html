@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>充值管理平台--基本资料-自管理门户信息</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Le styles -->
+    <script type="text/javascript" src="assets/js/jquery.js"></script>
+
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/loader-style.css">
+    <link rel="stylesheet" href="assets/css/bootstrap.css">
+
+    <!--分割线-->
+    <link rel="stylesheet" href="assets/css/x0popup.min.css">
+    <link rel="stylesheet" href="css/public.css">
+    <link rel="stylesheet" href="css/base.css">
+    <style type="text/css">
+        .facturerKey {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            justify-content: center;
+            font-size: 16px;
+            align-items: center;
+            padding-top: 100px
+        }
+
+        .facturerKey>div {
+            display: flex;
+            width: 500px;
+            height: 31px;
+            justify-content: center;
+            margin-bottom: 30px;
+            align-items: center;
+        }
+
+        .facturerKey>div>input {
+            width: 244px;
+            height: 31px;
+            margin-right: 10px;
+        }
+
+        .facturerKey>div>span:first-child {
+            width: 170px;
+            color: #666
+        }
+
+        .facturerKey>div>p {
+            width: 170px;
+            color: #666
+        }
+
+        .facturerKey>div>span:last-child {
+            color: #f88b00;
+            font-size: 14px;
+            padding-top: 5px;
+        }
+
+        #facturerKey_btn {
+            display: flex!important;
+            justify-content: center!important;
+        }
+
+        #facturerKey_btn>button {
+            width: 105px;
+            height: 31px;
+            border: 0px;
+            background: #f88b00;
+            color: #fff;
+            margin-top: 10px;
+            font-size: 16px
+        }
+
+        #facturerKey_tip {
+            text-align: center;
+            color: #fff;
+        }
+        .input_fail{
+border:0px;
+cursor:default;
+        }
+        .spans_fail{
+            color:#fff!important
+        }
+        .button_fail{
+            display: none
+        }
+    </style>
+    <!--分割线-->
+</head>
+
+<body class="wrap-container">
+    <div class="wrap-container__box">
+
+        <!-- BREADCRUMB -->
+        <ul id="breadcrumb">
+            <li>
+                <span class="entypo-home"></span>
+            </li>
+            <li><i class="fa fa-lg fa-angle-right"></i>
+            </li>
+                <li><a>基本资料</a>
+                </li>
+                <li><i class="fa fa-lg fa-angle-right"></i>
+                </li>
+                <li><a>自管理门户</a>
+                </li>
+        </ul>
+        <!-- END OF BREADCRUMB -->
+        <div class="content-wrap">
+            <div class="row">
+                <div class="table-background__ziven">
+                    <div class="nest" style="height:100%; position:relative">
+                        <div class="facturerKey" id="facturerKey" style="width:100%">
+                            <div class="loginRole">
+                                <p>选择角色:</p>
+      <select class="form-control role" placeholder="请选择角色" id="chooseFactureSelect" style="border:0px!important;border-radius:0;outline:1px solid #dedede;width: 244px;">  </select>
+                                <span style="color:white;width:28px">必填</span>
+                            </div>
+                            <div class="Kiccid">
+                                <span>ICCID:</span>
+                                <input class="form-control" type="text" id="facturerKey__id" />
+                                <span class="facturerKey__spans">必填</span>
+                            </div>
+                            <div>
+                                <span>自管理门户账号:</span>
+                                <input class="form-control" type="text" id="facturerKey__account" />
+                                <span class="facturerKey__spans">必填</span>
+                            </div>
+                            <div>
+                                <span>自管理门户密码:</span>
+                                <input class="form-control" type="text" id="facturerKey__password" />
+                                <span class="facturerKey__spans">必填</span>
+                            </div>
+                            <div>
+                                <span>电信API接口密码:</span>
+                                <input class="form-control" type="text" id="facturerKey__APIpassword" />
+                                <span class="facturerKey__spans">必填</span>
+                            </div>
+
+                            <div>
+                                <span>折扣(小数点两位):</span>
+                                <input class="form-control" type="text" id="facturerKey__discount" />
+                                <span class="facturerKey__spans">必填</span>
+                            </div>
+                            <div id="facturerKey_btn"><button id="saveBtn">添加</button></div>
+                            <div id="facturerKey_tip">注意:保存按钮只能操作一次,刷新页面后才能再次编辑与保存。</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END OF BLANK PAGE -->
+            </div>
+        </div>
+         <div class="wrap-footer"></div>
+   
+    </div>
+       <div class="wrap-footer"></div></div>
+   
+    <!-- MAIN EFFECT -->
+    <script type="text/javascript" src="assets/js/preloader.js"></script>
+    <script type="text/javascript" src="assets/js/bootstrap.js"></script>
+    <script type="text/javascript" src="assets/js/app.js"></script>
+    <script type="text/javascript" src="assets/js/load.js"></script>
+    <script type="text/javascript" src="assets/js/main.js"></script>
+    <script type="text/javascript" src="js/public.js"></script>
+    <script type="text/javascript" src="js/mix.js"></script>
+    <!--分割线-->
+    <script src="assets/js/x0popup.min.js"></script>
+    <script type="text/javascript">
+        var roleType = sessionStorage.getItem("type") == '1'
+        var checkAndUpdateFacturerKeyRoute = "updateManufacturerKey.do"
+        var saveCount = 0;
+        var getManufacturerInfoRoute = "getManufacturerInfoByLogin.do"//查询厂商基本信息路由
+        $(function () {
+            sessionStorage.getItem("type") == '1' ?
+                initAdminAuthorityManage(function () { getfacturerKey() }, '10') : getfacturerKey()
+            addSaveListener()
+           activeButton()
+
+        })
+        function activeButton(){
+             $("#facturerKey_btn button").click(function () {
+                checkAndSavefacturerKey()
+            })
+        }
+        function getfacturerKey() {
+            zivenload.start(".wrap-container__box")
+            $.ajax({
+                type: 'get',
+                url: baseUrl + getManufacturerInfoRoute,
+                success: function (data) {
+                    (!data.msg||data.msg==1) ? returnFacturerKeyPage(data) : returnErrorPage(data,function(){x0pAjaxError('query',data)})
+                },
+                error: function (data) {
+                   returnErrorPage(data,function(){x0pServerError(data)})
+                },
+                complete: function () {
+                    zivenload.end()
+                }
+            })
+        }
+        function returnErrorPage(data,func) {//错误页面返回时，同样要更加登录角色处理页面样式
+            sessionStorage.getItem("type") != '1' ? fliterFacturerKeyPage() : ''
+            func()//如果不是没有数据就报错
+        }
+        function returnFacturerKeyPage(data) {
+            $("#facturerKey__account").val(data.account ? data.account : '');
+            $("#facturerKey__password").val(data.password ? data.password : '');
+            $("#facturerKey__APIpassword").val(data.key ? data.key : '')
+            $("#facturerKey__id").val(data.iccid ? data.iccid : '')
+            $("#facturerKey__discount").val((data.discount||data.discount==0) ? data.discount : '')
+            sessionStorage.getItem("type") != '1' ? fliterFacturerKeyPage() : ''
+            if(sessionStorage.getItem("type")=='1'){
+               if(isNullCheck($("#facturerKey__account").val())){
+                fliterFacturerKeyPage()
+                $(".Kiccid").css("display","none")
+            }else{
+                reActiveFacturerKeyPage()
+                $(".Kiccid").css("display","flex")
+                activeButton()
+            }
+        }else{
+
+        }
+                
+            
+        }
+        function fliterFacturerKeyPage() {//非管理者登录过滤页面元素
+            $(".facturerKey div input").addClass("input_fail")
+            $(".facturerKey__spans").addClass("spans_fail")
+            $("#facturerKey_btn button").addClass("button_fail")
+            $(".facturerKey div input").attr('disabled', 'disabled')
+             $(".Kiccid").css("display","none")
+            // $(".facturerKey div input").css('cursor', 'default')
+            // $(".facturerKey__spans").css('color', '#fff')
+            // $("#facturerKey_btn button").css("display", "none")
+        }
+        function reActiveFacturerKeyPage(){
+           $(".facturerKey div input").removeClass("input_fail")
+            $(".facturerKey__spans").removeClass("spans_fail")
+            $("#facturerKey_btn button").removeClass("button_fail")
+            $(".facturerKey div input").removeAttr("disabled")
+        }
+        function checkfacturerKey() {
+            var account = $("#facturerKey__account").val();
+            var pwd = $("#facturerKey__password").val();
+            var key = $("#facturerKey__APIpassword").val()
+            var discount= $("#facturerKey__discount").val()
+            return isNullCheck(account) && isNullCheck(pwd) && isNullCheck(key) && isNullCheck(discount)
+        }
+        function shutOffSaveAndEditAction() {
+            if (saveCount > 0) {
+                $('#facturerKey__account').attr("disabled", true);
+                $('select').attr("disabled", true)
+                $('#facturerKey__password').attr("disabled", true);
+                $('#facturerKey__APIpassword').attr("disabled", true);
+                $('#facturerKey__id').attr("disabled", true);
+                $('#facturerKey__discount').attr("disabled", true);
+                $('#facturerKey_btn button').css("background", "#999")
+                $('#facturerKey_btn button').unbind();
+                $('#facturerKey_btn button').css("cursor", "not-allowed");
+                $('#facturerKey_tip').css("color", "#f88b00")
+            } else{
+                
+            }
+
+        }
+        function checkAndSavefacturerKey() {
+            checkfacturerKey() ? savefacturerKey() : x0pERROR("填写信息不全,请重新填写")
+        }
+        function saveFacturerKey() {
+            var account = $("#facturerKey__account").val();
+            var pwd = $("#facturerKey__password").val();
+            var key = $("#facturerKey__APIpassword").val()
+            var iccid = $("#facturerKey__id").val()
+            var discount= $("#facturerKey__discount").val()
+            zivenload.start(".wrap-container__box")
+            $.ajax({
+                type: 'post',
+                url: baseUrl + checkAndUpdateFacturerKeyRoute + "?iccid=" + iccid+ "&account=" +account+"&password="+ pwd  + "&key=" + key  + "&discount=" + discount,
+                success: function (data) {
+                    !data.msg ? x0pSuccessAndReload(function(){getfacturerKey()}) : x0pAjaxError(data)
+                },
+                error: function (data) {
+                    x0pServerError(data)
+                }, complete: function (data) {
+                    zivenload.end();
+                }
+            })
+        }
+        function addSaveListener() {
+            document.getElementById("saveBtn").addEventListener("click", function () {
+                checkfacturerKey() ? saveCount++ : ''
+                shutOffSaveAndEditAction()
+                saveCount==1? saveFacturerKey():''
+            })
+        }
+    </script>
+    <!--分割线-->
+</body>
+
+</html>

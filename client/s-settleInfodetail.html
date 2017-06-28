@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>充值管理平台--财务结算管理-月度详单</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Le styles -->
+    <script type="text/javascript" src="assets/js/jquery.js"></script>
+
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/loader-style.css">
+    <link rel="stylesheet" href="assets/css/bootstrap.css">
+    <link id="#layuicss-laydatecss" rel="stylesheet" href="./plugins/laydate/layui.css" media="all">
+    <link rel="stylesheet" href="assets/css/x0popup.min.css">
+    <link rel="stylesheet" href="css/public.css">
+    <link rel="stylesheet" href="css/base.css">
+    <style type="text/css">
+        .row-settleDetail {
+            display: flex;
+            justify-content: flex-start;
+            align-items: flex-end;
+            height: 31px;
+        }
+
+        .loginRole {
+            margin-bottom: 0px;
+            height: 95%;
+        }
+
+        .loginRole>p {
+            width: 100px;
+            display: inline
+        }
+
+        .loginRole>select {
+            width: 200px!important;
+        }
+
+        .row-settleMentInfo>div:last-child>span {
+            width: 100px;
+        }
+        /*.row-settleDetail>div>span {
+            display: block;
+        }*/
+
+        .row-settleDetail>div:first-child {
+            margin-right: 20px;
+        }
+
+        .table-time-input {
+            width: 200px;
+            height: 31px;
+            padding-left: 10px
+        }
+
+        select {
+            width: 150px!important;
+        }
+
+        #laydate_table {
+            display: none!important;
+        }
+    </style>
+    <!--分割线-->
+</head>
+
+<body class="wrap-container">
+    <div class="wrap-container__box">
+        <ul id="breadcrumb">
+            <li>
+                <span class="entypo-home"></span>
+            </li>
+            <li><i class="fa fa-lg fa-angle-right"></i>
+            </li>
+            <li><a>财务结算</a>
+            </li>
+            <li><i class="fa fa-lg fa-angle-right"></i>
+            </li>
+            <li><a>月度详单</a>
+            </li>
+        </ul>
+
+        <div class="content-wrap">
+            <div class="row">
+                <div class="table-background__ziven">
+                    <div class="nest">
+                        <div class="body-nest">
+                            <div style="margin-top:17px">
+                                <div class="row-table row-settleDetail" id="row-settleDetail">
+                                    <div class="loginRole">
+                                        <p>选择电信角色:</p>
+                                        <select class="form-control role" placeholder="请选择电信角色" id="chooseFactureSelect" style="border:0px!important;border-radius:0;outline:1px solid #dedede ">                                                   
+                                               </select>
+                                    </div>
+                                    <div>
+                                        <span>选择月份:</span>
+                                        <input class="layui-input table-time-input" id="table-settleDetail__date">
+                                    </div>
+
+                                    <div>
+                                        <button type="button" class="btn btn-info__ziven save_btn" style=" margin-left: 15px" onclick="settleDetailSearch()"> 查询</button>
+                                    </div>
+
+                                </div>
+                                <div>
+                                    <table class="table table__ziven ">
+                                        <thead>
+                                            <tr>
+                                                <th style="border-left:1px solid #dedede!important">
+                                                    订单号
+                                                </th>
+                                                <th>
+                                                    流量包编号
+                                                </th>
+                                                <th>
+                                                    流量包名称
+                                                </th>
+                                                <th>
+                                                    流量包原价(元)
+                                                </th>
+                                                <th>
+                                                    客户名称
+                                                </th>
+                                                <th>
+                                                    客户折扣
+                                                </th>
+                                                <th style="border-right:1px solid #dedede!important">
+                                                    流量包收入(元)
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="settleDetail__table">
+                                        </tbody>
+
+                                    </table>
+                                    <nav aria-label="...">
+                                        <ul class="pager settleDetail__page">
+                                        </ul>
+                                    </nav>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="wrap-footer"></div>
+    </div>
+    <!-- MAIN EFFECT -->
+    <script type="text/javascript" src="assets/js/bootstrap.js"></script>
+    <script type="text/javascript" src="assets/js/load.js"></script>
+    <script type="text/javascript" src="assets/js/main.js"></script>
+    <script src="assets/js/x0popup.min.js"></script>
+    <script src="js/public.js"></script>
+    <script src="js/mix.js"></script>
+    <script src="plugins/laydate/laydate.js"></script>
+    <script type="text/javascript">
+
+    </script>
+    <!--分割线-->
+    <script>
+        var listRechargeCommisionDetailRoute = 'listRechargeCommisionDetail.do'//电信获取平台电信佣金结算详细路由
+        $(function () {
+            $(".table-time-input").val("2017/06")
+            sessionStorage.getItem("type") == '1' ?
+                initAdminAuthorityManage(function () { settleDetailSearch() }, '11') : settleDetailSearch()
+            var start = {
+                elem: '#table-settleDetail__date',
+                format: 'YYYY/MM',
+                istoday: false, //是否显示今天
+                max: '2099/06', //最大月份
+            };
+            laydate(start)
+        })
+        //获取查询数据
+        function getRechargeCommisionDetail(page, type) {//页码和操作类型
+            zivenload.start(".wrap-container__box")
+            var month = transDate($(".table-time-input").val());
+            var params = month ? "?month=" + month + "&page=" + page + "&num=10" : x0pERROR('请输入月份进行查询！')
+            params ? $.ajax({
+                type: 'get',
+                url: baseUrl + listRechargeCommisionDetailRoute + params,
+                timeout: 8000,
+                success: function (data) {
+                    (!data.msg || data.msg == 1) ? returnsettleDetailPage(data, type) : x0pAjaxError("query", data)
+                },
+                error: function (data) {
+                    x0pServerError()
+                },
+                complete: function () {
+                    zivenload.end()
+                }
+
+            }) : ''
+        }
+        function returnsettleDetailPage(data, type) {
+            $(".no-existent").remove()
+            if (!data.msg) {
+                returnsettleDetailTable(data, type)
+                type === 3 ? '' : returnPagination(".settleDetail__page", data, type)
+            } else {
+                $('.settleDetail__table').children('tr').remove();
+                $('.table').after("<div class='no-existent'>暂无数据</div>")
+            }
+        }
+        function returnsettleDetailTable(obj) {
+            var subs = ""
+            var o = obj.commisionDetailList
+            for (var i = 0; i < o.length; i++) {
+                subs = subs + '<tr>'
+                    + '<td>' + o[i].orderId + '</td>'
+                    + '<td>' + o[i].ptId + '</td>'
+                    + '<td>' + transPackageName(o[i].ptName) + '</td>'
+                    + '<td>' + o[i].ptPrice + '</td>'
+                    + '<td>' + o[i].mname + '</td>'
+                    + '<td>' + o[i].discount + '</td>'
+                    + '<td>' + o[i].realPrice + '</td>'
+                    + '</tr>'
+            }
+            $('.settleDetail__table').children('tr').remove();//去除列表原有数据显示
+            $('.settleDetail__table').html(subs)//形成新数据列表      
+        }
+        function changePage(page, e) {//切换分页查询
+            updatePagination(e)
+            getRechargeCommisionDetail(page, 3)
+        }
+
+        function settleDetailSearch() {
+            $(".table-time-input").val()
+                ? getRechargeCommisionDetail(1, 1) : x0pERROR('请输入月份进行查询！')
+        }
+    </script>
+</body>
+
+</html>

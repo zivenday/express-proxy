@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>充值管理平台--基本资料-银行账户</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Le styles -->
+    <script type="text/javascript" src="assets/js/jquery.js"></script>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/loader-style.css">
+    <link rel="stylesheet" href="assets/css/bootstrap.css">
+    <link rel="stylesheet" href="assets/css/x0popup.min.css">
+    <link rel="stylesheet" href="css/public.css">
+    <link rel="stylesheet" href="css/base.css">
+    <style type="text/css">
+        .bankInfo {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            justify-content: center;
+            font-size: 16px;
+            align-items: center;
+            padding-top:60px;
+        }
+
+        .bankInfo>div {
+            display: flex;
+            width: 480px;
+            height: 31px;
+            justify-content: center;
+            margin-bottom: 40px;
+            align-items: center
+        }
+
+        .bankInfo>div>input,
+        .bankInfo>div>select {
+            width: 244px;
+            height: 31px;
+            margin-right: 10px;
+        }
+
+        .bankInfo>div>span:first-child {
+            width: 150px;
+            color: #666666;
+        }
+
+        .bankInfo>div>p {
+            width: 150px;
+            color: #666666;
+            margin-left: 10px;
+        }
+
+        .bankInfo>div>span:last-child {
+            color: #f88b00;
+            font-size: 14px;
+            padding-top: 5px;
+        }
+
+        .bankInfo_btn {
+            display: flex!important;
+            justify-content: center!important;
+        }
+
+        .bankInfo_btn>button {
+            width: 105px;
+            height: 31px;
+            border: 0px;
+            background: #f88b00;
+            color: #fff;
+            margin-top: 10px;
+            font-size: 16px;
+        }
+
+        .bankInfo_tip {
+            text-align: center;
+            color: #fff;
+
+        }
+    </style>
+    <!--分割线-->
+</head>
+
+<body class="wrap-container">
+    <div class="wrap-container__box">
+
+        <!-- BREADCRUMB -->
+        <ul id="breadcrumb">
+            <li>
+                <span class="entypo-home"></span>
+            </li>
+            <li><i class="fa fa-lg fa-angle-right"></i>
+            </li>
+                <li><a>基本资料</a>
+                </li>
+                <li><i class="fa fa-lg fa-angle-right"></i>
+                </li>
+                <li><a>银行账户</a>
+                </li>
+        </ul>
+        <!-- END OF BREADCRUMB -->
+        <div class="content-wrap">
+            <div class="row">
+                <div class="table-background__ziven">
+                    <div class="nest" style="height:100%; position:relative">
+                        <div class="bankInfo" id="bankInfo" style="width:100%">
+                            <div class="loginRole">
+                                <p>选择角色:</p>
+                                <select class="form-control role" placeholder="请选择角色" id="chooseFactureSelect" style="border:0px!important;border-radius:0;outline:1px solid #dedede;">                                                   
+                                               </select>
+                                <span style="color:white">必填</span>
+                            </div>
+
+                            <div>
+                                <span>公司名称:</span>
+                                <input class="form-control" type="text" id="bankInfo__name" disabled="disabled" />
+                                <span style="color:white">必填</span>
+                            </div>
+                            <div>
+                                <span>收款银行账号:</span>
+                                <input class="form-control" type="text" id="bankInfo__account" />
+                                <span class="bankInfo__spans">必填</span>
+                            </div>
+                            <div>
+                                <span>银行账号开户行:</span>
+                                <input class="form-control" type="text" id="bankInfo__bk" />
+                                <span class="bankInfo__spans">必填</span>
+                            </div>
+                            <div class="bankInfo_btn" id="saveBtn"><button>保存</button></div>
+                            <div class="bankInfo_tip">注意:保存按钮只能操作一次,刷新页面后才能再次编辑与保存。</div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- END OF BLANK PAGE -->
+        </div>
+        <div class="wrap-footer"></div>
+    </div>
+
+    
+    <!-- MAIN EFFECT -->
+    <script type="text/javascript" src="assets/js/bootstrap.js"></script>
+    <script type="text/javascript" src="assets/js/load.js"></script>
+    <script type="text/javascript" src="assets/js/main.js"></script>
+    <script type="text/javascript" src="js/public.js"></script>
+    <script src="assets/js/x0popup.min.js"></script>
+    <script type="text/javascript" src="js/mix.js"></script>
+    <script type="text/javascript">
+        var updateBankInfoRoute = "saveBankCardInfo.do"
+        var saveCount = 0;
+        var getManufacturerInfoRoute = "getManufacturerInfoByLogin.do"//查询厂商基本信息路由
+        $(function () {
+            sessionStorage.getItem("type") == '1' ?
+                initAdminAuthorityManage(function () { getBankInfo() }, '10') : getBankInfo()
+            addSaveListener()
+            $("#saveBtn button").bind("click", function () {
+                checkAndSaveBankInfo()
+            })
+        })
+        function checkBankInfo() {
+            if (!(isNullCheck($("#bankInfo__account").val()) && isNullCheck($("#bankInfo__bk").val()))){
+                x0pERROR("填写信息不全,请重新填写")
+                return false
+            }
+            else if(!checkNumber($("#bankInfo__account").val())){
+               x0pERROR("收款银行账户必须为数字")
+               return false
+            }else{
+                return true
+            }
+        }
+        function getBankInfo() {
+            zivenload.start(".wrap-container__box")
+            $.ajax({
+                type: 'get',
+                url: baseUrl + getManufacturerInfoRoute,
+                success: function (data) {
+                    (!data.msg||data.msg==1) ? returnBankInfoPage(data) : x0pAjaxError('query', data)
+                },
+                error: function (data) {
+                    x0pServerError(data)
+                },
+                complete: function () {
+                    zivenload.end()
+                }
+            })
+        }
+        function shutOffSaveAndEditAction() {
+            if (saveCount > 0) {
+                $('#bankInfo__account').attr("disabled", true);
+                $('select').attr("disabled", true)
+                $('#bankInfo__bk').attr("disabled", true);
+                $('.bankInfo_btn button').css("background", "#999")
+                $('#saveBtn button').unbind();
+                $('.bankInfo_btn button').css("cursor", "not-allowed");
+                $('.bankInfo_tip').css("color", "#f88b00")
+            } else {
+
+            }
+
+        }
+        function returnBankInfoPage(data) {
+            $("#bankInfo__name").val(data.name?data.name:'');
+            $("#bankInfo__account").val(data.bankCardAccount ? data.bankCardAccount : '');
+            $("#bankInfo__bk").val(data.bankName ? data.bankName : '');
+            
+                // sessionStorage.getItem("type") != '1' ? fliterBankInfoPage() : ''
+        }
+        function fliterBankInfoPage() {//非管理者登录过滤页面元素
+            // $(".bankInfo div input").css('border', '0px')
+            // $(".bankInfo div input").attr('disabled', 'disabled')
+            // $(".bankInfo div input").css('cursor', 'default')
+            //  $(".bankInfo__spans").css('color', '#fff')
+            //  $(".bankInfo_btn button").css("display","none")
+        }
+        function checkAndSaveBankInfo() {
+            checkBankInfo() ?  saveBankInfo()  : ''
+        }
+        function saveBankInfo() {
+            var n = $("#bankInfo__name").val();
+            var a = $("#bankInfo__account").val();
+            var bk = $("#bankInfo__bk").val()
+            console.log(bk)
+            zivenload.start(".wrap-container__box")
+            $.ajax({
+                type: 'post',
+                url: baseUrl + updateBankInfoRoute ,
+                data:{'account':a,'name':n,'bank':bk},
+				dataType:'JSON',
+                success: function (data) {
+                    !data.msg ? x0pSuccessAndReload(function(){getBankInfo()}) : x0pAjaxError(data)
+                },
+                error: function (data) {
+                    x0pServerError(data)
+                }, complete: function (data) {
+                    zivenload.end();
+                }
+            })
+
+
+        }
+        function addSaveListener() {
+            document.getElementById("saveBtn").addEventListener("click", function () {
+                checkBankInfo() ? saveCount++ : ''
+                shutOffSaveAndEditAction()
+            })
+        }
+    </script>
+    <!--分割线-->
+</body>
+
+</html>

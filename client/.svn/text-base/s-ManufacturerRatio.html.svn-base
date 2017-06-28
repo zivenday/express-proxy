@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>充值管理平台--基本资料-分成信息</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Le styles -->
+    <script type="text/javascript" src="assets/js/jquery.js"></script>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/loader-style.css">
+    <link rel="stylesheet" href="assets/css/bootstrap.css">
+    <link rel="stylesheet" href="assets/css/x0popup.min.css">
+    <link rel="stylesheet" href="css/public.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link id="#layuicss-laydatecss" rel="stylesheet" href="./plugins/laydate/layui.css" media="all">
+    <style type="text/css">
+        .facturerRatio {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            justify-content: center;
+            font-size: 16px;
+            align-items: center;
+            padding-top: 100px
+        }
+
+        .facturerRatio>div {
+            display: flex;
+            width: 480px;
+            height: 31px;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+
+        .facturerRatio>div>input,
+        .facturerRatio>div>select {
+            width: 244px;
+            height: 31px;
+            margin-right: 10px;
+        }
+
+        .facturerRatio>div>span:first-child {
+            width: 150px;
+            color: #666;
+            padding-top: 5px;
+        }
+
+        .facturerRatio>div>p {
+            width: 150px;
+            color: #666666;
+            margin-left: 10px;
+        }
+
+        .facturerRatio>div>span:last-child {
+            color: #f88b00;
+            font-size: 14px;
+            padding-top: 5px;
+        }
+
+        #facturerRatio_btn {
+            display: flex!important;
+            justify-content: center!important;
+        }
+
+        #facturerRatio_btn>button {
+            width: 105px;
+            height: 31px;
+            border: 0px;
+            background: #f88b00;
+            color: #fff;
+            margin-top: 10px;
+            font-size: 16px;
+        }
+
+        #facturerRatio_tip {
+            text-align: center;
+            color: #fff;
+        }
+    </style>
+    <!--分割线-->
+</head>
+
+<body class="wrap-container">
+    <div class="wrap-container__box">
+
+        <!-- BREADCRUMB -->
+        <ul id="breadcrumb">
+            <li>
+                <span class="entypo-home"></span>
+            </li>
+            <li><i class="fa fa-lg fa-angle-right"></i>
+            </li>
+            <li><a>基本资料</a>
+            </li>
+            <li><i class="fa fa-lg fa-angle-right"></i>
+            </li>
+            <li><a>分成信息</a>
+            </li>
+        </ul>
+        <!-- END OF BREADCRUMB -->
+        <div class="content-wrap  content-Ratio">
+            <div class="row">
+                <div class="table-background__ziven">
+                    <div class="nest" style="height:100%; position:relative">
+                        <div class="facturerRatio" id="info-second" style="width:100%">
+                            <div class="loginRole">
+                                <p>选择角色:</p>
+             <select class="form-control role" placeholder="请选择角色" id="chooseFactureSelect" style="border:0px!important;border-radius:0;outline:1px solid #dedede;width: 244px;margin-left:0px ">  </select>
+                                <span style="color:white;">必填</span>
+                            </div>
+                            <div>
+                                <span>合同编号:</span>
+                                <input class="form-control" type="text" id="facturerRatio__account" />
+                                <span class="facturerRatio_spans">必填</span>
+                            </div>
+                            <div>
+                                <span>按利润分成(%):</span>
+                                <input class="form-control" type="text" id="facturerRatio__discount1" />
+                                <span class="facturerRatio_spans">必填</span>
+                            </div>
+                            <div class="isRatioId2">
+                                <span>卡管理费(元):</span>
+                                <input class="form-control" type="text" id="facturerRatio__discount2" />
+                                <span class="facturerRatio_spans">必填</span>
+                            </div>
+                            <div class="time-ziven">
+                                <span>合同开始时间:</span>
+                                <input class="form-control  layui-input table-time-input " style="border-color:#dedede" placeholder="开始日期" id="facturerRatio__start">
+                                <span class="facturerRatio_spans">必填</span>
+                            </div>
+                            <div class="time-ziven">
+                                <span>合同结束时间:</span>
+                                <input class="form-control  layui-input table-time-input " style="border-color:#dedede" placeholder="结束日期" id="facturerRatio__end">
+                                <span class="facturerRatio_spans">必填</span>
+                            </div>
+                            <div id="facturerRatio_btn"><button id="saveBtn" style="background:#f88b00">保存</button></div>
+                            <div id="facturerRatio_tip">注意:保存按钮只能操作一次,刷新页面后才能再次编辑与保存。</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END OF BLANK PAGE -->
+            </div>
+        </div>
+            <div class="wrap-footer"></div>
+    </div>
+    </div>
+
+    <!-- MAIN EFFECT -->
+    <script type="text/javascript" src="assets/js/bootstrap.js"></script>
+    <script type="text/javascript" src="assets/js/load.js"></script>
+    <script type="text/javascript" src="assets/js/main.js"></script>
+    <script type="text/javascript" src="js/public.js"></script>
+    <script type="text/javascript" src="js/mix.js"></script>
+    <script src="assets/js/x0popup.min.js"></script>
+    <script src="plugins/laydate/laydate.js"></script>
+    <script type="text/javascript">
+        var AdminroleType = 0
+        var setManufacturerRatioRoute = 'setManufacturerRatio.do'//设置厂商分成信息
+        var setManufacturerManagerPriceRoute = 'setManufacturerManagerPrice.do'//设置与厂商卡管理信息（含合同）
+        var listManufacturerRatioRoute = 'listManufacturerRatio.do'//获取厂商合同,分成信息路由
+        var getCTRatioRoute = 'getCTRatio.do'//获取电信合同，分成信息路由
+        var setCTRatioRoute = 'setCTRatio.do'//设置电信分成信息
+        var saveCount = 0;
+        var getManufacturerInfoRoute = "listManufacturerRatio.do"//查询分成信息
+        $(function () {
+            switch (sessionStorage.getItem("type")) {
+                case '1'://admin login
+                    roleChoosedialog.init($(".wrap-container"));
+                    $(".role-choose__items span").click(function () {
+                        if (!$(".role-choose__items span").index(this)) {
+                            AdminroleType = 1
+                            initAdminAuthorityManage(function () { getManufacturerContractNumber(listManufacturerRatioRoute) }, '10');
+                            addSaveListener()
+                        } else {
+                            AdminroleType = 2
+                            initAdminAuthorityManage(function () { getManufacturerContractNumber(getCTRatioRoute) }, '11');
+                            addSaveListener()
+                        }
+                        roleChoosedialog.remove()
+                    })
+                    break;
+                case '2'://设备商login
+                    getManufacturerContractNumber(listManufacturerRatioRoute);
+                    break;
+                case '3'://电信login
+                    getManufacturerContractNumber(getCTRatioRoute);
+                    break;
+            }
+            $("#saveBtn").bind("click", function () {
+                checkAndSavefacturerRatio()
+            })
+        })
+        function checkfacturerRatio() {
+            var arg1 = $("#facturerRatio__account").val();
+            var arg2 = $("#facturerRatio__discount1").val();
+            var arg3 = $("#facturerRatio__discount2").val();
+            var arg4 = $("#facturerRatio__start").val()
+            var arg5 = $("#facturerRatio__end").val()
+            if (sessionStorage.getItem("type") == '1') {
+                if (AdminroleType == 1) {
+                    return isNullCheck(arg1) && isNullCheck(arg2) && isNullCheck(arg3) && isNullCheck(arg4) && isNullCheck(arg5)
+                } else {
+                    return isNullCheck(arg1) && isNullCheck(arg2) && isNullCheck(arg4) && isNullCheck(arg5)
+                }
+            } else if (sessionStorage.getItem("type") == '2') {
+                return isNullCheck(arg1) && isNullCheck(arg2) && isNullCheck(arg3) && isNullCheck(arg4) && isNullCheck(arg5)
+            } else if (sessionStorage.getItem("type") == '3') {
+                return isNullCheck(arg1) && isNullCheck(arg2) && isNullCheck(arg4) && isNullCheck(arg5)
+            }
+
+        }
+        function shutOffSaveAndEditAction() {
+            if (saveCount > 0) {
+                $('.facturerRatio div input').attr("disabled", true);
+                $('select').attr("disabled", true);
+                $('#facturerRatio__bk').attr("disabled", true);
+                $('#facturerRatio_btn button').css("background", "#999")
+                $('#saveBtn').unbind();
+                $('#facturerRatio_btn button').css("cursor", "not-allowed");
+                $('#facturerRatio_tip').css("color", "#f88b00")
+            } else {
+
+            }
+
+        }
+        function returnfacturerRatioPage(data) {
+            if (data.msg == 0) {
+                $("#facturerRatio__account").val(data.contractNumber ? data.contractNumber : '');
+                sessionStorage.getItem("type") == '1' ? $("#facturerRatio__discount1").val((parseFloat(data.ratioList[0].value) * 100 || data.ratioList[0].value == 0) ? parseFloat(data.ratioList[0].value) * 100 : '') :
+                    $("#facturerRatio__discount1").val((parseFloat(1 - data.ratioList[0].value) * 100 || data.ratioList[0].value == 0) ? parseFloat(1 - data.ratioList[0].value) * 100 : '');
+                $("#facturerRatio__discount2").val((parseFloat(data.ratioList[1].value) || data.ratioList[1].value == 0) ? parseFloat(data.ratioList[1].value) : '');
+                $("#facturerRatio__start").val(data.startTime ? data.startTime : '');
+                $("#facturerRatio__end").val(data.endTime ? data.endTime : '');
+            } else {
+                $("#facturerRatio__account").val("")
+                $("#facturerRatio__discount1").val("")
+                $("#facturerRatio__discount2").val("")
+                $("#facturerRatio__start").val("")
+                $("#facturerRatio__end").val("")
+            }
+            sessionStorage.getItem("type") != '1' ? fliterFacturerRatioPage() : ''
+        }
+        function checkAndSavefacturerRatio() {
+            checkfacturerRatio() ? savefacturerRatio() : x0pERROR("填写信息不全,请重新填写")
+        }
+        function returnCTPage(data) {//电信角色信息显示
+            if (data.msg == 0) {
+                $("#facturerRatio__start").val(data.startTime ? data.startTime : '');
+                $("#facturerRatio__end").val(data.endTime ? data.endTime : '');
+                $("#facturerRatio__account").val(data.contractNumber ? data.contractNumber : '')
+                $("#facturerRatio__discount1").val((parseFloat(data.value) * 100 || data.value == 0) ? parseFloat(data.value) * 100 : '')
+            } else {
+                $("#facturerRatio__account").val("")
+                $("#facturerRatio__discount1").val("")
+                $("#facturerRatio__discount2").val("")
+                $("#facturerRatio__start").val("")
+                $("#facturerRatio__end").val("")
+            }
+            $(".facturerRatio div").eq(3).css("display", "none")
+            sessionStorage.getItem("type") != '1' ? fliterFacturerRatioPage() : ''
+        }
+        function returnErrorPage(data, func) {//错误返回页面处理页面样式
+            sessionStorage.getItem("type") != '1' ? fliterFacturerRatioPage() : ''
+            func()
+        }
+        function fliterFacturerRatioPage() {//非管理者登录过滤页面元素
+            $(".facturerRatio div input").css('border', '0px')
+            $(".facturerRatio div input").attr('disabled', 'disabled')
+            $(".facturerRatio div input").css('cursor', 'default')
+            $(".facturerRatio_spans").css('color', '#fff')
+            $("#facturerRatio_btn button").css("display", "none")
+        }
+        function savefacturerRatio() {
+            zivenload.start(".wrap-container__box")
+            var arg1 = $("#facturerRatio__account").val();
+            var arg2 = $("#facturerRatio__discount1").val() / 100
+            var arg3 = transDate($("#facturerRatio__start").val());
+            var arg4 = transDate($("#facturerRatio__end").val());
+            var arg5 = $("#facturerRatio__discount2").val()
+            var router = ''
+            var isRoleType = (sessionStorage.getItem("type") == '2' || AdminroleType == 1)
+            router = isRoleType ? setManufacturerRatioRoute : setCTRatioRoute
+            var obj = isRoleType ? {
+                'mid': $("#chooseFactureSelect").val(),
+                'contractNumber': arg1,
+                'ratioValue': arg2,
+                'startTime': transDate(arg3),
+                'endTime': transDate(arg4),
+                'managerValue': arg5
+            } : {
+                    'ctId': $("#chooseFactureSelect").val(),
+                    'contractNumber': arg1,
+                    'value': arg2,
+                    'startTime': transDate(arg3),
+                    'endTime': transDate(arg4)
+                }
+            $.ajax({
+                type: 'post',
+                url: baseUrl + router,
+                dataType: 'JSON',
+                data: obj,
+                success: function (data) {
+                    !data.msg ? x0pSuccessAndReload(function () { getManufacturerContractNumber(isRoleType ? listManufacturerRatioRoute : getCTRatioRoute) }) : x0pAjaxError(data)
+                },
+                error: function (data) {
+                    x0pServerError(data)
+                }, complete: function (data) {
+                    zivenload.end();
+                }
+            })
+
+
+        }
+        function addSaveListener() {
+            document.getElementById("saveBtn").addEventListener("click", function () {
+                checkfacturerRatio() ? saveCount++ : ''
+                shutOffSaveAndEditAction()
+            })
+        }
+        function getManufacturerContractNumber(router) {//查询合同编号,分成信息
+            zivenload.start(".wrap-container__box")
+            $.ajax({
+                type: 'get',
+                url: baseUrl
+                + (router == getManufacturerInfoRoute ? listManufacturerRatioRoute : getCTRatioRoute),
+                success: function (data) {
+                    (!data.msg || data.msg == 1) ? (router == getManufacturerInfoRoute ? returnfacturerRatioPage(data) : returnCTPage(data)) : returnErrorPage(data, function () { x0pAjaxError('query', data) })
+                },
+                error: function (data) {
+                    returnErrorPage(data, function () { x0pServerError(data) })
+
+                },
+                complete: function () {
+                    zivenload.end()
+                }
+            })
+        }
+        var start = {
+            elem: '#facturerRatio__start',
+            format: 'YYYY-MM-DD',
+            max: '2099/06/16', //最大日期
+            choose: function (datas) {
+                end.min = datas; //开始日选好后，重置结束日的最小日期
+                end.start = datas //将结束日的初始值设定为开始日
+            }
+        };
+        var end = {
+            elem: '#facturerRatio__end',
+            format: 'YYYY-MM-DD',
+            max: '2099/06/16',
+            choose: function (datas) {
+                start.max = datas; //结束日选好后，重置开始日的最大日期
+            }
+        };
+        laydate(start)
+        laydate(end)
+    </script>
+    <!--分割线-->
+</body>
+
+</html>

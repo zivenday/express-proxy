@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>充值管理平台--基本资料--基本信息</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Le styles -->
+    <script type="text/javascript" src="assets/js/jquery.js"></script>
+
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/loader-style.css">
+    <link rel="stylesheet" href="assets/css/bootstrap.css">
+    <!--分割线-->
+    <link rel="stylesheet" href="assets/css/x0popup.min.css">
+    <link rel="stylesheet" href="css/public.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link id="#layuicss-laydatecss" rel="stylesheet" href="./plugins/laydate/layui.css" media="all">
+
+    <style type="text/css">
+        .baseInfo {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            justify-content: center;
+            font-size: 15px!important;
+            align-items: center;
+            padding-top: 50px;
+        }
+
+        .baseInfo>div {
+            display: flex;
+            width: 400px;
+            height: 31px;
+            justify-content: center;
+            margin-bottom: 40px;
+            align-items: center
+        }
+
+        .baseInfo_tip {
+            color: #fff;
+        }
+
+        .baseInfo>div>input {
+            width: 244px;
+            height: 31px;
+            margin-right: 10px;
+        }
+
+        .baseInfo>div>span:first-child {
+            width: 100px;
+             color:#666666;
+        }
+
+        .baseInfo>div>span:last-child {
+            width: 31px;
+            height: 31px;
+        }
+
+        #baseInfo_btn {
+            justify-content: center!important;
+        }
+
+        #baseInfo_btn>button {
+            width: 105px;
+            height: 31px;
+            border: 0px;
+            background: #f88b00;
+            color: #fff;
+            margin-top: 10px;
+            font-size: 16px;
+        }
+
+        .content-Ratio {
+            margin-top: 20px
+        }
+
+        .baseInfo>div>span:last-child {
+            color: #f88b00;
+            font-size: 14px;
+            padding-top: 5px;
+        }
+
+        .form-control {
+            font-size: 15px!important;
+        }
+
+
+        select {
+            width: 244px!important
+        }
+
+        .loginRole {
+            margin-left: 0px;
+            margin-right: 0px;
+            margin-left: -10px;
+        }
+        .loginRole>p {
+    color: #666666;
+}
+    </style>
+    <!--分割线-->
+</head>
+
+<body class="wrap-container">
+    <div class="wrap-container__box">
+
+        <!-- BREADCRUMB -->
+        <ul id="breadcrumb">
+            <li>
+                <span class="entypo-home"></span>
+            </li>
+            <li><i class="fa fa-lg fa-angle-right"></i>
+            </li>
+                <li><a>基本资料</a>
+                </li>
+                <li><i class="fa fa-lg fa-angle-right"></i>
+                </li>
+                <li><a>基本信息</a>
+                </li>
+        </ul>
+        <!-- END OF BREADCRUMB -->
+        <div class="content-wrap">
+            <div class="row">
+                <div class="table-background__ziven">
+
+                    <div class="nest" style="height:100%; position:relative">
+                        <div class="baseInfo" id='info-first' style="width:100%">
+                            <div class="loginRole">
+                                <p style="width:100px">选择角色:</p>
+                                <select class="form-control role" placeholder="请选择角色" id="chooseFactureSelect" style="border:0px!important;border-radius:0;outline:1px solid #dedede ">                                                   
+                                               </select>
+                                <span style="color:white">必填</span>
+                            </div>
+                            <div>
+                                <span>公司名称:</span>
+                                <input class="form-control" type="text" id="baseInfo__company" disabled="disabled" />
+                                <span></span>
+                            </div>
+                            <div>
+                                <span>公司地址:</span>
+                                <input class="form-control" type="text" id="baseInfo__addr" />
+                                <span class="baseInfo__spans">必填</span>
+                            </div>
+                            <div>
+                                <span>联系人:</span>
+                                <input class="form-control" type="text" id="baseInfo__name" />
+                                <span class="baseInfo__spans">必填</span>
+                            </div>
+                            <div>
+                                <span>联系方式:</span>
+                                <input class="form-control " type="text" id="baseInfo__call" />
+                                <span class="baseInfo__spans">必填</span>
+                            </div>
+                            <div id="baseInfo_btn"><button>保存</button></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END OF BLANK PAGE -->
+            </div>
+        </div>
+           <div class="wrap-footer"></div>
+    </div>
+    </div>
+    <!-- MAIN EFFECT -->
+    <script type="text/javascript" src="assets/js/bootstrap.js"></script>
+    <script type="text/javascript" src="assets/js/load.js"></script>
+    <script type="text/javascript" src="assets/js/main.js"></script>
+    <script type="text/javascript" src="js/public.js"></script>
+    <script type="text/javascript" src="js/mix.js"></script>
+    <script src="assets/js/x0popup.min.js"></script>
+    <script src="plugins/laydate/laydate.js"></script>
+    <script type="text/javascript" src="js/mix.js"></script>
+    <script type="text/javascript">
+        var AdminroleType = 0;//1为管理厂商角色，2为管理电信角色,0为非管理角色
+        var roleType = '2'//sessionStorage.getItem("type") || 100
+        var chooseId = ''//管理者登录后授权选择厂商的mid或者电信的ctId
+        var getManufacturerInfoRoute = "getManufacturerInfoByLogin.do"//查询厂商基本信息路由
+        var getCTInfoRoute = 'getCTInfo.do'//查询电信信息路由
+        var updateManufacturerInfoRoute = "updateManufacturerInfo.do"//修改厂商信息路由
+        var updateCTInfoRoute = 'updateCTInfo.do'//更新电信基本信息路由
+
+
+        $(function () {
+            switch (sessionStorage.getItem("type")) {
+                case '1'://admin login
+                    roleChoosedialog.init($(".wrap-container"))
+                    $(".role-choose__items span").click(function () {
+                        if (!$(".role-choose__items span").index(this)) {
+                            AdminroleType = 1//厂商
+                            initAdminAuthorityManage(function () { getBaseInfo(getManufacturerInfoRoute) }, '10')
+                        } else {
+                            AdminroleType = 2//电信
+                            initAdminAuthorityManage(function () { getBaseInfo(getCTInfoRoute) }, '11')
+                        }
+                     roleChoosedialog.remove()
+                    })
+                    break;
+                case '2'://设备商login
+                    getBaseInfo(getManufacturerInfoRoute);
+                    break;
+                case '3'://电信login
+                    getBaseInfo(getCTInfoRoute);
+                    break;
+            }
+            $("#baseInfo_btn").bind("click", function () {
+                checkAndSaveBaseInfo()
+            })
+        });
+
+        function saveBaseInfo() {//修改信息请求
+            zivenload.start(".wrap-container__box")
+            //角色判断
+            var saveRoute = (sessionStorage.getItem("type") == '2' || AdminroleType == 1) ? updateManufacturerInfoRoute
+                : updateCTInfoRoute
+            $.ajax({
+                type: 'post',
+                url: baseUrl + saveRoute,
+                data: { 'address': $("#baseInfo__addr").val(), 'contactsName': $("#baseInfo__name").val(), 'contactsPhone': $("#baseInfo__call").val() },
+                dataType: 'JSON',
+                timeout: 8000,
+                success: function (data) {
+                    var router = (sessionStorage.getItem("type") == '2' || AdminroleType == 1) ? getManufacturerInfoRoute : getCTInfoRoute
+                    !data.msg ? x0pSuccessAndReload(function () { getBaseInfo(router) }) : x0pAjaxError(data)
+
+                },
+                error: function (data) {
+                    x0pServerError(data)
+                },
+                complete: function () {
+                    zivenload.end()
+                }
+            })
+
+        }
+
+        function getBaseInfo(router) {//查询厂商/电信信息
+            zivenload.start(".wrap-container__box")
+            $.ajax({
+                type: 'get',
+                url: baseUrl + router,
+                success: function (data) {
+                    (!data.msg || data.msg == 1) ? returnBaseInfoPage(data) : x0pERROR('query', data)
+                },
+                error: function (data) {
+                    x0pServerError(data)
+                },
+                complete: function () {
+                    zivenload.end()
+                }
+            })
+        }
+
+        function returnBaseInfoPage(data) {
+            $("#baseInfo__company").val(data.name ? data.name : '')
+            $("#baseInfo__addr").val(data.address ? data.address : '')
+            $("#baseInfo__name").val(data.contacts ? data.contacts : '')
+            $("#baseInfo__call").val(data.contactsPhone ? data.contactsPhone : '')
+            sessionStorage.getItem("type") != '1' ? flitePage() : ''
+        }
+        function flitePage() {//非管理者登录过滤页面元素
+            // $(".baseInfo div input").css('border', '0px')
+            // $(".baseInfo div input").attr('disabled', 'disabled')
+            // $(".baseInfo div input").css('cursor', 'default')
+            //  $(".baseInfo__spans").css('color', '#fff')
+            //  $("#baseInfo_btn").css("display","none")
+        }
+        function checkBaseInfo() {
+            var arg1 = $("#baseInfo__addr").val()
+            var arg2 = $("#baseInfo__name").val()
+            var arg3 = $("#baseInfo__call").val()
+            if (!(isNullCheck(arg1) && isNullCheck(arg2) && isNullCheck(arg3))) {
+                x0pERROR("填写信息不全,请重新填写")
+                return false
+            } else if (!checkPhone(arg3)) {
+                x0pERROR("联系方式必须是手机号码")
+                return false
+            } else {
+                return true
+            }
+
+        }
+        function checkAndSaveBaseInfo() {
+            checkBaseInfo() ? saveBaseInfo() : ''
+        }
+    </script>
+    <!--分割线-->
+</body>
+
+</html>

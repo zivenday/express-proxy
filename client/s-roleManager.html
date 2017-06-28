@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>充值管理平台--角色关联</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Le styles -->
+    <script type="text/javascript" src="assets/js/jquery.js"></script>
+    <link rel="stylesheet" href="css/mixflex.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/loader-style.css">
+    <link rel="stylesheet" href="assets/css/bootstrap.css">
+
+    <!--分割线-->
+    <link rel="stylesheet" href="assets/css/x0popup.min.css">
+    <link rel="stylesheet" href="css/public.css">
+    <link rel="stylesheet" href="css/base.css">
+
+    <style type="text/css">
+        canvas {
+            width: 100% !important;
+            max-width: 1000px;
+            height: auto !important;
+        }
+
+        .RoleManager__index--active {
+            background: #ddd
+        }
+
+        body {
+            min-width: 852px;
+        }
+    </style>
+    <!--分割线-->
+</head>
+
+<body class="wrap-container">
+    <div class="wrap-container__box">
+        <!-- BREADCRUMB -->
+        <ul id="breadcrumb">
+            <li>
+                <span class="entypo-home"></span>
+            </li>
+            <li><i class="fa fa-lg fa-angle-right"></i>
+            </li>
+            <li><a>角色关联</a>
+            </li>
+        </ul>
+
+        <div class="content-wrap">
+            <div class="row">
+                <div class="table-background__ziven">
+                    <div class="nest">
+                        <div class="body-nest">
+                            <!--<div class="loginRole">
+                                        <p>选择厂商角色:</p>
+                                        <select class="form-control role" placeholder="请选择角色" id="chooseFactureSelect" style="border:0px!important;border-radius:0;outline:1px solid #dedede ">                                                   
+                                               </select>
+                                    </div>-->
+                            <div class="row-table flex">
+                                <!--<div><input class="form-control input__ziven " id="RoleManager_search" placeholder="请输入用户ICCID进行查询"
+                                        value="" type="text" style="border-radius: 0px;" /></div>
+                                <div> <button type="button" class="btn btn-info__ziven" onclick="RoleManagerSearch(this)" style="margin-left:15px"> 查询</button></div>-->
+                                <div> <button type="button" class="btn btn-info__ziven upbtn"  onclick="addRoleManager()"> 添加关联</button></div>
+                                <div> <button type="button" class="btn btn-info__ziven " style="margin-left:20px" onclick="addTelecom()">电信注册</button></div>
+                            </div>
+                            <table class="table" id="table__ziven">
+                                <thead>
+                                    <tr>
+                                        <th style="border-left:1px solid #dedede!important">
+                                            厂商编号
+                                        </th>
+                                        <th>
+                                            厂商名称
+                                        </th>
+                                        <th>
+                                            电信编号
+                                        </th>
+                                        <th id="table__ziven-th " style="border-right:1px solid #dedede!important">
+                                            电信名称</th>
+                                    </tr>
+                                </thead>
+                                <tbody class=" RoleManager__table" id="table-tbody__ziven">
+                                </tbody>
+
+                            </table>
+                            <nav aria-label="...">
+                                <ul class="pager RoleManager__page">
+                                </ul>
+                            </nav>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+<div class="wrap-footer"></div>
+    </div>
+
+
+    </div>
+    <div class="modal fade" id="addRoleManagerModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" style="border-radius:0">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">添加关联表单</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="offNet">
+                        <div id="addRoleManagerModelBody">
+
+                            <div class="input-group" style="padding-bottom:20px" style="border-radius:0">
+                                <span class="input-group-addon" style="border-radius:0">厂商角色</span>
+                                <select class="form-control " placeholder="请选择厂商角色" id="factureRole" style="border:0px!important;border-radius:0;outline:1px solid #A8A8A8 ">  
+                                                  <!--<option value ="10" style="border-radius:0" selected>用户总使用量</option>
+                                                   <option value ="20" style="border-radius:0">超出套餐外使用量</option>
+                                                    <option value="ADD" style="border-radius:0">单独进行断网</option>-->
+                                               </select>
+                            </div>
+                            <div class="input-group" style="padding-bottom:20px" style="border-radius:0">
+                                <span class="input-group-addon" style="border-radius:0">电信角色</span>
+                                <select class="form-control " placeholder="请选择电信角色" id="telecomRole" style="border:0px!important;border-radius:0;outline:1px solid #A8A8A8 ">  
+                                                  <!--<option value ="10" style="border-radius:0" selected>用户总使用量</option>
+                                                   <option value ="20" style="border-radius:0">超出套餐外使用量</option>
+                                                    <option value="ADD" style="border-radius:0">单独进行断网</option>-->
+                                               </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal" style="border-radius:0">取消</button>
+                        <button type="button" class="btn btn-primary" style="border-radius:0" onclick="roleManagerSubmit()">提交</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+    </div>
+    <div class="modal fade" id="addTelecomModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" style="border-radius:0">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">添加电信表单</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="offNet">
+                        <div id="addTelecomModelBody">
+                            <div class="input-group" style="padding-bottom:20px">
+                                <span class="input-group-addon" style="border-radius:0">电信名称:</span>
+                                <input type="text" class="form-control fname" placeholder="" aria-describedby="basic-addon1" style="border-radius:0">
+                            </div>
+                            <div class="input-group" style="padding-bottom:20px">
+                                <span class="input-group-addon" style="border-radius:0">电信地址:</span>
+                                <input type="text" class="form-control faddr" placeholder="" aria-describedby="basic-addon1" style="border-radius:0">
+                            </div>
+                            <div class="input-group" style="padding-bottom:20px">
+                                <span class="input-group-addon" style="border-radius:0">联系人:</span>
+                                <input type="text" class="form-control fcontractor" placeholder="" aria-describedby="basic-addon1" style="border-radius:0">
+                            </div>
+                            <div class="input-group" style="padding-bottom:20px">
+                                <span class="input-group-addon" style="border-radius:0">联系电话:</span>
+                                <input type="text" class="form-control fcall" placeholder="" aria-describedby="basic-addon1" style="border-radius:0">
+                            </div>
+                            <div class="input-group" style="padding-bottom:20px">
+                                <span class="input-group-addon" style="border-radius:0">账号:</span>
+                                <input type="text" class="form-control faccount" placeholder="" aria-describedby="basic-addon1" style="border-radius:0">
+                            </div>
+                            <div class="input-group" style="padding-bottom:20px">
+                                <span class="input-group-addon" style="border-radius:0">密码:</span>
+                                <input type="text" class="form-control fpwd" placeholder="" aria-describedby="basic-addon1" style="border-radius:0">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal" style="border-radius:0">取消</button>
+                        <button type="button" class="btn btn-primary" style="border-radius:0" onclick="addTelecomSubmit()">提交</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+    </div>
+    <!-- MAIN EFFECT -->
+    <script type="text/javascript" src="assets/js/bootstrap.js"></script>
+    <script type="text/javascript" src="assets/js/load.js"></script>
+    <script type="text/javascript" src="assets/js/main.js"></script>
+    <script src="assets/js/x0popup.min.js"></script>
+    <script src="js/public.js"></script>
+    <script src="js/mix.js"></script>
+    <script type="text/javascript">
+        var listCTAndManufacturerRoute = 'listCTAndManufacturer.do'//管理员获取厂商与电信列表
+        var saveCTManufacturerRoute = 'saveCTManufacturer.do'//管理员存储厂商与电信关联信息
+        var registerCTRoute = 'registerCT.do'//注册电信信息
+        var reg_for_account = /^[a-zA-Z][a-zA-Z]*[0-9]+[a-zA-Z]*/;
+        RoleManagerSearch(1)
+        function RoleManagerSearch(n) {//iccid搜索
+            $("#RoleManager_search").val() ?
+                // (getRoleManagerInfo(baseUrl + getIotInfoByIdRoute + "?iccid=" + $("#RoleManager_search").val(), 2))
+                '' : getRoleManagerInfo(baseUrl + listCTAndManufacturerRoute + "?page=" + n + "&num=10", 1)
+        }
+        function getRoleManagerInfo(RoleManagerurl, type) {//type为操作类型1为list查询，2为根据id查询，3为分页查询
+            zivenload.start(".wrap-container__box")
+            $.ajax({
+                type: "get",
+                url: RoleManagerurl,
+                timeout: 8000,
+                success: function (data) {
+                    (!data.msg || data.msg == 1) ? returnPage(data, type) : x0pAjaxError('query', data)
+                },
+                error: function (data) {
+                    x0pServerError(data)
+                },
+                complete: function (data) {
+                    zivenload.end()
+                },
+            });
+        }
+        function addRoleManager() {
+            $("#uaddRoleManagerModel").modal("show")
+        }
+        function returnPage(data, type) {//重构页面
+            $(".no-existent").remove()
+            if (!data.msg) {
+                returnTable(data, type)
+                type == 3 ? '' : returnPagination(".RoleManager__page", data, type)
+            } else {
+                $('.RoleManager__table').children('tr').remove();
+                $('.table').after("<div class='no-existent'>暂无数据</div>")
+            }
+        }
+        function returnTable(obj, type) {
+            var subs = ''
+            $.each(obj.list, function () {
+                subs = subs + '<tr>'
+                    + '<td>' + this.mid + '</td>'
+                    + '<td>' + this.mname + '</td>'
+                    + '<td>' + this.ctId + '</td>'
+                    + '<td>' + this.ctName + '</td>'
+                    + '</tr>'
+            })
+            $('.RoleManager__table').children('tr').remove();
+            $('.RoleManager__table').html(subs)
+
+        }
+        function changePage(n, e) {//分页查询
+            updatePagination(e)
+            RoleManagerSearch(n)
+        }
+        function addRoleManager() {
+            initChooseFactureModal($("#factureRole"), function () { }, 1, 0, 0, 0)
+            initChooseFactureModal($("#telecomRole"), function () { }, 2, 0, 0, 0)
+            $('#addRoleManagerModel').modal('show')
+        }
+        function addTelecom() {
+            $('#addTelecomModel').modal('show')
+        }
+
+        function addTelecomSubmit() {
+            console.log(checkTelecom())
+            checkTelecom() ? addTelecomSubmitAction() : ''
+        }
+        function checkTelecom() {
+            var name = $.trim($(".fname").val())
+            var addr = $.trim($(".faddr").val())
+            var constrator = $.trim($(".fcontractor").val())
+            var call = $.trim($(".fcall").val())
+            var account = $.trim($(".faccount").val())
+            var pwd = $.trim($(".fpwd").val())
+            console.log('constrator',constrator)
+            var isFull = (isNullCheck(name) && isNullCheck(addr) && isNullCheck(constrator) && isNullCheck(call) && isNullCheck(account) && isNullCheck(pwd))
+            if (!isFull) {
+                x0pERROR("填写信息不全,表单全部为必填项,请重新填写")
+                return false
+            } else {
+                if (!checkPhone(call)) {
+                    x0pERROR("请填写正确的手机号")
+                    return false
+                }
+                else if (account.length < 6 || account.length > 16) {
+                    x0pERROR("账号长度为6～16")
+                    return false
+                }
+                else if (!reg_for_account.test(account) || !!/[^a-zA-Z0-9]+/.test(account)) {
+                    x0pERROR("账号由字母、数字组成，首字符不能为数字")
+                    return false
+                }
+                else if (pwd.length < 6 || pwd.length > 16) {
+                    x0pERROR("密码长度为6～16")
+                    return false
+                } else {
+                    return true
+                }
+            }
+        }
+        function addTelecomSubmitAction() {
+           var  jsonObj={
+                "ctInfo":JSON.stringify({
+                       "name":$.trim($(".fname").val()),
+                       "address":$.trim($(".faddr").val()),
+                       "contacts":$.trim($(".fcontractor").val()),
+                       "contactsPhone":$.trim($(".fcall").val()),
+                }),
+                "accountInfo":JSON.stringify({
+                    "account":$.trim($(".faccount").val()),
+                    "password":$.trim($(".fpwd").val())
+                })
+            };
+            zivenload.start(".wrap-container__box")
+            $.ajax({
+                type: "POST",
+                url: baseUrl + registerCTRoute ,
+                dataType: 'JSON',
+                data: jsonObj,
+                error: function (data) {
+                    x0pServerError(data)
+                },
+                success: function (data) {
+                    !data.msg ? x0pSuccessAndReload(function () { RoleManagerSearch(1) }) : x0pAjaxError("save", data)
+                },
+                complete: function () {
+                    zivenload.end()
+                }
+            });
+      
+        }
+        function roleManagerSubmit() {
+            var mid = $("#factureRole").val()
+            var ctId = $("#telecomRole").val()
+            zivenload.start(".wrap-container__box")
+            $.ajax({
+                type: "POST",
+                url: baseUrl + saveCTManufacturerRoute,
+                dataType: 'JSON',
+                data: { 'ctId': ctId, 'mid': mid },
+                error: function (data) {
+                    x0pServerError(data)
+                },
+                success: function (data) {
+                    !data.msg ? x0pSuccessAndReload(function () { RoleManagerSearch(1) }) : x0pAjaxError("save", data)
+                },
+                complete: function () {
+                    zivenload.end()
+                }
+            });
+        }
+    </script>
+    <!--分割线-->
+</body>
+
+</html>

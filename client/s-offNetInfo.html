@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>充值管理平台--达量断网</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Le styles -->
+    <script type="text/javascript" src="assets/js/jquery.js"></script>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/loader-style.css">
+    <link rel="stylesheet" href="assets/css/bootstrap.css">
+    <link rel="stylesheet" href="assets/css/x0popup.min.css">
+    <link rel="stylesheet" href="css/public.css">
+    <link rel="stylesheet" href="css/base.css">
+    <style type="text/css">
+           .row-table>div:last-child {
+            padding-top: 8px;
+            position: absolute;
+            right: 20px;
+        }
+
+        .row-table>div:last-child>span {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background: #f88b00;
+            border-radius: 0px
+        }
+
+        .row-table>div:last-child>div {
+            display: inline-block
+        }
+        .body-nest{
+            min-width: 1121px;
+            
+        }
+        #table__ziven{
+            min-width: 1088px;
+        }
+        .input-group-addon {
+            border: 1px solid #A8A8A8;
+        }
+    </style>
+    <!--分割线-->
+</head>
+
+<body class="wrap-container">
+    <div class="wrap-container__box">
+        <!-- BREADCRUMB -->
+        <ul id="breadcrumb">
+            <li>
+                <span class="entypo-home"></span>
+            </li>
+            <li><i class="fa fa-lg fa-angle-right"></i>
+            </li>
+            <li><a>达量断网</a>
+            </li>
+        </ul>
+        <div class="content-wrap">
+            <div class="row">
+                <div class="table-background__ziven">
+                    <div class="nest">
+                        <div class="body-nest">
+                            <div class="loginRole">
+                                <p>选择厂商角色:</p>
+                                <select class="form-control role" placeholder="请选择角色" id="chooseFactureSelect" style="border:0px!important;border-radius:0;outline:1px solid #dedede ">                                                   
+                                               </select>
+                            </div>
+                            <div class="row-table">
+                                <div>
+                                    <input class="form-control input__ziven " id="offNetInfo__search" placeholder="请输入用户ICCID进行查询" type="text" style="border-radius: 0px;">
+                                </div>
+                                <div> <button type="button" class="btn btn-info__ziven" onclick="offNetInfoSearch()" style="margin-left:15px">查询</button></div>
+                                <div>
+                                    <span class="focus-tips"></span>
+                                    <div>注意:处理过程约耗时0~5分钟，请稍后查询。</div>
+                                </div>
+                                <!--<div> <button type="button" class="btn btn-primary btn-primary__ziven" onclick="openAddSetOffModel()"
+                                        style="margin-left:20px">添加设置</button></div>-->
+
+                            </div>
+                            <table class="table " id="table__ziven">
+                                <thead>
+                                    <tr>
+                                        <th style="border-left:1px solid #dedede!important">接入号码</th>
+                                        <th>ICCID</th>
+                                        <th>已用量(MB)</th>
+                                        <th>剩余量(MB)</th>
+                                        <th>总流量(MB)</th>
+                                        <th>单独断网</th>
+                                        <th>达量设置</th>
+                                        <th>达量类型</th>
+                                        <th>达量值(MB)</th>
+                                        <th>是否达量</th>
+                                        <th style="border-right:1px solid #dedede!important">操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="offNetInfo__table">
+                                </tbody>
+
+                            </table>
+                            <nav aria-label="...">
+                                <ul class="pager offNetInfo__page">
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+           <div class="wrap-footer">
+            </div>
+    </div>
+    
+     
+  
+    
+        <div class="modal fade" id="setOffNetModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content" style="border-radius:0">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title">设置(达量/单独)断网表单</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="offNet">
+                            <div id="setOffNetModelBody">
+                                <div class="input-group" style="padding-bottom:20px">
+                                    <span class="input-group-addon" style="border-radius:0">ICCID:</span>
+                                    <input type="text" class="form-control iccid" placeholder="如:8986031540252024112" aria-describedby="basic-addon1" style="border-radius:0">
+                                </div>
+                                <div class="input-group" style="padding-bottom:20px">
+                                    <span class="input-group-addon" style="border-radius:0">接入卡号:</span>
+                                    <input type="text" class="form-control number" placeholder="如:1064919874258" aria-describedby="basic-addon1" style="border-radius:0">
+                                </div>
+                                <div class="input-group" style="padding-bottom:20px" style="border-radius:0">
+                                    <span class="input-group-addon" style="border-radius:0">断网类型</span>
+                                    <select class="form-control " placeholder="请选择类型" id="offNetType" style="border:0px!important;border-radius:0;outline:1px solid #A8A8A8 "
+                                        onchange="onSetOffSelectChange(this)">  
+                                                  <option value ="10" style="border-radius:0" selected>用户总使用量</option>
+                                                   <option value ="20" style="border-radius:0">超出套餐外使用量</option>
+                                                    <option value="ADD" style="border-radius:0">单独进行断网</option>
+                                               </select>
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-addon" style="border-radius:0">设置值(单位:MB)</span>
+                                    <input type="text" class="form-control quota" aria-describedby="basic-addon1" style="border-radius:0">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal" style="border-radius:0">取消</button>
+                            <button type="button" class="btn btn-primary" style="border-radius:0" onclick="offNetSubmit()">提交</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+        </div>
+        <!-- MAIN EFFECT -->
+        <script type="text/javascript" src="assets/js/preloader.js"></script>
+        <script type="text/javascript" src="assets/js/bootstrap.js"></script>
+        <script type="text/javascript" src="assets/js/app.js"></script>
+        <script type="text/javascript" src="assets/js/load.js"></script>
+        <script type="text/javascript" src="assets/js/main.js"></script>
+        <script src="assets/js/x0popup.min.js"></script>
+        <script type="text/javascript" src="js/public.js"></script>
+        <script type="text/javascript" src="js/mix.js"></script>
+        <script type="text/javascript">
+            var setOffAaddOrEditType = 1;//操作类型编号新增为1,编辑为2,默认为1
+            //自定义按钮组合
+            var defaultBtn = function () { return '<button class="btn btn-default  button test " style="border-radius: 0px;cursor:not-allowed"  data-opacity="0.9">' + arguments[0] + '</button>' }
+            var activeBtn = function () { return '<button type="button" class="btn btn-primary" onclick="openSetOffModel(this)"style="border-radius: 0px;"  >' + arguments[0] + '</button>' }
+            var dangerBtn = function () { return '<button type="button" class="btn btn-danger" style="border-radius: 0px"  onclick="cancelSetOff(this)">' + arguments[0] + '</button>' }
+            var infoBtn = function () { return '<button type="button" class="btn btn-info" style="border-radius: 0px"  onclick="recoverNet(this)">' + arguments[0] + '</button>' }
+            //自定义空格
+            var spans = function () { return '<span style="white-space:pre"> </span>' }
+            //url 路由字段定义
+            var listOffNetRoute = "listOffNetInfo.do"//批量查询路由
+            var getOffNetByIccidRoute = "getOffNetInfoByIccid.do"//id查询路由
+            var offNetRoute = "setOffNet.do"//设置达量路由
+            var recoverRoute = "recoverNet.do"//恢复达量上网路由
+            var singleCutRoute = "singleCutNet.do"//单独断网与恢复路由
+            $(function () {
+                sessionStorage.getItem("type") == '1' ?
+                    initAdminAuthorityManage(function () { offNetInfoSearch() }, '10') : offNetInfoSearch()
+            });
+        </script>
+        <script>
+            function returnOffNetTable(obj, type) {//构建列表
+                var subs = '';
+                if (type == 1 || type == 3) {
+                    var o = obj.offNetList
+                    for (var i = 0; i < o.length; i++) {
+                        subs = subs + '<tr>'
+                            + '<td>' + o[i].number + '</td>'
+                            + '<td>' + o[i].iccid + '</td>'
+                            + '<td>' + (o[i].CUMULATION_ALREADY / 1024).toFixed(2) + '</td>'
+                            + '<td>' + (o[i].CUMULATION_LEFT / 1024).toFixed(2) + '</td>'
+                            + '<td>' + (o[i].CUMULATION_TOTAL / 1024).toFixed(2) + '</td>'
+                            + '<td>' + o[i].isSingleCutNet + '</td>'
+                        o[i].isSetOffNet ? (subs = subs + '<td>是</td>'
+                            + '<td>' + (o[i].offNetType == 10 ? "用户总使用量" : "超出套餐使用量") + '</td>'
+                            + '<td>' + o[i].offNetValue + '</td>'
+                            + '<td>' + o[i].isAlreadyOffNet + '</td>'
+                            + returnOperation(o[i])) : (subs = subs + '<td>否</td><td>无</td><td>无</td><td>否</td>'+ returnOperation(o[i]))
+                    }
+                    $(".offNetInfo__table").children('tr').remove();
+                    $(".offNetInfo__table").html(subs)
+                } else {
+                    subs = '<tr>'
+                        + '<td>' + obj.number + '</td>'
+                        + '<td>' + $("#offNetInfo__search").val() + '</td>'
+                        + '<td>' + (obj.CUMULATION_ALREADY / 1024).toFixed(2) + '</td>'
+                        + '<td>' + (obj.CUMULATION_LEFT / 1024).toFixed(2) + '</td>'
+                        + '<td>' + (obj.CUMULATION_TOTAL / 1024).toFixed(2) + '</td>'
+                        + '<td>' + obj.isSingleCutNet + '</td>'
+                    obj.isSetOffNet ? (subs = subs + '<td>是</td>'
+                        + '<td>' + (obj.offNetType == 10 ? "用户总使用量" : "超出套餐使用量") + '</td>'
+                        + '<td>' + obj.offNetValue + '</td>'
+                        + '<td>' + obj.isAlreadyOffNet + '</td>'
+                        + returnOperation(obj)) : (subs = subs + '<td>否</td><td>无</td><td>无</td><td>否</td>'+returnOperation(obj))
+                    $(".offNetInfo__table").children('tr').remove();
+                    $(".offNetInfo__table").html(subs)
+                }
+
+            }
+            function returnOperation(obj){
+                var operatBtns=''
+                if(obj.operation){
+                    operatBtns=operatBtns+ (obj.isSetOffNet ?('<td class="operation__ziven">' + (obj.isSingleCutNet == '是' || obj.isAlreadyOffNet == '是' ? defaultBtn('设置') : activeBtn('设置')) + spans() + dangerBtn('取消') + spans()
+                        + ((obj.isSingleCutNet == '是' || obj.isAlreadyOffNet == '是') ? infoBtn('恢复') : defaultBtn('恢复'))
+                        + '</td></tr>') : ('<td class="operation__ziven">'
+                            + (obj.isSingleCutNet == '是' ? defaultBtn('设置') : activeBtn('设置')) + spans() + defaultBtn('取消') + spans() + (obj.isSingleCutNet == '是' ? infoBtn('恢复') : defaultBtn('恢复')) + '</td></tr>'))
+                }else{
+                    operatBtns='<td class="operation__ziven">'+defaultBtn('申请处理中')+'</td></tr>'
+                }
+                return operatBtns;
+            }
+            function changePage(n, e) {//分页查询
+                updatePagination(e)
+                getoffNetInfo(baseUrl + listOffNetRoute + "?page=" + n, 3)
+            }
+            function offNetInfoSearch() {//搜索查询
+                $("#offNetInfo__search").val() ? getoffNetInfo(baseUrl + getOffNetByIccidRoute + "?iccid=" + $("#offNetInfo__search").val(), 2) : getoffNetInfo(baseUrl + listOffNetRoute + "?page=1", 1)
+            }
+            function openAddSetOffModel() {
+                clearAddAndEditModel() //清空模态窗口数据
+                $('#setOffNetModel').modal('show')
+            }
+            function openSetOffModel(e) {
+                clearAddAndEditModel() //清空模态窗口数据
+                $('#setOffNetModel').modal('show')
+                e.parentNode.parentNode.childNodes[6].innerText == "是" ? setOffAaddOrEditType = 2 : setOffAaddOrEditType = 1
+                initModelData(e, setOffAaddOrEditType)
+            }
+            function initModelData(e, setOffAaddOrEditType) {//初始化模态窗口（编辑状态，不是新增状态）
+                var obj = e.parentNode.parentNode
+                $(".iccid").val(obj.childNodes[1].innerText)
+                $(".number").val(obj.childNodes[0].innerText)
+                if (setOffAaddOrEditType == 2) {//根据表内容显示相应的模态窗口数据
+                    if (obj.childNodes[7].innerText == "用户总使用量") {
+                        $("#offNetType").val("10")
+                        $(".quota")[0].parentNode.childNodes[1].innerHTML = '设置值(单位:MB)'
+                        $(".quota").val(obj.childNodes[8].innerText)//如果是无穷大就直接显示-1                 
+                    } else {
+                        $("#offNetType").val("20")
+                        $(".quota")[0].parentNode.childNodes[1].innerHTML = '设置值(单位:MB)'
+                        $(".quota").val(obj.childNodes[8].innerText)
+                    }
+                }
+                $(".iccid").attr("disabled", true)
+                $(".number").attr("disabled", true)
+
+            }
+            function offNetSubmit() {
+                if (checkOffNetForm()) {
+                    if ($("#offNetType").val() != "ADD") {//如果不是单独断网,就是达量断网
+                        var url = baseUrl + offNetRoute
+                            + '?iccid=' + $(".iccid").val()
+                            + '&number=' + $(".number").val()
+                            + '&action=' + setOffAaddOrEditType
+                            + '&type=' + ($("#offNetType").val() == '10' ? 1 : 2)//显示编号的为10，提交的编号为1 20与2对应
+                            + '&quota=' + $(".quota").val()//如果是套餐设置或者流量无限制就直接把输入值当参数
+                    } else {
+                        var url = baseUrl + singleCutRoute
+                            + '?iccid=' + $(".iccid").val()
+                            + '&number=' + $(".number").val()
+                            + '&action=ADD'
+
+                    }
+                    $('#setOffNetModel').modal('hide')
+                    setOffNetAction(url)
+                } else {//表单有错,提示报错，不提交请求
+                    x0p({
+                        title: '',
+                        text: '表单信息填写不全',
+                        animationType: 'slideDown',
+                        icon: 'error',
+                        buttons: [],
+                        autoClose: 2000
+                    })
+                }
+            }
+            function setOffNetAction(url) {//设置提交请求
+                zivenload.start(".wrap-container__box")
+                $.ajax({
+                    type: "post",
+                    url: url,
+                    timeout: 8000,
+                    success: function (data) {
+                        (!data.msg || data.msg == 1) ? x0pSuccessAndReload(function () { getoffNetInfo(baseUrl + listOffNetRoute + "?page=1", 1) },'请求成功')
+                            : x0pAjaxError("setting", data)
+                    },
+                    error: function (data) {
+                        x0pServerError(data)
+                    },
+                    complete: function () {
+                        zivenload.end()
+                    }
+                })
+            }
+            function checkOffNetForm() {//检测表单是否填写完整
+                var result = 1;
+                $("#setOffNetModelBody").children("div").children("input").each(function (index, elem) {
+                    if (!isNullCheck($(this).val())) {
+                        if ($("#offNetType").val() == "ADD" && index == 2) { //如果是单独断网，无视隐藏的输入框输入
+                            return 0
+                        } else {
+                            result = 0
+                        }
+                        return false//跳出each循环
+                    }
+                })
+                return result
+
+            }
+            function onSetOffSelectChange(e) {//动态对选择选项进行动态改变
+                switch ($("#offNetType").val()) {
+                    case "10":
+                        $(".quota")[0].parentNode.style.display = "table";
+                        $(".quota").attr("placeholder", "如:1024");
+                        $(".quota").val("");
+                        $(".quota")[0].parentNode.childNodes[1].innerHTML = '设置值(单位:MB)'
+                        break;
+                    case "20":
+                        $(".quota")[0].parentNode.style.display = "table";
+                        $(".quota").attr("placeholder", "如:1024");
+                        $(".quota").val("");
+                        $(".quota")[0].parentNode.childNodes[1].innerHTML = '设置值(单位:MB)'
+                        break;
+                    case "ADD":
+                        $(".quota")[0].parentNode.style.display = "none";
+                        break;
+                }
+            }
+            function cancelSetOff(e) {//取消达量设置确定提示按钮
+                x0p({
+                    title: '提醒',
+                    text: '是否要取消达量断网？',
+                    icon: 'info',
+                    animationType: 'slideUp',
+                    buttons: [
+                        {
+                            type: 'error',
+                            text: '取消'
+                        },
+                        {
+                            type: 'info',
+                            text: '确定',
+                            showLoading: true
+                        }
+                    ]
+                }, function (button) {
+                    if (button == 'info') {
+                        cancelSetOffAction(e)
+                    }
+                });
+            }
+            function cancelSetOffAction(e) {//取消达量设置请求后台
+                var obj = e.parentNode.parentNode
+                var url = baseUrl + offNetRoute
+                    + '?iccid=' + obj.childNodes[1].innerText
+                    + '&number=' + obj.childNodes[0].innerText
+                    + '&action=3'
+                    + '&type=' + (obj.childNodes[7].innerText == "用户总使用量" ? 1 : 2)
+                    + '&quota=' + obj.childNodes[8].innerText
+                $.ajax({
+                    type: "post",
+                    url: url,
+                    success: function (data) {
+                        !data.msg ? x0pSuccessAndReload(function () { getoffNetInfo(baseUrl + listOffNetRoute + "?page=1", 1) },'请求成功')
+                            : x0pAjaxError("setting", data)
+                    },
+                    error: function (data) {
+                        x0pServerError(data)
+                    }
+                })
+            }
+            function recoverNet(e) {//恢复上网功能
+                var isTips = ""
+                var route = ""
+                var row = e.parentNode.parentNode
+                //判断恢复上网类型，单独恢复优先级更高
+                if (row.childNodes[5].innerText == "否") {
+                    isTips = "达量断网";
+                    route = recoverRoute
+                    recoverConfirmFunc(e, isTips, route)
+                } else {
+                    if (row.childNodes[9].innerText == "否") {
+                        isTips = "单独断网";
+                        route = singleCutRoute
+                        recoverConfirmFunc(e, isTips, route)
+                    } else {
+                        x0p({
+                            title: '',
+                            text: '请选择要恢复的断网类型',
+                            icon: 'info',
+                            animationType: 'slideUp',
+                            buttons: [
+                                {
+                                    type: 'error',
+                                    text: '单独断网'
+                                },
+                                {
+                                    type: 'info',
+                                    text: '达量断网',
+                                    showLoading: true
+                                }
+                            ]
+                        }, function (button) {
+                            if (button == 'info') {
+                                isTips = "达量断网";
+                                route = recoverRoute;
+                                recoverConfirmFunc(e, isTips, route)
+                            } else {
+                                isTips = "单独断网";
+                                route = singleCutRoute;
+                                recoverConfirmFunc(e, isTips, route)
+                            }
+                        });
+                    }
+
+                }
+
+            }
+            function recoverConfirmFunc(e, isTips, route) {
+                x0p({
+                    title: '',
+                    text: '是否要从[' + isTips + ']恢复该卡？',
+                    icon: 'info',
+                    animationType: 'slideUp',
+                    buttons: [
+                        {
+                            type: 'error',
+                            text: '取消'
+                        },
+                        {
+                            type: 'info',
+                            text: '确定',
+                            showLoading: true
+                        }
+                    ]
+                }, function (button) {
+                    if (button == 'info') {
+                        recoverNetAction(e, route)
+                    }
+                });
+            }
+            function getoffNetInfo(url, type) {//type为操作类型1为list查询，2为根据id查询，3为分页查询
+                zivenload.start(".wrap-container__box")
+                $.ajax({
+                    type: "get",
+                    url: url,
+                    timeout: 8000,
+                    success: function (data) {
+                        (!data.msg||data.msg==1) ? returnOffNetPage(data, type) : x0pAjaxError('query', data)
+                    },
+                    error: function (data) {
+                        x0pServerError(data)
+                    },
+                    complete: function () {
+                        zivenload.end()
+                    }
+                });
+            }
+            function returnOffNetPage(data, type) {//重构网页数据
+                 $(".no-existent").remove()
+                if (!data.msg) {
+                    returnOffNetTable(data, type)
+                    type === 3 ? '' : returnPagination(".offNetInfo__page", data, type)                
+              } else {
+                    $('.offNetInfo__table').children('tr').remove();
+                    $('.table').after("<div class='no-existent'>暂无数据</div>")
+                }
+            }
+            function recoverNetAction(e, route) {//恢复按钮判断是否是达量恢复还是单独断网恢复并提交请求
+                var obj = e.parentNode.parentNode
+                var url = ""
+                if (route == recoverRoute) {
+                    url = baseUrl + route
+                        + '?iccid=' + obj.childNodes[1].innerText
+                        + '&number=' + obj.childNodes[0].innerText
+                } else {
+                    url = baseUrl + route
+                        + '?iccid=' + obj.childNodes[1].innerText
+                        + '&number=' + obj.childNodes[0].innerText
+                        + '&action=DEL'
+                }
+                $.ajax({
+                    type: "post",
+                    url: url,
+                    success: function (data) {
+                        !data.msg ? x0pSuccessAndReload(function () { getoffNetInfo(baseUrl + listOffNetRoute + "?page=1", 1) },'请求成功')
+                            : x0pAjaxError("recover", data)
+                        !data.msg ? getoffNetInfo(baseUrl + listOffNetRoute + "?page=1", 1) : ''
+                    },
+                    error: function (data) {
+                        x0pServerError(data)
+                    }
+                })
+            }
+            function clearAddAndEditModel() {//清空模块窗口，还原默认数据
+                $("#setOffNetModelBody").children("div").children("input").each(function () {
+                    $(this).val("")
+                    $(this).attr("disabled", false)
+                })
+                $("#setOffNetModelBody").children("div").children("select").val("10")//还原下拉框为第一个选项，恢复最后一个输入框可见，并恢复默认提示
+                $("#setOffNetModelBody").children("div")[$("#setOffNetModelBody").children("div").length - 1].style.display = "table"
+                $(".quota").attr("placeholder", "如:1024");
+                $(".quota")[0].parentNode.childNodes[1].innerHTML = '设置值(单位:MB)'
+                setOffAaddOrEditType = 1//恢复引发模态窗口的操作类型属性
+            }
+        </script>
+</body>
+
+</html>

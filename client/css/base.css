@@ -1,0 +1,148 @@
+ .no-existent {
+     width: 200px;
+     margin: 0 auto;
+     text-align: center;
+ }
+
+ .role-choose {
+     width: 100%;
+     height: 100%;
+     position: absolute;
+     background-color: rgba(0, 0, 0, 0.2);
+     z-index: 1000;
+ }
+
+ .role-choose__container {
+     width: 450px;
+     height: 200px;
+     background: #fff;
+     position: absolute;
+     /*设定水平和垂直偏移父元素的50%，
+再根据实际长度将子元素上左挪回一半大小*/
+     left: 50%;
+     top: 50%;
+     margin-left: -225px;
+     margin-top: -100px;
+    font-family: STHeiti,Helvetica;
+    -webkit-animation: role-dialog .45s ease;
+    animation: role-dialog .45s ease;
+ }
+
+ .role-choose__container>div:first-child {
+     height: 75px;
+     width: 100%;
+     text-align: center;
+     padding-top:30px;
+     font-size:15px;
+     color: #555
+ }
+ .role-choose__container>div:last-child{
+     height: 95px;
+     width: 100%;
+ }
+ .role-choose__container>div>span{
+     display: inline-block;
+     height: 100%;
+     width: 50%;
+     font-size: 30px;
+     text-align: center;
+     padding-top: 20px;
+ }
+ .role-choose__container>div>span:first-child{
+         border-right: 1px solid #c3c3c3;
+         color: #f88b00;
+         cursor: pointer
+ }
+  .role-choose__container>div>span:first-child:hover{
+      color: #b56805
+ }
+ .role-choose__container>div>span:last-child{
+     color: #328fee;
+     cursor: pointer
+ }
+  .role-choose__container>div>span:last-child:hover{
+      color: #3b5c9f
+  }
+
+
+  .x0p.default .button-error{background-color:#f88b00}.x0p.default .button-error:hover{background-color:#b56805}
+ .xi-error span::before {
+    background-color: #f88b00;
+}
+  @keyframes role-dialog{
+0% {
+    transform: scale(0.9);
+    opacity: 0.3;
+}
+
+50% {
+    transform: scale(1.1) ;
+    opacity: 0.7;
+}
+
+100% {
+    transform: scale(1) ;
+    opacity: 1;
+}}
+
+
+
+/*加载动画样式*/
+
+.loading-container {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.loading {
+    width: 100px;
+    height: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.loading>span {
+    display: inline-block;
+    width: 10px;
+    height: 100%;
+    border-radius: 50%;
+    background: #f88b00;
+    animation: load 0.52s ease infinite;
+    -webkit-animation: load 0.52s ease infinite;
+}
+
+.loading span:nth-child(1) {
+    animation-delay: 0.13s;
+    -webkit-animation-delay: 0.13s;
+}
+
+.loading span:nth-child(2) {
+    animation-delay: 0.26s;
+    -webkit-animation-delay: 0.26s;
+}
+
+.loading span:nth-child(3) {
+    animation-delay: 0.39s;
+    -webkit-animation-delay: 0.39s;
+}
+
+.loading span:nth-child(4) {
+    animation-delay: 0.52s;
+    -webkit-animation-delay: 0.52s;
+}
+
+@keyframes load {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+

@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>充值管理平台--基本资料-套餐金额</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Le styles -->
+    <script type="text/javascript" src="assets/js/jquery.js"></script>
+
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/loader-style.css">
+    <link rel="stylesheet" href="assets/css/bootstrap.css">
+
+    <!--分割线-->
+    <link rel="stylesheet" href="assets/css/x0popup.min.css">
+    <link rel="stylesheet" href="css/public.css">
+    <link rel="stylesheet" href="css/base.css">
+    <style type="text/css">
+        canvas {
+            width: 100% !important;
+            max-width: 1000px;
+            height: auto !important;
+        }
+
+        .orderFail__index--active {
+            background: #ddd
+        }
+
+        .statics-table-date {
+            display: inline-block;
+            list-style-type: none;
+            position: absolute;
+        }
+
+        .laydate-icon {
+            padding-left: 10px;
+        }
+
+        .laydate_btn {
+            top: 1px!important
+        }
+
+        #facturerMangerInfo-table {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap
+        }
+
+        #facturerMangerInfo-btn {
+            width: 100%;
+            height: 30px;
+        }
+
+        .plan {
+            float: left;
+            width: 300px;
+            margin: 20px 2px;
+            padding: 15px 25px;
+            text-align: center;
+            background: white;
+            background-clip: padding-box;
+            border: 1px solid #e5ded6;
+            border-color: rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+        }
+
+        .plan-title {
+            margin-bottom: 12px;
+            font-size: 24px;
+            color: #666;
+        }
+
+        .plan-price {
+            margin-bottom: 20px;
+            line-height: 1;
+            font-size: 40px;
+            font-weight: bold;
+            color: #666;
+        }
+
+        .plan-features {
+            width: 80%;
+            margin: 20px auto 15px;
+            padding: 15px 0 0 15px;
+            border-top: 1px solid #e5ded6;
+            text-align: left;
+        }
+
+        .plan-unit {
+            display: block;
+            margin-top: 5px;
+            font-size: 13px;
+            font-weight: normal;
+            color: #aaa;
+        }
+
+        .plan-button {
+            position: relative;
+            display: block;
+            line-height: 40px;
+            font-size: 16px;
+            font-weight: 500;
+            color: white!important;
+            text-align: center;
+            text-decoration: none;
+            text-shadow: 0 1px rgba(0, 0, 0, 0.1);
+            background: #f88b00;
+            border-bottom: 2px solid #e68101;
+            border-color: rgba(0, 0, 0, 0.15);
+            border-radius: 0px;
+        }
+
+        .plan-button:hover {
+            background: #e68101;
+        }
+
+        .plan-down-button {
+            background: #ccc!important;
+            cursor: not-allowed;
+        }
+
+        .loginRole {
+            position: relative;
+            margin-left: 50px;
+            margin-bottom: 0px;
+        }
+    </style>
+    <!--分割线-->
+</head>
+
+<body class="wrap-container">
+    <div class="wrap-container__box">
+
+        <!-- BREADCRUMB -->
+        <ul id="breadcrumb">
+            <li>
+                <span class="entypo-home"></span>
+            </li>
+            <li><i class="fa fa-lg fa-angle-right"></i>
+            </li>
+                <li><a>基本资料</a>
+                </li>
+                <li><i class="fa fa-lg fa-angle-right"></i>
+                </li>
+                <li><a>套餐金额</a>
+                </li>
+        </ul>
+        <!-- END OF BREADCRUMB -->
+        <div class="content-wrap">
+            <div class="row">
+                <div class="table-background__ziven">
+
+                    <!-- BLANK PAGE-->
+                    <div class="nest" id="Blank_PageClose">
+                        <div class="nest" id="Blank_Page_Content" style="height:100%; position:relative;  padding-top: 26px;">
+                            <div class="loginRole">
+                                <p>选择角色:</p>
+                                <select class="form-control role" placeholder="请选择角色" id="chooseFactureSelect" style="border:0px!important;border-radius:0;outline:1px solid #dedede ">                                                   
+                                               </select>
+                            </div>
+                            <div id="facturerMangerInfo-table" style="width:100%">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END OF BLANK PAGE -->
+            </div>
+        </div>
+           <div class="wrap-footer"></div>
+    </div>
+    <!--编辑套餐金额信息模态窗口-->
+    <div class="modal fade" id="setfacturerPriceModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" style="border-radius:0">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">编辑套餐价格</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="setfacturerPrice">
+                        <div id="setfacturerPriceInfoBody">
+                            <div class="input-group" style="padding-bottom:20px;display:none">
+                                <span class="input-group-addon" style="border-radius:0">编号:</span>
+                                <input type="text" class="form-control eid" placeholder="" aria-describedby="basic-addon1" style="border-radius:0">
+                            </div>
+                            <div class="input-group" style="padding-bottom:20px;display:none">
+                                <span class="input-group-addon" style="border-radius:0">最低价格:</span>
+                                <input type="text" class="form-control ebottomPrice" placeholder="" aria-describedby="basic-addon1" style="border-radius:0">
+                            </div>
+                            <div class="input-group" style="padding-bottom:20px">
+                                <span class="input-group-addon" style="border-radius:0">设置价格:</span>
+                                <input type="text" class="form-control eprice" placeholder="" aria-describedby="basic-addon1" style="border-radius:0">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal" style="border-radius:0">取消</button>
+                        <button type="button" class="btn btn-primary" style="border-radius:0" onclick="checkEditPriceModal()">提交</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    </div>
+ 
+    <!-- MAIN EFFECT -->
+    <script type="text/javascript" src="assets/js/preloader.js"></script>
+    <script type="text/javascript" src="assets/js/bootstrap.js"></script>
+    <script type="text/javascript" src="assets/js/app.js"></script>
+    <script type="text/javascript" src="assets/js/load.js"></script>
+    <script type="text/javascript" src="assets/js/main.js"></script>
+    <script type="text/javascript" src="js/public.js"></script>
+    <script type="text/javascript" src="js/mix.js"></script>
+    <!--分割线-->
+    <script src="assets/js/x0popup.min.js"></script>
+    <script type="text/javascript">
+        var listManufacturerPackageRoute = "listManufacturerPackage.do"//批量查询套餐信息路由
+        var setManufacturerPackageRoute = "setManufacturerPackage.do"//设置套餐路由
+        var setpriceO = '';
+        $(function () {
+            sessionStorage.getItem("type") == '1' ?
+                initAdminAuthorityManage(function () { getListManufacturerPackage() }, '10') : getListManufacturerPackage()
+
+        })
+        function getListManufacturerPackage() {
+            zivenload.start(".wrap-container__box")
+            $.ajax({
+                type: "get",
+                url: baseUrl + listManufacturerPackageRoute,
+                timeout: 8000,
+                success: function (data) {
+                    (!data.msg || data.msg == 1) ? returnPackageTable(data) : x0pAjaxError('query', data)
+                },
+                error: function (data) {
+                    x0pServerError(data)
+                },
+                complete: function (data) {
+                    zivenload.end()
+                }
+            })
+        }
+
+        function returnPackageTable(data) {
+            if (!data.msg) {
+                var subs = ""
+                var isType = sessionStorage.getItem("type") || 1000
+                $.each(data.packageList, function (index) {
+                    subs = subs + '<div class="plan "><h3 class="plan-title plan__ziven">套餐' + (index + 1) + '</h3>'
+                        + '<p class="plan-price plan__ziven">￥' + this.ptPrice + '<span class="plan-unit">' + this.ptId + '</span></p>'
+                        + '<ul class="plan-features">'
+                        + '<li class="plan-fea？ture">' + this.ptName + '</li>'
+                        + '<li style="display:none">' + this.bottomPrice + '</li>'
+                        + '</ul>'
+                        + (isType == '1' ? '<a href="#" class="plan-button " onclick="showEditptPriceModal(this)">编辑价格</a>' ://管理员可进行点击
+                            '<a href="#" class="plan-button  plan-down-button">编辑价格</a>')
+                        + '</div>'
+                })
+                $("#facturerMangerInfo-table").empty()
+                $("#facturerMangerInfo-table").html(subs)
+                isType == '2' ? $(".plan-button ").css("display", "none") : ''
+            } else {
+                $('.facturerMangerInfo-table').children('tr').remove();
+                $('.table').after("<div class='no-existent'>暂无数据</div>")
+            }
+        }
+
+        function showEditptPriceModal(e) {//   显示编辑窗口
+            $(".eprice").val(e.parentNode.childNodes[1].childNodes[0].textContent.split("￥")[1])
+            $(".eid").val(e.parentNode.childNodes[1].childNodes[1].textContent)
+            $(".ebottomPrice").val(e.parentNode.childNodes[2].childNodes[1].textContent)
+            $("#setfacturerPriceModal").modal("show")
+
+        }
+
+        function checkEditPriceModal() {//检查modal填写信息
+            if (isNullCheck($(".eprice").val())) {//是否为空
+                if (parseFloat($(".eprice").val()) >= parseFloat($(".ebottomPrice").val())) {//是否低于最低价格
+                    upadatePriceConfirm()
+                } else {
+                    x0pERROR('价格不能低于' + parseFloat($(".ebottomPrice").val()) + '元,请重新填写！');
+                }
+            } else {
+                x0pERROR('信息填写不全,请重新填写！');
+            }
+        }
+        function upadatePriceConfirm() {//更新确认
+            x0p({
+                title: '提醒',
+                text: '确定要进行修改吗？',
+                icon: 'info',
+                animationType: 'slideUp',
+                buttons: [
+                    {
+                        type: 'error',
+                        text: '取消'
+                    },
+                    {
+                        type: 'info',
+                        text: '确定',
+                        showLoading: true
+                    }
+                ]
+            }, function (button) {
+                if (button == 'info') {
+                    upadatePriceAction()//提交激活请求
+
+                }
+            })
+        }
+        function upadatePriceAction() {//更新请求
+            var o = {
+                'packageList': [{
+                    "ptid": $(".eid").val(),
+                    "price": $(".eprice").val()
+                }]
+            }
+            zivenload.start(".wrap-container__box")
+            $.ajax({
+                type: 'post',
+                url: baseUrl + setManufacturerPackageRoute + "?packageJson=" + JSON.stringify(o),
+                timeout: 8000,
+                success: function (data) {
+                    !data.msg ? x0pSuccessAndReload(function () { getListManufacturerPackage() }) : x0pAjaxError(data)
+                    !data.msg ? $("#setfacturerPriceModal").modal('hide') : ''
+                },
+                error: function (data) {
+                    x0pServerError(data)
+                },
+                complete: function () {
+                    zivenload.end()
+                }
+            })
+        }
+    </script>
+    <!--分割线-->
+</body>
+
+</html>

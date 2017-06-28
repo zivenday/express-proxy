@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>充值管理平台--用户订单-订单查询</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Le styles -->
+    <script type="text/javascript" src="assets/js/jquery.js"></script>
+
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/loader-style.css">
+    <link rel="stylesheet" href="assets/css/bootstrap.css">
+    <link rel="stylesheet" href="assets/css/x0popup.min.css">
+    <link rel="stylesheet" href="css/public.css">
+    <link rel="stylesheet" href="css/base.css">
+    <style type="text/css">
+        canvas {
+            width: 100% !important;
+            max-width: 1000px;
+            height: auto !important;
+        }
+
+        .payOrder__index--active {
+            background: #ddd
+        }
+    </style>
+    <!--分割线-->
+</head>
+
+<body class="wrap-container">
+    <div class="wrap-container__box">
+        <!-- BREADCRUMB -->
+        <ul id="breadcrumb">
+            <li>
+                <span class="entypo-home"></span>
+            </li>
+            <li><i class="fa fa-lg fa-angle-right"></i>
+            </li>
+            <li><a>用户订单</a>
+            </li>
+            <li><i class="fa fa-lg fa-angle-right"></i>
+            </li>
+            <li><a>订单查询</a>
+            </li>
+        </ul>
+
+        <div class="content-wrap">
+            <div class="row">
+                <div class="table-background__ziven">
+                    <div class="nest">
+                        <div class="body-nest">
+                            <div class="loginRole">
+                                <p>选择厂商角色:</p>
+                                <select class="form-control role" placeholder="请选择角色" id="chooseFactureSelect" style="border:0px!important;border-radius:0;outline:1px solid #dedede ">                                                   
+                                               </select>
+                            </div>
+                            <div class="row-table">
+                                <div>
+                                    <input class="form-control  input__ziven" id="payOrder__search" placeholder="请输入用户ICCID或订单号" value="" type="text" />
+                                </div>
+                                <div> <button type="button" class="btn  btn-info__ziven" onclick="payOrderSearch(this)" style="margin-left: 15px;"> 查询</button></div>
+                            </div>
+
+                            <table class="table ">
+                                <thead>
+                                    <tr>
+                                        <th style="border-left:1px solid #dedede!important">
+                                            接入号码
+                                        </th>
+                                        <th>
+                                            ICCID
+                                        </th>
+                                        <th>
+                                            订单号
+                                        </th>
+                                        <th>
+                                            交易单号
+                                        </th>
+                                        <th>
+                                            交易时间
+                                        </th>
+                                        <th>
+                                            订单内容
+                                        </th>
+                                        <th style="border-right:1px solid #dedede!important">
+                                            金额(元)
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody class="payOrder__table">
+                                </tbody>
+
+                            </table>
+                            <nav aria-label="...">
+                                <ul class="pager payOrder__page">
+                                </ul>
+                            </nav>
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
+        <div class="wrap-footer"></div>
+    </div>
+
+    
+    <script type="text/javascript" src="assets/js/bootstrap.js"></script>
+    <script type="text/javascript" src="assets/js/load.js"></script>
+    <script type="text/javascript" src="assets/js/main.js"></script>
+    <script type="text/javascript" src="js/public.js"></script>
+    <script type="text/javascript" src="js/mix.js"></script>
+    <script src="assets/js/x0popup.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            sessionStorage.getItem("type") == '1' ?
+                initAdminAuthorityManage(function () { payOrderSearch() }, '10') : payOrderSearch()
+        });
+        //自定义按钮
+        var activeBtn = function () { return '<button type="button" class="btn btn-primary" style="border-radius: 0px;cursor:not-allowed"  >' + arguments[0] + '</button>' }
+        var dangerBtn = function () { return '<button type="button" class="btn btn-danger" style="border-radius: 0px"  onclick="activeStateAction(this)">' + arguments[0] + '</button>' }
+        //路由
+        var listpayOrderInfoRoute = "listPayOrderByMid.do"//批量查询路由
+        var getpayOrderByIdRoute = "listPayOrderByIccid.do"//id查询路由
+        var rePostPayOrderRoute = "rePostPayOrderRoute.do"//提交失败订单路由
+    </script>
+    <script type="text/javascript">
+        function payOrderSearch() {
+            console.log($("#payOrder__search").val().trim().length)
+            if (isNullCheck($("#payOrder__search").val().trim())) {
+                $("#payOrder__search").val().trim().length == 19 ? getpayOrderInfo(baseUrl + getpayOrderByIdRoute + "?iccid=" + $("#payOrder__search").val() + "&page=1&num=10", 2) : getpayOrderInfo(baseUrl + getpayOrderByIdRoute + "?orderId=" + $("#payOrder__search").val() + "&page=1&num=10", 2)
+            } else {
+                getpayOrderInfo(baseUrl + listpayOrderInfoRoute + "?page=1&num=10", 1)
+            }
+        }
+        function getpayOrderInfo(payOrderurl, type) {//type为操作类型1为list查询，3为分页查询
+            zivenload.start(".wrap-container__box")
+            $.ajax({
+                type: "get",
+                url: payOrderurl,
+                success: function (data) {
+                    (!data.msg||data.msg==1) ? returnPayOrderPage(data, type) : x0pAjaxError('query', data)
+                },
+                error: function (data) {
+                    x0pServerError(data)
+                },
+                complete: function () {
+                    zivenload.end()
+                }
+            });
+        }
+        function returnPayOrderPage(data, type) {
+             $(".no-existent").remove()
+            if (!data.msg) {
+                returnPayOrderTable(data, type)
+                type === 3 ? '' : returnPagination(".payOrder__page", data, type)
+            } else {
+                $('.payOrder__table').children('tr').remove();
+                $('.table').after("<div class='no-existent'>暂无数据</div>")
+            }
+
+        }
+        function returnPayOrderTable(obj, type) {//构建列表
+            var subs = ""
+            var o = obj.payOrderList
+            for (var i = 0; i < o.length; i++) {
+                subs = subs + '<tr>'
+                    + '<td>' + o[i].number + '</td>'
+                    + '<td>' + o[i].iccid + '</td>'
+                    + '<td>' + o[i].orderId + '</td>'
+                    + '<td>' + o[i].payOrderId + '</td>'
+                    + '<td>' + o[i].time + '</td>'
+                    + '<td>' + transPackageName(o[i].content) + '</td>'
+                    + '<td>' + o[i].price + '</td>'
+                    + '</tr>'
+            }
+            $('.payOrder__table').children('tr').remove();//去除列表原有数据显示
+            $('.payOrder__table').html(subs)//形成新数据列表                   
+        }
+
+        function changePage(n, e) {//切换分页查询
+            updatePagination(e)
+            getpayOrderInfo(baseUrl + listpayOrderInfoRoute + "?page=" + n + "&num=10", 3)
+        }
+    </script>
+    <!--分割线-->
+</body>
+
+</html>

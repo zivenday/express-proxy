@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>充值管理平台--用户信息</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Le styles -->
+    <script type="text/javascript" src="assets/js/jquery.js"></script>
+    <link rel="stylesheet" href="css/mixflex.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/loader-style.css">
+    <link rel="stylesheet" href="assets/css/bootstrap.css">
+
+    <!--分割线-->
+    <link rel="stylesheet" href="assets/css/x0popup.min.css">
+    <link rel="stylesheet" href="css/public.css">
+    <link rel="stylesheet" href="css/base.css">
+    <style type="text/css">
+        .IotCard__index--active {
+            background: #ddd
+        }
+
+        body {
+            /*min-height: 700px;*/
+            min-width: 994px;
+            overflow-x: auto;
+        }
+    </style>
+    <!--分割线-->
+</head>
+
+<body class="wrap-container">
+    <div class="wrap-container__box">
+        <!-- BREADCRUMB -->
+        <ul id="breadcrumb">
+            <li>
+                <span class="entypo-home"></span>
+            </li>
+            <li><i class="fa fa-lg fa-angle-right"></i>
+            </li>
+            <li><a>用户信息</a>
+            </li>
+        </ul>
+
+        <div class="content-wrap">
+            <div class="row">
+                <div class="table-background__ziven">
+                    <div class="nest">
+                        <div class="body-nest">
+                            <div class="loginRole">
+                                <p>选择厂商角色:</p>
+                                <select class="form-control role" placeholder="请选择角色" id="chooseFactureSelect" style="border:0px!important;border-radius:0;outline:1px solid #dedede ">                                                   
+                                               </select>
+                            </div>
+                            <div class="row-table flex">
+                                <div><input class="form-control input__ziven " id="IotCard_search" placeholder="请输入用户ICCID进行查询"
+                                        value="" type="text" style="border-radius: 0px;" /></div>
+                                <div> <button type="button" class="btn btn-info__ziven" onclick="IotCardSearch(this)" style="margin-left:15px"> 查询</button></div>
+                                <div> <button type="button" class="btn btn-info__ziven upbtn" onclick="initUploadModel(this)" style="margin-left:15px"> 卡录入</button></div>
+                            </div>
+                            <table class="table" id="table__ziven">
+                                <thead>
+                                    <tr>
+                                        <th style="border-left:1px solid #dedede!important">
+                                            接入号码
+                                        </th>
+                                        <th>
+                                            ICCID
+                                        </th>
+                                        <th>
+                                            已用总量(MB)
+                                        </th>
+                                        <th>
+                                            剩余量(MB)
+                                        </th>
+                                        <th>
+                                            总量(MB)
+                                        </th>
+                                        <!--<th>
+                                            超额量(MB)
+                                        </th>-->
+                                        <th>
+                                            套餐名称
+                                        </th>
+                                        <th>计费开始时间</th>
+                                        <th id="table__ziven-th " style="border-right:1px solid #dedede!important">
+                                            计费结束时间</th>
+                                    </tr>
+                                </thead>
+                                <tbody class=" IotCard__table" id="table-tbody__ziven">
+                                </tbody>
+
+                            </table>
+                            <nav aria-label="...">
+                                <ul class="pager IotCard__page">
+                                </ul>
+                            </nav>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+<div class="wrap-footer">
+    </div>
+    </div>
+
+    
+    <div class="modal fade" id="uploadModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" style="border-radius:0">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">卡消息录入</h4>
+                </div>
+                <div class="modal-body">
+                    <form action="/recharge/manager/uploadExcel.do" id="uploadForm" method="post" enctype="multipart/form-data">
+                        <div class="upload">
+                            <div id="uploadModelBody">
+
+                                <div>
+                                    <input id="excel_file" type="file" name="cardInfoExcel" accept="xlsx" size="80" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal" style="border-radius:0">取消</button>
+                            <button type="button" class="btn btn-primary" style="border-radius:0" onclick="submit()">导入</button>
+                        </div>
+                    </form>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+    </div>
+
+    <!-- MAIN EFFECT -->
+    <script type="text/javascript" src="assets/js/bootstrap.js"></script>
+    <script type="text/javascript" src="assets/js/load.js"></script>
+    <script type="text/javascript" src="assets/js/main.js"></script>
+    <script src="assets/js/x0popup.min.js"></script>
+    <script src="js/mix.js"></script>
+    <script src="js/public.js"></script>
+    <script type="text/javascript">
+    zivenload.start(".wrap-container__box")
+        var listIotCardInfoRoute = "listIotCardInfo.do"//批量查询路由
+        var getIotInfoByIdRoute = "getIotCardInfoByIccid.do"//id查询路由
+        // var uploadExcelRoute = "uploadExcel.do"//上传路由
+        $(function () {
+            sessionStorage.getItem("type") == '1' ?
+                initAdminAuthorityManage(function () { IotCardSearch() }, '10') : IotCardSearch()
+        });
+
+        var roleFactury = "";
+        var roleType = sessionStorage.getItem("type")
+        roleType != '1' ? $(".upbtn").css("display", 'none') : ''
+    </script>
+    <script type="text/javascript">
+        function IotCardSearch(obj) {//iccid搜索
+            $("#IotCard_search").val() ? (getIotCardInfo(baseUrl + getIotInfoByIdRoute + "?iccid=" + $("#IotCard_search").val(), 2))
+                : getIotCardInfo(baseUrl + listIotCardInfoRoute + "?page=1", 1)
+        }
+        function getIotCardInfo(IotCardurl, type) {//type为操作类型1为list查询，2为根据id查询，3为分页查询
+            zivenload.start(".wrap-container__box")
+            $.ajax({
+                type: "get",
+                url: IotCardurl,
+                timeout: 8000,
+                success: function (data) {
+                    (!data.msg || data.msg == 1) ? returnPage(data, type) : x0pAjaxError('query', data)
+                },
+                error: function (data) {
+                    x0pServerError(data)
+                },
+                complete: function (data) {
+                    zivenload.end()
+                },
+
+            });
+        }
+        function initUploadModel() {
+            $("#uploadModel").modal("show")
+        }
+        function returnPage(data, type) {//重构页面
+            $('.no-existent').remove()
+            if (!data.msg) {
+                returnTable(data, type)
+                type == 3 ? '' : returnPagination(".IotCard__page", data, type)
+            } else {
+                $('.IotCard__table').children('tr').remove();
+                 
+                $('.table').after("<div class='no-existent'>暂无数据</div>")
+                // $('.IotCard__table div').addClass("center")
+            }
+        }
+        function returnTable(obj, type) {
+            var subs = ''
+            var o = ((type == 1 || type == 3) ? obj.infoList : obj);
+            var objSize = ((type == 1 || type == 3) ? o.length : 1);
+            for (var i = 0; i < objSize; i++) {
+                var temp = ((type == 1 || type == 3) ? o[i] : o)
+                var l = ((type == 1 || type == 3) ? o[i].info.length : o.info.length)
+                var id = ((type == 1 || type == 3) ? temp.iccid : $("#IotCard_search").val())
+                subs = subs + '<tr>'
+                    + '<td rowspan="' + l + '">' + temp.number + '</td>'
+                    + '<td rowspan="' + l + '">' + id + '</td>'
+                    // + '<td rowspan="' + l + '">' + temp.totalTraffic + '</td>'
+                    + '<td rowspan="' + l + '">' + (temp.alreadyTraffic).toFixed(2) + '</td>'
+                    // + '<td>' + (temp.info[0].CUMULATION_ALREADY / 1024).toFixed(2) + '</td>'
+                    + '<td>' + (temp.info[0].CUMULATION_LEFT / 1024).toFixed(2) + '</td>'
+                    + '<td>' + (temp.info[0].CUMULATION_TOTAL / 1024).toFixed(2) + '</td>'
+                    // + '<td rowspan="' + l + '">' + (temp.overTraffic).toFixed(2) + '</td>'
+                    + '<td>' + transPackageName(temp.info[0].OFFER_NAME) + '</td>'
+                    + '<td>' + temp.info[0].START_TIME.substring(0, 4) + '/' + temp.info[0].START_TIME.substring(4, 6) + '/' + temp.info[0].START_TIME.substring(6, 8) + '</td>'
+                    + '<td>' + temp.info[0].END_TIME.substring(0, 4) + '/' + temp.info[0].END_TIME.substring(4, 6) + '/' + temp.info[0].END_TIME.substring(6, 8) + '</td>'
+                    + '</tr>'
+
+
+                l > 1 ? $.each(temp.info, function (index) {
+                    index >= 1 ? (subs = subs + '<tr>'
+                        // + '<td>' + (this.CUMULATION_ALREADY / 1024).toFixed(2) + '</td>'
+                        + '<td>' + (this.CUMULATION_LEFT / 1024).toFixed(2) + '</td>'
+                        + '<td>' + (this.CUMULATION_TOTAL / 1024).toFixed(2) + '</td>'
+                        + '<td>' + transPackageName(this.OFFER_NAME) + '</td>'
+                        + '<td>' + this.START_TIME.substring(0, 4) + '/' + this.START_TIME.substring(4, 6) + '/' + this.START_TIME.substring(6, 8) + '</td>'
+                        + '<td>' + this.END_TIME.substring(0, 4) + '/' + this.END_TIME.substring(4, 6) + '/' + this.END_TIME.substring(6, 8) + '</td>'
+                        + '</tr>') : ''
+                }) : ''
+                $('.IotCard__table').children('tr').remove();
+                $('.IotCard__table').html(subs)
+            }
+        }
+        function changePage(n, e) {//分页查询
+            updatePagination(e)
+            $("#IotCard_search").val() ? getIotCardInfo(baseUrl + listIotCardInfoRoute + "?iccid" + $("#IotCard_search").val() + "&page=" + n, 3)
+                : getIotCardInfo(baseUrl + listIotCardInfoRoute + "?page=" + n, 3)
+        }
+        function initUploadModel() {
+            $('#uploadModel').modal('show')
+        }
+    </script>
+    <!--分割线-->
+</body>
+
+</html>

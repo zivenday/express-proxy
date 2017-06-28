@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>充值管理平台--管理人员-经营状况</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Le styles -->
+    <script type="text/javascript" src="assets/js/jquery.js"></script>
+
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/loader-style.css">
+    <link rel="stylesheet" href="assets/css/bootstrap.css">
+
+    <link rel="stylesheet" href="assets/js/button/ladda/ladda.min.css">
+
+    <link rel="stylesheet" href="assets/css/x0popup.min.css">
+    <link rel="stylesheet" href="css/public.css">
+    <link rel="stylesheet" href="css/base.css">
+    <!-- yangjy -->
+    <style type="text/css">
+    body{
+        background-color: #f5f5f5;
+    }
+    .p-error{
+        color:red;
+    }
+    .p-error>span:nth-child(n+2)::before{
+        content:"\A";
+        white-space:pre;
+    }
+    .button-demo, .progress-demo {
+        display: inline-block;
+        margin-right: 3px;
+        margin-bottom: 20px;
+    }
+    div.progress{
+        position:relative;
+    }
+    div.progress-bar:not(.zero){
+        position:relative;
+    }
+    div.progress-bar.zero>.number-bar-label{
+        color: black;
+    }
+    span.number-bar-label{
+        display: block;
+        width:100%;
+        height:15px;
+        clip:auto;
+        text-align:center;
+        font-weight: bold;
+    }
+    /*适用需要滚动的iframe页面*/
+.footer-space2{
+    margin-top:20px;
+    width:100%;
+    height: 40px!important;
+    text-align: center;
+    color: #999;
+}
+.footer-space2::before{
+    content:'世纪龙信息网络有限责任公司版权所有 服务声明';
+}
+/*适用需要滚动的iframe页面*/
+
+
+.col-item {
+            /*display: inline-block;*/
+            float: left;
+            width: 12%;
+            padding: 12px 0 12px 0;
+            font-size: 13px;
+            color: #666;
+            height:99px;
+        }
+        .col-item-content{
+            border-left: 1px solid #eeeeee;
+            padding-left: 20px;
+            height: 80%;
+        }
+        .col-item h4{
+            /*height: 42px;*/
+            font-size: 13px !important;
+        }
+        .col-item p{
+            font-size: 25px !important;
+            color: #f88b00;
+        }
+
+        .col-item:first-child .col-item-content{
+            border: none;
+        }
+
+        .nest-extend {
+            min-width: 720px;
+        }
+        .nest-extend h6{
+            font-size: 15px !important;
+            color: #333 !important;
+        }
+        .nest .title-alt h6{
+            font-size: 15px;
+            font-family: '微软雅黑';
+            color: #333333;
+        }
+
+        select[name="times"]{
+            position: absolute;
+            right: 20px;
+        }
+        select[name="times2"]{
+            position: absolute;
+            right: 35%;
+            top: 85px;
+            z-index: 1;
+        }
+        #no_pie_data_tip{
+            color: #888888;
+            position: absolute;
+            display: none;
+            z-index: 1;
+            left: 74%;
+            top: 45%;
+        }
+    </style>
+    <!-- yangjy -->
+</head>
+
+<body>
+    <!--  PAPER WRAP -->
+    <div class="wrap-fluid">
+        <div class="container-fluid paper-wrap bevel tlbr">
+             <div class="row">
+                <div id="paper-top">
+                        <h2 class="tittle-content-header">
+                            <span class="entypo-home"></span>
+                            <span class="icon icon-chevron-right"></span>经营状况
+                        </h2>
+                </div>
+            </div> 
+
+            <!--用户卡号状态-->
+            <div class="content-wrap">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="nest nest-extend">
+                        <div class="title-alt" style="margin-top:0px;">
+                            <h6>总用户数：<span class="span_user_number">-</span></h6>
+                        </div>
+                        <div class="user-container">
+                            <div class="col-item">
+                                <div class="col-item-content">
+                                    <h4>在用</h4>
+                                    <p>-</p>
+                                </div>
+                            </div>
+                            <div class="col-item">
+                                <div class="col-item-content">
+                                    <h4>欠停(单向)</h4>
+                                    <p>-</p>
+                                </div>
+                            </div>
+                            <div class="col-item">
+                                <div class="col-item-content">
+                                    <h4>用户报停</h4>
+                                    <p>-</p>
+                                </div>
+                            </div>
+                            <div class="col-item">
+                                <div class="col-item-content">
+                                    <h4>违章停机</h4>
+                                    <p>-</p>
+                                </div>
+                            </div>
+                            <div class="col-item">
+                                <div class="col-item-content">
+                                    <h4>用户拆机</h4>
+                                    <p>-</p>
+                                </div>
+                            </div>
+                            <div class="col-item">
+                                <div class="col-item-content">
+                                    <h4>挂失</h4>
+                                    <p>-</p>
+                                </div>
+                            </div>
+                            <div class="col-item">
+                                <div class="col-item-content">
+                                    <h4>欠停(双向)</h4>
+                                    <p>-</p>
+                                </div>
+                            </div>
+                            <div class="col-item">
+                                <div class="col-item-content">
+                                    <h4>活卡待激活</h4>
+                                    <p>-</p>
+                                </div>
+                            </div>
+                            <div style="clear: both;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 流水金额 -->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="nest">
+                            <div class="title-alt">
+                                <h6>收入金额</h6>
+                            </div>
+                            <div class="body-nest" id="panel-manufacturer-income">
+                                <select name="times">
+                                    <option selected value="month">月</option>
+                                    <option value="quarter">季</option>
+                                    <option value="year">年</option>
+                                </select>
+                                <div id="chart-manufacturer-income" style="width: 700px;height:400px;margin:0 auto;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="nest">
+                            <div class="title-alt">
+                                <h6>流量包订购数量</h6>
+                            </div>
+                            <div class="body-nest" id="panel-trafficBag-order-number">
+                                <select name="times2">
+                                    <option selected value="month">月</option>
+                                    <option value="quarter">季</option>
+                                    <option value="year">年</option>
+                                </select>
+                                <p id="no_pie_data_tip"></p>
+                                <div id="chart-trafficBag-order-number"
+                                     style="width: 1000px;height:600px;margin:0 auto;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-space2"></div>
+        
+
+        <!-- MAIN EFFECT -->
+        <script type="text/javascript" src="assets/js/preloader.js"></script>
+        <script type="text/javascript" src="assets/js/bootstrap.js"></script>
+        <script type="text/javascript" src="assets/js/app.js"></script>
+        <script type="text/javascript" src="assets/js/load.js"></script>
+        <script type="text/javascript" src="assets/js/main.js"></script>
+
+        <script src="js/public.js"></script>
+        <script src="js/mix.js"></script>
+        <script src="assets/js/x0popup.min.js"></script>
+
+        <script type="text/javascript" src="js/echarts.js"></script>
+
+        <script type="text/javascript" src="js/admin-operatingCondition.js"></script>
+
+</body>
+
+</html>

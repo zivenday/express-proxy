@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>充值管理平台--首页</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Le styles -->
+    <script type="text/javascript" src="assets/js/jquery.js"></script>
+
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/loader-style.css">
+    <link rel="stylesheet" href="assets/css/bootstrap.css">
+
+    <link rel="stylesheet" href="assets/js/button/ladda/ladda.min.css">
+    <link rel="shortcut icon" href="assets/ico/minus.png">
+
+    <style>
+        html{
+            height: 100%;
+        }
+        body{
+            position: relative;
+            width:100%;
+            height: 100%;
+        }
+        .tbar{
+            width:100%;
+            height:75px;
+            background-color: #fff;
+            box-shadow:0 0px 4px 0px #909090;
+        }
+            .left-block{
+                height:100%;
+            }
+                .big-title-logo{
+                    width: 43px;
+                    height: 41px;
+                    margin-top: -8px;
+                }
+                .big-title{
+                    color: #555555;
+                    font-size: 29px;
+                    line-height: 75px;
+                    margin-left:10px;
+                }
+            .right-block{
+                height:100%;
+            }
+                .nav.navbar-nav>li>a.dropdown-toggle{
+                    line-height: 75px;
+                    padding-top: 0px;
+                    padding-bottom: 0px;
+                }
+
+        .content{
+            position: absolute;
+            left:0px;
+            right:0px;
+            top: 75px;
+            bottom:0px;
+            background-color: #2e343d;
+        }
+            .leftSiderBar{
+                width:250px;
+                height:auto;
+                background-color:#2e343d;
+            }
+                .side-bar>ul li a.leftside-item-clicked{
+                    background-color: #f88b00;
+                }
+            .main{
+                position:absolute;
+                left:250px;
+                right:0px;
+                top:0px;
+                bottom:0px;
+                background-color: #f5f5f5;
+            }
+    </style>
+</head>
+
+<body>
+    <!-- <div id="preloader">
+        <div id="status">&nbsp;</div>
+    </div> -->
+    <div class="tbar">
+        <div class="col-sm-10 left-block">
+            <img class="big-title-logo" src="imgs/logo.png">
+            <span class="big-title">物联易充充值管理平台</span>
+        </div>
+        <div class="col-sm-2 right-block">
+            <ul style="margin-right:0;" class="nav navbar-nav navbar-right">
+                <li>
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                        您好，<span class="span_username"></span><b class="caret"></b>
+                    </a>
+                    <ul style="margin-top:14px;" role="menu" class="dropdown-setting dropdown-menu">
+                        <!-- <li>
+                            <a href="javascript:void(0)" id="a-to-manufacturer-self-information">
+                                <span class="entypo-user"></span>&#160;个人资料</a>
+                        </li> -->
+                        <li>
+                            <a href="s-equipementManufacturerSelfInformation.html">
+                                <span class="entypo-vcard"></span>&#160;&#160;账户设置</a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <span class="entypo-lifebuoy"></span>&#160;&#160;帮助</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="#">
+                                <span class="entypo-logout"></span>&#160;&#160;登出</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="content">
+        <div class="leftSiderBar">
+            <div id="skin-select">
+                <div class="skin-part">
+                    <div id="tree-wrap">
+                        <div class="side-bar">
+                            <ul class="topnav menu-left-nest" id="side-bar-administrator">
+                                <li>
+                                    <a href="#" style="border-left:0px solid!important;" class="title-menu-left">
+                                        <span class="widget-menu"></span>
+                                        <!-- <i data-toggle="tooltip" class="entypo-cog pull-right config-wrap"></i> -->
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a class="tooltip-tip ajax-load" href="javascript:void(0)" title="查询用户使用信息" id="admin-to-user-info">
+                                        <!-- <i class="icon-window"></i> -->
+                                        <i class="entypo-user"></i>
+                                        <span>用户使用信息</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="tooltip-tip ajax-load" href="javascript:void(0)" title="查询卡号状态" id="admin-to-card-status">
+                                        <i class="icon-window"></i>
+                                        <span>卡号状态管理</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="tooltip-tip ajax-load" href="javascript:void(0)" title="达量管理" id="admin-to-offnet-info">
+                                        <i class="icon-window"></i>
+                                        <span>达量断网管理</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="tooltip-tip ajax-load has-child-item" href="javascript:void(0)" title="充值缴费">
+                                        <i class="icon-window"></i>
+                                        <span>充值缴费</span>
+                                    </a>
+                                    <ul>
+                                        <li>
+                                            <a class="tooltip-tip2 ajax-load" href="javascript:void(0)" title="用户订单查询" id="admin-to-user-order">
+                                                <i class="entypo-doc-text"></i>
+                                                <span>用户订单查询</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="tooltip-tip2 ajax-load" href="javascript:void(0)" title="订单数据统计" id="admin-to-order-statistics">
+                                                <i class="entypo-newspaper"></i>
+                                                <span>订单数据统计</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="tooltip-tip2 ajax-load" href="javascript:void(0)" title="失败订单查询" id="admin-to-failure-order">
+                                                <i class="entypo-newspaper"></i>
+                                                <span>失败订单查询</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a class="tooltip-tip ajax-load has-child-item" href="#" title="财务结算">
+                                        <i class="icon-preview"></i>
+                                        <span>财务结算</span>
+                                    </a>
+                                    <ul>
+                                        <li>
+                                            <a class="tooltip-tip2 ajax-load" href="javascript:void(0)" title="当月结算明细" id="admin-to-month-settlement">
+                                                <i class="entypo-doc-text"></i>
+                                                <span>当月结算明细</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="tooltip-tip2 ajax-load" href="javascript:void(0)" title="结算历史记录" id="admin-to-settlement-history">
+                                                <i class="entypo-newspaper"></i>
+                                                <span>结算历史记录</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="tooltip-tip2 ajax-load" href="javascript:void(0)" title="电信佣金结算" id="admin-to-settlement-info">
+                                                <i class="entypo-newspaper"></i>
+                                                <span>电信佣金结算</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a class="tooltip-tip ajax-load" href="javascript:void(0)" title="经营状况" id="admin-to-operation-status">
+                                        <i class="icon-preview"></i>
+                                        <span>经营状况</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="tooltip-tip ajax-load" title="预警阈值管理" href="javascript:void(0)" id="admin-to-traffice-alarm">
+                                        <i class="icon-preview"></i>
+                                        <span>预警阈值管理</span>
+                                    </a>
+                                </li>
+                                
+                                <li>
+                                    <a class="tooltip-tip ajax-load" href="javascript:void(0)" title="查询-预警消息" id="admin-to-alarm-info">
+                                        <i class="icon-preview"></i>
+                                        <span>预警消息查询</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="tooltip-tip ajax-load has-child-item" href="javascript:void(0)" title="厂商信息管理">
+                                        <i class="icon-preview"></i>
+                                        <span>厂商信息管理</span>
+                                    </a>
+                                    <ul>
+                                        <li>
+                                            <a class="tooltip-tip2 ajax-load" href="javascript:void(0)" title="基本信息" id="admin-to-manufacturers-basic-info">
+                                                <i class="entypo-newspaper"></i>
+                                                <span>基本信息</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="tooltip-tip2 ajax-load" href="javascript:void(0)" title="套餐金额信息" id="admin-to-package-price-info">
+                                                <i class="entypo-newspaper"></i>
+                                                <span>套餐金额信息</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="tooltip-tip2 ajax-load" href="javascript:void(0)" title="银行账户信息" id="nav-bankInfo__admin">
+                                                <i class="entypo-newspaper"></i>
+                                                <span>银行账户信息</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="tooltip-tip2 ajax-load" href="javascript:void(0)" title="自管理门户信息" id="nav-ManufacturerKey__admin">
+                                                <i class="entypo-newspaper"></i>
+                                                <span>自管理门户信息</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+
+                            <ul class="topnav menu-left-nest" id="side-bar-manufacturer">
+                                <li>
+                                    <a href="#" style="border-left:0px solid!important;" class="title-menu-left">
+                                        <span class="design-kit"></span>
+                                        <!-- <i data-toggle="tooltip" class="entypo-cog pull-right config-wrap"></i> -->
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="tooltip-tip ajax-load" href="javascript:void(0)" title="查询用户使用信息" id="a-to-check-users-information">
+                                        <!-- <i class="icon-window"></i> -->
+                                        <i class="entypo-user"></i>
+                                        <span>用户使用信息</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="tooltip-tip ajax-load" href="javascript:void(0)" title="查询卡号状态" id="a-to-check-card-information">
+                                        <i class="icon-window"></i>
+                                        <span>卡号状态管理</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="tooltip-tip ajax-load" href="javascript:void(0)" title="达量管理" id="a-to-offnet-info">
+                                        <i class="icon-window"></i>
+                                        <span>达量断网管理</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="tooltip-tip ajax-load has-child-item" href="javascript:void(0)" title="充值缴费" id="a-to-recharge">
+                                        <i class="icon-window"></i>
+                                        <span>充值缴费</span>
+                                    </a>
+                                    <ul>
+                                        <li>
+                                            <a class="tooltip-tip2 ajax-load" href="javascript:void(0)" title="用户订单查询" id="nav-payOrder__info">
+                                                <i class="entypo-doc-text"></i>
+                                                <span>用户订单查询</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="tooltip-tip2 ajax-load" href="javascript:void(0)" title="订单数据统计" id="nav-payOrder__statics">
+                                                <i class="entypo-newspaper"></i>
+                                                <span>订单数据统计</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="tooltip-tip2 ajax-load" href="javascript:void(0)" title="失败订单查询" id="nav-payOrder__fail">
+                                                <i class="entypo-newspaper"></i>
+                                                <span>失败订单查询</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a class="tooltip-tip ajax-load has-child-item" href="#" title="财务结算">
+                                        <i class="icon-preview"></i>
+                                        <span>财务结算</span>
+                                    </a>
+                                    <ul>
+                                        <li>
+                                            <a class="tooltip-tip2 ajax-load" href="javascript:void(0)" title="当月结算明细" id="a-to-month-settlement-detail">
+                                                <i class="entypo-doc-text"></i>
+                                                <span>当月结算明细</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="tooltip-tip2 ajax-load" href="javascript:void(0)" title="结算历史记录" id="a-to-settlement-history-record">
+                                                <i class="entypo-newspaper"></i>
+                                                <span>结算历史记录</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a class="tooltip-tip ajax-load" href="javascript:void(0)" title="经营状况" id="a-to-operation-status">
+                                        <i class="icon-preview"></i>
+                                        <span>经营状况</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="tooltip-tip ajax-load" title="查询、设置阈值" id="a-to-set-traffic-alarm-Info" href="javascript:void(0)">
+                                        <i class="icon-preview"></i>
+                                        <span>预警阈值管理</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="tooltip-tip ajax-load" href="javascript:void(0)" title="查询-预警消息" id="a-to-check-traffic-alarm-info">
+                                        <i class="icon-preview"></i>
+                                        <span>预警消息查询</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="tooltip-tip ajax-load has-child-item" href="javascript:void(0)" title="厂商信息管理" id="nav-factureManage">
+                                        <i class="icon-preview"></i>
+                                        <span>厂商信息管理</span>
+                                    </a>
+                                    <ul>
+                                        <li>
+                                            <a class="tooltip-tip2 ajax-load" href="javascript:void(0)" title="基本信息" id="nav-facturerManger__info">
+                                                <i class="entypo-newspaper"></i>
+                                                <span>基本信息</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="tooltip-tip2 ajax-load" href="javascript:void(0)" title="套餐金额信息" id="nav-facturerManger__price">
+                                                <i class="entypo-newspaper"></i>
+                                                <span>套餐金额信息</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="tooltip-tip2 ajax-load" href="javascript:void(0)" title="银行账号信息" id="nav-facturerManger__accountInfo">
+                                                <i class="entypo-newspaper"></i>
+                                                <span>银行账号信息</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="tooltip-tip2 ajax-load" href="javascript:void(0)" title="自管理门户信息" id="nav-facturerManger__selfManagementInfo">
+                                                <i class="entypo-newspaper"></i>
+                                                <span>自管理门户信息</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+
+                            <ul class="topnav menu-left-nest" id="side-bar-telecom">
+                                <li>
+                                    <a href="#" style="border-left:0px solid!important;" class="title-menu-left">
+                                        <span class="component"></span>
+                                        <!-- <i data-toggle="tooltip" class="entypo-cog pull-right config-wrap"></i> -->
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="tooltip-tip ajax-load" href="javascript:void(0)" title="编辑-基本信息" id="telecom-to-basic-info">
+                                        <i class="icon-preview"></i>
+                                        <span>基本信息管理</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="tooltip-tip ajax-load" href="javascript:void(0)" title="查询-预警消息" id="telecom-to-amount-settlement">
+                                        <i class="icon-preview"></i>
+                                        <span>财务结算管理</span>
+                                    </a>
+                                    <ul>
+                                       <li>
+                                            <a class="tooltip-tip2 ajax-load" href="javascript:void(0)" title="电信佣金结算" id="telecom-to-amount-settlement-info">
+                                                <i class="entypo-newspaper"></i>
+                                                <span>电信佣金结算</span>
+                                            </a>
+                                        </li> 
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="main" id="for-iframe-display">
+            <iframe border="0" frameborder="0" scrolling="auto" width="100%" height="100%"></iframe>
+        </div>
+    </div>
+
+
+    <!-- MAIN EFFECT -->
+    <script type="text/javascript" src="assets/js/preloader.js"></script>
+    <script type="text/javascript" src="assets/js/bootstrap.js"></script>
+    <script type="text/javascript" src="assets/js/app.js"></script>
+    <script type="text/javascript" src="assets/js/load.js"></script>
+    <script type="text/javascript" src="assets/js/main.js"></script>
+
+    <!-- yangjy -->
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var loc;
+            if(!!sessionStorage.getItem("loc")){
+                loc = sessionStorage.getItem("loc");
+            }
+            else{
+                //没有存到session的话，默认使用服务器ip
+                loc = "http://10.16.29.101:8080";
+            }
+
+            //-----------------判断登录用户的身份-----------------
+            //根据用户身份隐藏/显示侧边栏
+            var accountType = '1'//sessionStorage.getItem("type");
+            if (!accountType) {   //若没有获取到临时数据，用21cn管理员身份
+                accountType = "1";
+            }
+            switch (accountType) {
+                case "1":
+                    $("#side-bar-administrator").css("display", "");
+                    $("#side-bar-manufacturer").css("display", "none");
+                    $("#side-bar-telecom").css("display", "none");
+
+                    //获取厂商列表-ajax
+                    $.ajax({
+                        url: loc+"/recharge/manager/listManufacturerGeneral.do",
+                        data: {},
+                        type: 'GET',
+                        dataType:'JSON',
+                        success: function(msg){
+                            switch(String(msg.msg)){
+                                case "0":
+                                    window.sessionStorage.setItem("manufacturerList_JSONString", JSON.stringify(msg.mList));
+                                    break;
+                                case "1": case "10": default:
+                                    break;
+                            }
+                        },
+                        error: function(msg){
+                        }
+                    });
+
+                    break;
+                case "2":
+                    $("#side-bar-administrator").css("display", "none");
+                    $("#side-bar-manufacturer").css("display", "");
+                    $("#side-bar-telecom").css("display", "none");
+                    //厂商身份：登录后的主页面是经营状况那一页
+                    $("iframe").attr("src", "s-operatingCondition.html");
+
+                    //-----------------显示“查询-预警信息”侧边栏今日预警信息条数-------------------
+                    $.ajax({
+                        url:loc+'/recharge/manager/getWarningCountNow.do',
+                        type:'GET',
+                        data:{},
+                        dataType:'JSON',
+                        success:function(msg){
+                            switch(String(msg.msg)){
+                            case "0":
+                                $("#numberOfTrafficAlarmInfo").text(msg.warningCount);
+                                if($("#numberOfTrafficAlarmInfo").css("display") == "none"){
+                                    $("#numberOfTrafficAlarmInfo").css("display","");
+                                }
+                                break;
+                            case "10":
+                                console.log(msg.code);
+                                $("#numberOfTrafficAlarmInfo").css("display","none");
+                                break;
+                            default:
+                                $("#numberOfTrafficAlarmInfo").css("display","none");
+                                break;
+                            }
+                        },
+                        error:function(msg){
+                            console.log("获取今日预警信息条数失败，msg："+msg);
+                            $("#numberOfTrafficAlarmInfo").css("display","none");
+                        }
+                    });
+
+                    break;
+                case "3":
+                    $("#side-bar-administrator").css("display", "none");
+                    $("#side-bar-manufacturer").css("display", "none");
+                    $("#side-bar-telecom").css("display", "");
+                    break;
+            }
+
+            //-----------------显示登录用户昵称----------------------------
+            if (!!sessionStorage.getItem("name")) {
+                $(".span_username").text(sessionStorage.getItem("name"));
+            }
+            else if(!!sessionStorage.getItem("useraccount")){
+                $(".span_username").text(sessionStorage.getItem("useraccount"));
+            }
+
+            
+
+            //------------------other-------------------
+            //右侧内容区：（厂商）个人设置
+            $("#a-to-manufacturer-self-information").click(function () {
+                $("iframe").attr("src", "s-equipementManufacturerSelfInformation.html");
+            });
+
+            //------------------侧边栏：点击高亮效果-------------------
+            var now_leftSideItem_Dom;
+            $(".side-bar>ul>li>a.tooltip-tip:not(.has-child-item), .side-bar>ul>li a.tooltip-tip2").click(function(){
+                console.log($(this));
+                if(!!now_leftSideItem_Dom){
+                    $(now_leftSideItem_Dom).removeClass("leftside-item-clicked");
+                }
+                now_leftSideItem_Dom = $(this);
+                if(!$(now_leftSideItem_Dom).hasClass("leftside-item-clicked")){
+                    $(now_leftSideItem_Dom).addClass("leftside-item-clicked");
+                }
+            });
+
+            //------------------管理人员------------------
+            //右侧内容区：（管理人员）查询用户使用信息
+            $("#admin-to-user-info").click(function () {
+                $("iframe").attr("src", "s-usersInformation.html");                        //zhongwei
+            });
+            //右侧内容区：（管理人员）查询卡号状态
+            $("#admin-to-card-status").click(function () {
+                $("iframe").attr("src", "s-usersStatus.html");                        //zhongwei
+            });
+            //右侧内容区：（管理人员）达量断网
+            $("#admin-to-offnet-info").click(function () {
+                $("iframe").attr("src", "s-offNetInfo.html");                        //zhongwei
+            });
+            //右侧内容区：（管理人员）用户订单查询
+            $("#admin-to-user-order").click(function () {
+                $("iframe").attr("src", "s-payOrderInfor.html");                        //zhongwei
+            });
+            //右侧内容区：（管理人员）订单数据统计
+            $("#admin-to-order-statistics").click(function () {
+                $("iframe").attr("src", "s-orderStatistics.html");                        //zhongwei
+            });
+            //右侧内容区：（管理人员）失败订单查询
+            $("#admin-to-failure-order").click(function () {
+                $("iframe").attr("src", "s-orderFailInfo.html");                        //zhongwei
+            });
+            //右侧内容区：（管理人员）当月结算明细
+            $("#admin-to-month-settlement").click(function () {
+                $("iframe").attr("src", "admin-monthEarnAmount.html");
+            });
+            //右侧内容区：（管理人员）结算历史记录
+            $("#admin-to-settlement-history").click(function () {
+                $("iframe").attr("src", "admin-earnAmountHistory.html");
+            });
+             //右侧内容区：（管理人员）电信佣金结算
+            $("#admin-to-settlement-info").click(function () {
+                $("iframe").attr("src", "s-amountSettlementInfo.html");
+            });
+            
+            //右侧内容区：（管理人员）经营状况
+            $("#admin-to-operation-status").click(function () {
+                $("iframe").attr("src", "admin-operatingCondition.html");
+            });
+            //右侧内容区：（管理人员）预警阈值管理
+            $("#admin-to-traffice-alarm").click(function () {
+                $("iframe").attr("src", "admin-trafficAlarmInfo.html");
+            });
+            //右侧内容区：（管理人员）预警消息管理
+            $("#admin-to-alarm-info").click(function () {
+                $("iframe").attr("src", "admin-trafficAlarmInfo2.html");
+            });
+            //右侧内容区：（管理人员）厂商基本信息
+            $("#admin-to-manufacturers-basic-info").click(function () {
+<<<<<<< .mine
+                $("iframe").attr("src", "s-facturerMangerInfo.html");                        //zhongwei
+=======
+                $("iframe").attr("src", "s-usersInformation.html");                        //zhongwei
+>>>>>>> .r1153
+            });
+            //银行账户
+             $("#nav-bankInfo__admin").click(function () {
+                $("iframe").attr("src", "s-bankInfo.html");                        //zhongwei
+            });
+            //自管理门户
+             $("#nav-ManufacturerKey__admin").click(function () {
+                $("iframe").attr("src", "s-ManufacturerKey.html");                        //zhongwei
+            });
+            //右侧内容区：（管理人员）套餐金额信息
+            $("#admin-to-package-price-info").click(function () {
+                $("iframe").attr("src", "s-facturerPackageInfo.html");                        //zhongwei
+            });
+
+            //------------------设备厂商------------------
+            //------------------右侧内容区：（厂商）获取用户使用信息
+            $("#a-to-check-users-information").click(function () {
+                $("iframe").attr("src", "s-usersInformation.html");
+            });
+            //------------------右侧内容区：（厂商）获取用户卡号状态信息
+            $("#a-to-check-card-information").click(function () {
+                $("iframe").attr("src", "s-usersStatus.html");
+            });
+            //------------------右侧内容区：（厂商）达量管理
+            $("#a-to-offnet-info").click(function () {
+                $("iframe").attr("src", "s-offNetInfo.html");
+            });
+            //右侧内容区：（厂商）充值查询 订单查询
+            $("#nav-payOrder__info").click(function () {
+                $("iframe").attr("src", "s-payOrderInfor.html");
+            });
+            //右侧内容区：（厂商）充值查询 订单统计
+            $("#nav-payOrder__statics").click(function () {
+                $("iframe").attr("src", "s-orderStatistics.html");
+            });
+            //右侧内容区：（厂商）充值查询 失败订单查询
+            $("#nav-payOrder__fail").click(function () {
+                $("iframe").attr("src", "s-orderFailInfo.html");
+            });
+            //右侧内容区：（厂商）财务结算-当月结算明细
+            $("#a-to-month-settlement-detail").click(function () {
+                $("iframe").attr("src", "s-monthEarnAmount.html");
+            });
+            //右侧内容区：（厂商）财务结算-结算历史记录
+            $("#a-to-settlement-history-record").click(function () {
+                $("iframe").attr("src", "s-earnAmountHistory.html");
+            });
+            //右侧内容区：（厂商）经营状况
+            $("#a-to-operation-status").click(function () {
+                $("iframe").attr("src", "s-operatingCondition.html");
+            });
+
+            //------------------右侧内容区：（厂商）查询预警阈值信息
+            $("#a-to-set-traffic-alarm-Info").click(function () {
+                $("iframe").attr("src", "s-trafficAlarmInfo.html");
+            });
+            //------------------右侧内容区：（厂商）查询预警信息
+            $("#a-to-check-traffic-alarm-info").click(function () {
+                $("iframe").attr("src", "s-trafficAlarmInfo2.html");
+            });
+            //厂商内容 基本信息
+              $("#nav-facturerManger__info").click(function () {
+                $("iframe").attr("src", "s-facturerMangerInfo.html");
+            });         
+            $("#nav-facturerManger__price").click(function () {
+                $("iframe").attr("src", "s-facturerPackageInfo.html");
+            }); 
+            $("#nav-facturerManger__accountInfo").click(function(){
+                $("iframe").attr("src", "s-bankInfo.html");
+            });
+            $("#nav-facturerManger__selfManagementInfo").click(function(){
+                $("iframe").attr("src", "s-ManufacturerKey.html");
+            });
+            //------------------电信人员------------------
+            //------------------右侧内容区：（电信人员）基本信息管理
+            $("#telecom-to-basic-info").click(function(){
+                $("iframe").attr("src", "s-facturerMangerInfo.html");
+            });
+            //------------------右侧内容区：（电信人员）财务结算管理
+            $("#telecom-to-amount-settlement-info").click(function(){
+                $("iframe").attr("src", "s-amountSettlementInfo.html");
+            });
+        });
+    </script>
+    <!-- yangjy -->
+</body>
+
+</html>

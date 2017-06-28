@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>充值管理平台-管理人员-预警信息</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Le styles -->
+    <script type="text/javascript" src="assets/js/jquery.js"></script>
+
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/loader-style.css">
+    <link rel="stylesheet" href="assets/css/bootstrap.css">
+
+    <link rel="stylesheet" href="assets/js/button/ladda/ladda.min.css">
+
+    <link href="assets/js/footable/css/footable.core.css?v=2-0-1" rel="stylesheet" type="text/css">
+    <link href="assets/js/footable/css/footable.standalone.css" rel="stylesheet" type="text/css">
+    <link href="assets/js/footable/css/footable-demos.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="assets/js/dataTable/lib/jquery.dataTables/css/DT_bootstrap.css">
+    <link rel="stylesheet" href="assets/js/dataTable/css/datatables.responsive.css">
+
+    <link rel="shortcut icon" href="assets/ico/minus.png">
+    <link rel="stylesheet" href="css/public.css">
+
+    <!-- yangjy -->
+    <style>
+        #numberOfTrafficAlarmInfo{
+            background:#EA3F3F;
+        }
+        .input-error{
+            color:red;
+        }
+        #td-no-info{
+            text-align:center;
+        }
+        /*适用需要滚动的iframe页面*/
+.footer-space2{
+    margin-top:20px;
+    width:100%;
+    height: 40px!important;
+    text-align: center;
+    color: #999;
+}
+.footer-space2::before{
+    content:'世纪龙信息网络有限责任公司版权所有 服务声明';
+}
+/*适用需要滚动的iframe页面*/
+    </style>
+    <!-- yangjy -->
+    
+</head>
+
+<body>
+<div class="wrap-fluid">
+    <div class="container-fluid paper-wrap bevel tlbr">
+        <div class="row">
+                <div id="paper-top">
+                        <h2 class="tittle-content-header">
+                            <span class="entypo-home"></span>
+                            <!--<span class="icon icon-chevron-right"></span>菜单-->
+                            <span class="icon icon-chevron-right"></span>预警消息
+                        </h2>
+                </div>
+            </div> 
+
+            <div class="content-wrap">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="body-nest" style="min-height:650px;">
+                                <div class="row" style="margin-bottom:10px;">
+                                    <div class="col-sm-3">
+                                        <input class="form-control"  placeholder="请输入用户ICCID进行查询" value="" type="text" style="border-radius: 0px;" id="inputIccidForCheckAlarmInfo"/>
+                                    </div>
+                                    <button type="button" class="btn btn-check" style="border-radius: 0px;" id="btn-checkAlarmInfoByIccid">查询</button>
+                                </div>
+
+                                <!--”选择厂商“功能块-->
+                                <div class="row" style="margin-bottom:10px;">
+
+                                    <div class="btn-group col-sm-3" id="div-select-manufacturer">
+                                        <button type="button" class="btn btn-select dropdown-toggle" data-mid='0'data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="btn-select-manufacturer" style="width:100%;">选择厂商<span class="caret"></span>
+                                        </button>
+
+
+                                    </div>
+
+                                    <button type="button" class="btn btn-check" onclick="" style="border-radius: 0px;" id="btn-checkAllAlarmInfo"> 查询该厂商号卡</button>
+                                </div>
+                                <!--”选择厂商“功能块-->
+
+                                <p class="input-error">&nbsp;</p>
+
+                                <!--显示查询结果的table行-->
+                                <table class="table-striped footable-res footable metro-blue" data-page-size="10" id="table-trafficInfoCheckResult">
+                                    <thead>
+                                        <tr>
+                                            <th>接入号码</th>
+                                            <th>ICCID</th>
+                                            <th>预警类型</th>
+                                            <th>时间</th>
+                                            <th>预警内容</th>
+                                        </tr>
+                                    </thead>                                        
+                                    <tbody>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="5">
+                                                <div class="pagination pagination-centered"></div>
+                                            </td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-space2"></div>
+        <!-- MAIN EFFECT -->
+        <script type="text/javascript" src="assets/js/preloader.js"></script>
+        <script type="text/javascript" src="assets/js/bootstrap.js"></script>
+        <script type="text/javascript" src="assets/js/app.js"></script>
+        <script type="text/javascript" src="assets/js/load.js"></script>
+        <script type="text/javascript" src="assets/js/main.js"></script>
+
+        <script src="assets/js/footable/js/footable.js?v=2-0-1" type="text/javascript"></script>
+        <script src="assets/js/footable/js/footable.sort.js?v=2-0-1" type="text/javascript"></script>
+        <script src="assets/js/footable/js/footable.filter.js?v=2-0-1" type="text/javascript"></script>
+        <script src="assets/js/footable/js/footable.paginate.js?v=2-0-1" type="text/javascript"></script>
+
+        <script src="js/mix.js"></script>
+
+        <script type="text/javascript" src="js/admin-trafficAlarmInfo2.js"></script>
+
+
+</body>
+
+</html>

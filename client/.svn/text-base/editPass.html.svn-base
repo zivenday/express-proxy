@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>修改密码</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script type="text/javascript" src="assets/js/jquery.js"></script>
+
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <!--yangjy-->
+    <style>
+    html{
+        overflow-y: auto;
+    }
+    body{
+        overflow-x: auto;
+        background-color: #f5f5f5;
+    }
+    .edit-container{
+        margin: 58px 30px;
+        background-color: #fff;
+        border-radius: 4px;
+        box-shadow: 0px 0px 5px #999999;
+        padding: 0 20px 20px;
+    }
+    .edit-container-title{
+        height: 80px;
+        font-size: 24px;
+        font-family: '微软雅黑';
+        border-bottom: 1px solid #9ea7b3;
+        line-height: 80px;
+    }
+    .edit-container form{
+        padding: 30px 0px;
+    }
+    .input-line{
+        margin-top: 13px;
+    }
+    .input-line label.left-label{
+        display: inline-block;
+        width: 300px;
+        text-align: right;
+        line-height: 24px;
+    }
+    .input-line input{
+        color: #9ea7b3;
+        font-size: 16px;
+        margin-left:10px;
+        width: 350px;
+    }
+    .input-line select{
+        width: 100px;
+        margin-left:3px;
+    }
+    .input-line select[name="province3"]{
+        margin-left:10px;
+    }
+
+    /*验证后的错误信息*/
+    .input-line>p{
+        margin: 0 0 0 315px;
+    }
+    .input-line>p.error{
+        color: red;
+    }
+    .input-line>p.valid{
+        
+    }
+    .footer-space{
+        position:fixed;
+        width:100%;
+        height: 40px!important;
+        top: 95%;
+        text-align: center;
+        color: #999;
+    }
+    .footer-space::before{
+        content:'世纪龙信息网络有限责任公司版权所有 服务声明';
+    }
+    </style>
+</head>
+
+<body>
+    <div class="edit-container">
+        <div class="edit-container-title">
+            修改密码
+        </div>
+        <form id="edit-form-1">
+            <div class="input-line">
+                <label class="left-label" for="inputPasswordOld">输入旧密码：</label>
+                <input type="password" id="inputPasswordOld" name="inputPasswordOld">
+            </div>
+            <div class="input-line">
+                <label class="left-label" for="inputPasswordNew1">输入新密码：</label>
+                <input type="password" id="inputPasswordNew1" name="inputPasswordNew1">
+            </div>
+            <div class="input-line">
+                <label class="left-label" for="inputPasswordNew2">再一次输入密码：</label>
+                <input type="password" id="inputPasswordNew2" name="inputPasswordNew2">
+            </div>
+            <div class="input-line">
+                <button type="button" class="btn btn-check" style="border-radius: 0px;width: 100px; margin: 0 auto; display: block;" id="btn-edit-pass">确定</button>
+            </div>
+        </form>
+    </div>
+    <!-- MAIN EFFECT -->
+    <script type="text/javascript" src="assets/js/bootstrap.js"></script>
+    <script type="text/javascript" src="assets/js/app.js"></script>
+    <script type="text/javascript" src="assets/js/load.js"></script>
+    <script type="text/javascript" src="assets/js/main.js"></script>
+
+    <!--yangjy-->
+    <script type="text/javascript" src="js/editPass.js"></script>
+
+    <script>
+    </script>
+    <!--yangjy-->
+    
+</body>
+
+</html>

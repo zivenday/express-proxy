@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>充值管理平台--用户订单-订单统计</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Le styles -->
+    <script type="text/javascript" src="assets/js/jquery.js"></script>
+
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/loader-style.css">
+    <link rel="stylesheet" href="assets/css/bootstrap.css">
+    <link id="#layuicss-laydatecss" rel="stylesheet" href="./plugins/laydate/layui.css" media="all">
+
+    <!--分割线-->
+    <link rel="stylesheet" href="assets/css/x0popup.min.css">
+    <link rel="stylesheet" href="css/public.css">
+    <link rel="stylesheet" href="css/base.css">
+    <style type="text/css">
+        /*订单数据统计日期选择*/
+
+        .orderStatstics__index--active {
+            background: #ddd
+        }
+
+        .statics-table-date {
+            display: inline-block;
+            list-style-type: none;
+            position: absolute;
+        }
+
+        .row-orderStatistics {
+            margin-top: 5px;
+        }
+
+        .table-time-input {
+            width: 202px;
+            height: 31px;
+            padding-left: 10px;
+            color: #555
+        }
+
+        .laydate-icon {
+            padding-left: 10px;
+        }
+
+        .laydate_btn {
+            top: 1px!important
+        }
+    </style>
+    <!--分割线-->
+</head>
+
+<body class="wrap-container">
+    <div class="wrap-container__box">
+        <ul id="breadcrumb">
+            <li>
+                <span class="entypo-home"></span>
+            </li>
+            <li><i class="fa fa-lg fa-angle-right"></i>
+            </li>
+            <li><a>用户订单</a>
+            </li>
+            <li><i class="fa fa-lg fa-angle-right"></i>
+            </li>
+            <li><a>订单统计</a>
+            </li>
+        </ul>
+
+        <div class="content-wrap">
+            <div class="row">
+                <div class="table-background__ziven">
+                    <div class="nest">
+                        <div class="body-nest">
+                            <div class="loginRole">
+                                <p>选择厂商角色:</p>
+                                <select class="form-control role" placeholder="请选择角色" id="chooseFactureSelect" style="border:0px!important;border-radius:0;outline:1px solid #dedede ">                                                   
+                                               </select>
+                            </div>
+                            <div style="margin-top:17px">
+                                <div style="color: #999;">请选择时间日期：</div>
+                                <div class="row-table row-orderStatistics">
+                                    <div>
+                                        <input class="layui-input table-time-input" placeholder="开始日期" id="table-orderStatics__start">
+                                    </div>
+                                    <div style="width:50px;text-align: center">到</div>
+                                    <div>
+                                        <input class="layui-input table-time-input" placeholder="结束日期" id="table-orderStatics__end">
+                                    </div>
+                                    <div>
+                                        <button type="button" class="btn btn-info__ziven" style=" margin-left: 15px" onclick="getAllstatics()"> 查询</button>
+                                    </div>
+
+                                </div>
+                                <div>
+                                    <div class="statics-result" style="margin-bottom:20px">
+                                        <div class="statics-result__line1"></div>
+                                        <div class="statics-result__line2"></div>
+                                        <div class="statics-result__line3" style="margin-left:7px"></div>
+                                    </div>
+                                    <table class="table table__ziven ">
+                                        <thead>
+                                            <tr>
+                                                <th style="border-left:1px solid #dedede!important">
+                                                    接入号码
+                                                </th>
+                                                <th>
+                                                    ICCID
+                                                </th>
+                                                <th>
+                                                    订单号
+                                                </th>
+                                                <th>
+                                                    交易时间
+                                                </th>
+                                                <th>
+                                                    订单内容
+                                                </th>
+                                                <th style="border-right:1px solid #dedede!important">
+                                                    金额(元)
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="orderStatstics__table">
+                                        </tbody>
+
+                                    </table>
+                                    <nav aria-label="...">
+                                        <ul class="pager orderStatstics__page">
+                                        </ul>
+                                    </nav>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+         <div class="wrap-footer"></div>
+    </div>
+   
+
+    <!-- MAIN EFFECT -->
+    <script type="text/javascript" src="assets/js/bootstrap.js"></script>
+    <script type="text/javascript" src="assets/js/load.js"></script>
+    <script type="text/javascript" src="assets/js/main.js"></script>
+    <script src="assets/js/x0popup.min.js"></script>
+    <script src="js/public.js"></script>
+    <script src="js/mix.js"></script>
+    <script src="plugins/laydate/laydate.js"></script>
+    <script type="text/javascript">
+        var listorderByDateRoute = "listPayOrderByDate.do"//列表时间查询
+        var statsticsByDateRoute = "getOrderStatisticsByDate.do"//图表时间统计
+        $("#table-orderStatics__end").val($.getZivenDate(0, 'Y/M/D'))
+        $("#table-orderStatics__start").val($.getZivenDate(30, 'Y/M/D'))
+        var start = {
+            elem: '#table-orderStatics__start',
+            format: 'YYYY/MM/DD',
+            max: '2099/06/16', //最大日期
+            choose: function (datas) {
+                console.log(datas)
+                end.min = datas; //开始日选好后，重置结束日的最小日期
+                end.start = datas //将结束日的初始值设定为开始日
+            }
+        };
+        var end = {
+            elem: '#table-orderStatics__end',
+            format: 'YYYY/MM/DD',
+            max: '2099/06/16',
+            choose: function (datas) {
+                start.max = datas; //结束日选好后，重置开始日的最大日期
+            }
+        };
+        laydate(end)
+        laydate(start)
+    </script>
+    <script type="text/javascript">
+        $(function () {
+            sessionStorage.getItem("type") == '1' ?
+                initAdminAuthorityManage(function () { getAllstatics() }, '10') : getAllstatics()
+        });
+        function getorderStatsticsInfo(url, type) {//type为操作类型1为list查询，3为分页查询
+            zivenload.start(".wrap-container__box")
+            $.ajax({
+                type: "get",
+                url: url,
+                timeout: 8000,
+                success: function (data) {
+                    (!data.msg||data.msg==1) ? returnOrderStatisticsPage(data, type)
+                        : x0p('列表信息查询失败', "错误:[" + data.msg + "]--" + trans__CN(data.code), 'error', false);
+                    (!data.msg||data.msg==1) ? getOrderStatisticsByDate(baseUrl + statsticsByDateRoute + "?startDate=" + transDate($("#table-orderStatics__start").val()) + "&endDate=" + transDate($("#table-orderStatics__end").val()), 1)
+                    :''
+                },
+                error: function (data) {
+                    x0pServerError(data)
+                },
+                complete:function(){
+                    zivenload.end()
+                }
+            });
+        }
+        function returnOrderStatisticsPage(data, type) {
+             $(".no-existent").remove()
+            if (!data.msg) {
+                returnOrderStatisticsTable(data, type)
+                type === 3 ? '' : returnPagination(".orderStatstics__page", data, type)
+            } else {
+                $('.orderStatstics__table').children('tr').remove();
+                $('.table').after("<div class='no-existent'>暂无数据</div>")
+            }
+
+
+        }
+        function getOrderStatisticsByDate(url) {//统计说明内容显示的请求
+        zivenload.start(".wrap-container__box")
+            $.ajax({
+                type: "get",
+                url: url,
+                timeout: 8000,
+                success: function (data) {
+                    (!data.msg||data.msg==1)  ? returnTips(data)
+                        : x0p('统计信息查询失败', "错误:[" + data.msg + "]--" + trans__CN(data.code), 'error', false)
+                },
+                error: function (data) {
+                    x0p('统计信息查询失败', "错误:[" + data.msg + "]--" + trans__CN(data.code), 'error', false)
+                },
+                complete: function () {
+                    zivenload.end()
+                }
+            });
+        }
+
+        function returnTips(data) {//构建统计说明
+            $(".statics-result__line1").empty();
+            $(".statics-result__line2").empty();
+            $(".statics-result__line3").empty();
+            if (!data.msg) {
+                var line1 = "在该时段内，共有" + data.userCount + "位用户进行充值，充值总金额为" + data.priceTotal + "元,充值流量叠加包数量总计" + data.packageCount + "个。"
+                var line2 = "分别为:"
+                var line3 = ""
+                $.each(data.packageList, function (index) {
+                    (index % 2 == 0 && index != 0) ? line3 += '<br>' : ''
+                    line3 += "[" + this.packageName + ":" + this.packageCount + "个]"
+                    index + 1 == data.packageList.length ? line3 = line3 += " 。" : line3 += ','
+                })
+                $(".statics-result__line1").html(line1)
+                $(".statics-result__line2").html(line2)
+                $(".statics-result__line3").html(line3)
+            } else {
+            }
+        }
+        function returnOrderStatisticsTable(obj, type) {//构建列表
+            var subs = ""
+            var o = obj.payOrderList
+            for (var i = 0; i < o.length; i++) {
+                subs = subs + '<tr>'
+                    + '<td>' + o[i].number + '</td>'
+                    + '<td>' + o[i].iccid + '</td>'
+                    + '<td>' + o[i].orderId + '</td>'
+                    + '<td>' + o[i].time + '</td>'
+                    + '<td>' + transPackageName(o[i].content) + '</td>'
+                    + '<td>' + o[i].price + '</td>'
+                    + '</tr>'
+            }
+            $('.orderStatstics__table').children('tr').remove();//去除列表原有数据显示
+            $('.orderStatstics__table').html(subs)//形成新数据列表                   
+        }
+
+        function changePage(n, e) {//切换分页查询
+            updatePagination(e)
+            getorderStatsticsInfo(baseUrl + listorderByDateRoute + "?page=" + n + "&num=10&startDate=" + transDate($("#table-orderStatics__start").val()) + "&endDate=" + transDate($("#table-orderStatics__end").val()), 3)
+        }
+
+        function getAllstatics() {//查询按钮
+            if (isNullCheck($("#table-orderStatics__start").val()) && isNullCheck($("#table-orderStatics__end").val())) {
+                getorderStatsticsInfo(baseUrl + listorderByDateRoute + "?page=1&num=10&startDate=" + transDate($("#table-orderStatics__start").val()) + "&endDate=" + transDate($("#table-orderStatics__end").val()), 1)
+            } else {
+                x0pERROR('query', "请选择完整日期！")
+            }
+        }
+    </script>
+</body>
+
+</html>

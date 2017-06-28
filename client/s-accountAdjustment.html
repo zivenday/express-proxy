@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>充值管理平台--财务结算管理-调账信息</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Le styles -->
+    <script type="text/javascript" src="assets/js/jquery.js"></script>
+    <link rel="stylesheet" href="assets/css/bootstrap.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/loader-style.css">
+
+    <link id="#layuicss-laydatecss" rel="stylesheet" href="./plugins/laydate/layui.css" media="all">
+
+    <link rel="stylesheet" href="assets/css/x0popup.min.css">
+    <link rel="stylesheet" href="css/public.css">
+    <link rel="stylesheet" href="css/base.css">
+    <style type="text/css">
+        .row-accountAdjust {
+            display: flex;
+            justify-content: flex-start;
+            align-items: flex-end;
+        }
+
+        .row-accountAdjust>div>span {
+            display: block;
+        }
+
+        .row-accountAdjust>div:first-child {
+            margin-right: 20px;
+        }
+
+        .table-time-input {
+            width: 150px;
+            height: 31px;
+            padding-left: 10px
+        }
+
+        select {
+            width: 150px!important;
+        }
+
+        #laydate_table {
+            display: none!important;
+        }
+    </style>
+    <!--分割线-->
+</head>
+
+<body class="wrap-container">
+    <div class="wrap-container__box">
+        <ul id="breadcrumb">
+            <li>
+                <span class="entypo-home"></span>
+            </li>                                                                                                                                                                                                         
+            <li><i class="fa fa-lg fa-angle-right"></i>
+            </li>
+            <li><a>财务结算</a>
+            </li>
+            <li><i class="fa fa-lg fa-angle-right"></i>
+            </li>
+            <li><a class="istele">调账信息</a>
+            </li>
+        </ul>
+
+        <div class="content-wrap">
+            <div class="row">
+                <div class="table-background__ziven">
+                    <div class="nest">
+                        <div class="body-nest">
+                            <div style="margin-top:17px">
+                                <div class="row-table row-accountAdjust" id="row-accountAdjust">
+                                    <div>
+                                        <span>选择月份:</span>
+                                        <input class="layui-input table-time-input" id="table-accountAdjust__date">
+                                    </div>
+                                    <div class="teleRole">
+                                        <span>选择角色:</span>
+                                        <select class="form-control role" placeholder="请选择角色" id="chooseFactureSelect" style="border:0px!important;border-radius:0;outline:1px solid #dedede ">                                                   
+                                               </select>
+                                    </div>
+                                    <div>
+                                        <button type="button" class="btn btn-info__ziven save_btn" style=" margin-left: 15px" onclick="accountAdjustSearch()"> 查询</button>
+                                    </div>
+
+                                </div>
+                                <div>
+                                    <table class="table table__ziven ">
+                                        <thead>
+                                            <tr>
+                                                <th style="border-left:1px solid #dedede!important">
+                                                    客户编号
+                                                </th>
+                                                <th>
+                                                    客户名称
+                                                </th>
+                                                <th>
+                                                    账单时间
+                                                </th>
+                                                <th>
+                                                    主套餐名称
+                                                </th>
+
+                                                <th>
+                                                    客户折扣
+                                                </th>
+                                                <th>卡数量</th>
+                                                <th>
+                                                    主套餐总费用(元)
+                                                </th>
+                                                <th>
+                                                    加餐包总费用(元)
+                                                </th>
+                                                <th>
+                                                    超出流量（MB）
+                                                </th>
+                                                <th>
+                                                    套外单价(元)
+                                                </th>
+                                                <th>
+                                                    套内单价(元)
+                                                </th>
+                                                <th>
+                                                    调账前总额(元)
+                                                </th>
+                                                <th style="border-right:1px solid #dedede!important">
+                                                    调账后总额(元)
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="accountAdjust__table">
+                                        </tbody>
+
+                                    </table>
+                                    <nav aria-label="...">
+                                        <ul class="pager accountAdjust__page">
+                                        </ul>
+                                    </nav>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+            <div class="wrap-footer"></div>
+    </div>
+
+
+    <!-- MAIN EFFECT -->
+    <script type="text/javascript" src="assets/js/bootstrap.js"></script>
+    <script type="text/javascript" src="assets/js/load.js"></script>
+    <script type="text/javascript" src="assets/js/main.js"></script>
+    <script src="assets/js/x0popup.min.js"></script>
+    <script src="js/public.js"></script>
+    <script src="plugins/laydate/laydate.js"></script>
+    <script type="text/javascript" src="js/mix.js"></script>
+    <script type="text/javascript">
+
+    </script>
+    <!--分割线-->
+    <script>
+        var roleType = sessionStorage.getItem("type")
+        var AdminroleType = 0;//管理者角色控制
+        var listAccountAdjustmentByMidRoute = 'listAccountAdjustmentByMid.do'//厂商获取调账单信息
+        var listAccountAdjustmentByCTRoute = 'listAccountAdjustmentByCT.do'//电信获取调账单信息
+        $(function () {
+            laydate({
+                elem: '#table-accountAdjust__date',
+                format: 'YYYY/MM', // 分隔符可以任意定义，该例子表示只显示年月
+                festival: true, //显示节日
+                istoday: false, //是否显示今天
+                choose: function (datas) { //选择日期完毕的回调
+
+                }
+            });
+            $(".table-time-input").val($.getZivenDate(31, 'Y/M'))
+            switch (roleType) {
+                case '1'://admin login
+                    x0p({
+                        title: '',
+                        text: '请选择需要查看的角色类型',
+                        icon: 'info',
+                        animationType: 'slideUp',
+                        buttons: [
+                            {
+                                type: 'error',
+                                text: '厂商角色'
+                            },
+                            {
+                                type: 'info',
+                                text: '电信角色',
+                            }
+                        ]
+                    }, function (button) {
+                        if (button == 'info') {
+                            AdminroleType = 2
+                            initAdminAuthorityManage(function () { accountAdjustSearch() }, '11')
+                        } else if ((button == 'error')) {
+                            AdminroleType = 1
+                            initAdminAuthorityManage(function () { accountAdjustSearch() }, '10')
+                        }
+
+                    });
+                    break;
+                default://设备商login
+                    accountAdjustSearch();
+                    break;
+            }
+
+        })
+        //获取查询数据
+        function getaccountAdjust(page, type) {//页码和操作类型
+            zivenload.start(".wrap-container__box")
+            var router = ''
+            if (!AdminroleType) {
+                router = (roleType == '2' ? listAccountAdjustmentByMidRoute : listAccountAdjustmentByCTRoute)
+            } else {
+                router = (AdminroleType == 1 ? listAccountAdjustmentByMidRoute : listAccountAdjustmentByCTRoute)
+            }
+
+            var month = transDate($(".table-time-input").val());
+            var params = month ? "?month=" + month + "&page=" + page + "&num=10" : x0pERROR('请输入月份进行查询！')
+            params ? $.ajax({
+                type: 'get',
+                url: baseUrl + router + params,
+                timeout: 8000,
+                success: function (data) {
+                    (!data.msg || data.msg == 1) ? returnaccountAdjustPage(data, type) : x0pAjaxError("query", data)
+                },
+                error: function (data) {
+                    x0pServerError(data)
+                },
+                complete: function () {
+                    zivenload.end()
+                }
+
+            }) : ''
+        }
+        function returnaccountAdjustPage(data, type) {
+            if (!data.msg) {
+                returnaccountAdjustTable(data, type)
+                type === 3 ? '' : returnPagination(".accountAdjust__page", data, type)
+            } else {
+                $('.accountAdjust__table').children('tr').remove();
+                $('.table').after("<div class='no-existent'>暂无数据</div>")
+            }
+
+        }
+        function returnaccountAdjustTable(obj) {
+            var subs = ""
+            var o = obj.adjustList
+            for (var i = 0; i < o.length; i++) {
+                var size = o[i].ownerName.length
+                subs = subs + '<tr>'
+                    + (o[i].mid.length < size ? '<td rowspan="' + size + '">' + o[i].mid[0] + '</td>' : '<td>' + o[i].mid[0] + '</td>')
+                    + (o[i].mname.length < size ? '<td rowspan="' + size + '">' + o[i].mname[0] + '</td>' : '<td>' + o[i].mname[0] + '</td>')
+                    + (o[i].time.length < size ? '<td rowspan="' + size + '">' + o[i].time[0] + '</td>' : '<td>' + o[i].time[0] + '</td>')
+                    + (o[i].ownerName.length < size ? '<td rowspan="' + size + '">' + transPackageName(o[i].ownerName[0]) + '</td>' : '<td>' + transPackageName(o[i].ownerName[0]) + '</td>')
+                    + (o[i].discount.length < size ? '<td rowspan="' + size + '">' + o[i].discount[0] + '</td>' : '<td>' + o[i].discount[0] + '</td>')
+                    + (o[i].cardCount.length < size ? '<td rowspan="' + size + '">' + o[i].cardCount[0] + '</td>' : '<td>' + o[i].cardCount[0] + '</td>')
+                    + (o[i].ownerPrice.length < size ? '<td rowspan="' + size + '">' + o[i].ownerPrice[0] + '</td>' : '<td>' + o[i].ownerPrice[0] + '</td>')
+                    + (o[i].addPrice.length < size ? '<td rowspan="' + size + '">' + o[i].addPrice[0] + '</td>' : '<td>' + o[i].addPrice[0] + '</td>')
+                    + (o[i].overFlow.length < size ? '<td rowspan="' + size + '">' + o[i].overFlow[0] + '</td>' : '<td>' + o[i].overFlow[0] + '</td>')
+                    + (o[i].outCost.length < size ? '<td rowspan="' + size + '">' + o[i].outCost[0] + '</td>' : '<td>' + o[i].outCost[0] + '</td>')
+                    + (o[i].innerCost.length < size ? '<td rowspan="' + size + '">' + o[i].innerCost[0] + '</td>' : '<td>' + o[i].innerCost[0] + '</td>')
+                    + (o[i].beforeGrossPrice.length < size ? '<td rowspan="' + size + '">' + o[i].beforeGrossPrice[0] + '</td>' : '<td>' + o[i].beforeGrossPrice[0] + '</td>')
+                    + (o[i].afterGrossPrice.length < size ? '<td rowspan="' + size + '">' + o[i].afterGrossPrice[0] + '</td>' : '<td>' + o[i].afterGrossPrice[0] + '</td>')
+                    + '</tr>'
+                for (var j = 1; j < size; j++) {
+                    subs += '<tr>'
+                    o[i].mid.length == size ? subs += '<td>' + o[i].mid[j] + '</td>' : ''
+                    o[i].mname.length == size ? subs += '<td>' + o[i].mname[j] + '</td>' : ''
+                    o[i].time.length == size ? subs += '<td>' + o[i].time[j] + '</td>' : ''
+                    o[i].ownerName.length == size ? subs += '<td>' + transPackageName(o[i].ownerName[j]) + '</td>' : ''
+                    o[i].discount.length == size ? subs += '<td>' + o[i].discount[j] + '</td>' : ''
+                    o[i].cardCount.length == size ? subs += '<td>' + o[i].cardCount[j] + '</td>' : ''
+                    o[i].ownerPrice.length == size ? subs += '<td>' + o[i].ownerPrice[j] + '</td>' : ''
+                    o[i].addPrice.length == size ? subs += '<td>' + o[i].addPrice[j] + '</td>' : ''
+                    o[i].overFlow.length == size ? subs += '<td>' + o[i].overFlow[j] + '</td>' : ''
+                    o[i].outCost.length == size ? subs += '<td>' + o[i].outCost[j] + '</td>' : ''
+                    o[i].innerCost.length == size ? subs += '<td>' + o[i].innerCost[j] + '</td>' : ''
+                    o[i].beforeGrossPrice.length == size ? subs += '<td>' + o[i].beforeGrossPrice[j] + '</td>' : ''
+                    o[i].afterGrossPrice.length == size ? subs += '<td>' + o[i].afterGrossPrice[j] + '</td>' : ''
+                    subs += '</tr>'
+                }
+            }
+            $('.accountAdjust__table').children('tr').remove();//去除列表原有数据显示
+            $('.accountAdjust__table').html(subs)//形成新数据列表      
+        }
+        function changePage(page, e) {//切换分页查询
+            updatePagination(e)
+            getaccountAdjust(page, 3)
+        }
+
+        function accountAdjustSearch() {
+            $(".table-time-input").val()
+                ? getaccountAdjust(1, 1) : x0pERROR('请输入月份进行查询！')
+        }
+    </script>
+</body>
+
+</html>

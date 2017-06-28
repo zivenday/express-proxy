@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>充值管理平台--用户状态</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Le styles -->
+    <!--<script type="text/javascript" src="assets/js/jquery-3.2.1.min.js"></script>-->
+    <script type="text/javascript" src="assets/js/jquery.js"></script>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/loader-style.css">
+    <link rel="stylesheet" href="assets/css/bootstrap.css">
+    <link rel="stylesheet" href="assets/css/x0popup.min.css">
+    <link rel="stylesheet" href="css/public.css">
+    <link rel="stylesheet" href="css/base.css">
+    <style type="text/css">
+        .row-table>div:last-child {
+            padding-top: 8px;
+            position: absolute;
+            right: 20px;
+        }
+
+        .row-table>div:last-child>span {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background: #f88b00;
+            border-radius: 0px
+        }
+
+        .row-table>div:last-child>div {
+            display: inline-block
+        }
+    </style>
+    <!--分割线-->
+</head>
+
+<body class="wrap-container">
+    <div class="wrap-container__box">
+        <!-- BREADCRUMB -->
+        <ul id="breadcrumb">
+            <li>
+                <span class="entypo-home"></span>
+            </li>
+
+            <li><i class="fa fa-lg fa-angle-right"></i>
+            </li>
+            <li><a href="#" title="Sample page 1">用户状态</a>
+            </li>
+        </ul>
+        <div class="content-wrap">
+            <div class="row">
+                <div class="table-background__ziven">
+                    <div class="nest">
+                        <div class="body-nest">
+                            <div class="loginRole">
+                                <p>选择厂商角色:</p>
+                                <select class="form-control role" placeholder="请选择角色" id="chooseFactureSelect" style="border:0px!important;border-radius:0;outline:1px solid #dedede ">                                                   
+                                               </select>
+                            </div>
+                            <div class="row-table">
+                                <div>
+                                    <input class="form-control input__ziven lotCardState__search" placeholder="请输入用户ICCID进行查询" type="text" style="border-radius: 0px;">
+                                </div>
+
+                                <div>
+                                    <button type="button" class="btn btn-info__ziven" onclick="lotCardStateSearch()" style="margin-left:15px">查询</button>
+
+                                </div>
+                                <div>
+                                    <span class="focus-tips"></span>
+                                    <div>注意:处理过程约耗时0~5分钟，请稍后查询。</div>
+                                </div>
+
+                            </div>
+
+
+                            <table class="table" id="table__ziven">
+                                <thead>
+                                    <tr>
+                                        <th style="border-left:1px solid #dedede!important">
+                                            接入号码
+                                        </th>
+                                        <th>
+                                            ICCID
+                                        </th>
+                                        <th>
+                                            UIM卡状态
+                                        </th>
+                                        <th style="border-right:1px solid #dedede!important">操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="lotCardState__table">
+                                </tbody>
+
+                            </table>
+                            <nav aria-label="...">
+                                <ul class="pager lotCardState__page">
+                                </ul>
+                            </nav>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="clear"></div>
+        <div class="wrap-footer"></div>
+
+    </div>
+
+    <script type="text/javascript" src="assets/js/bootstrap.js"></script>
+    <script type="text/javascript" src="assets/js/load.js"></script>
+    <script type="text/javascript" src="assets/js/main.js"></script>
+    <script src="assets/js/x0popup.min.js"></script>
+    <script src="js/mix.js"></script>
+    <script src="js/public.js"></script>
+
+    <script>
+        var defaultBtn = function () { return '<button class="btn btn-default  button test " style="border-radius: 0px;cursor:not-allowed"  data-opacity="0.9">' + arguments[0] + '</button>' }
+        var activeBtn = function () { return '<button type="button" class="btn btn-primary" style="border-radius: 0px;cursor:not-allowed"  >' + arguments[0] + '</button>' }
+        var dangerBtn = function () { return '<button type="button" class="btn btn-danger" style="border-radius: 0px"  onclick="activeStateAction(this)">' + arguments[0] + '</button>' }
+        var infoBtn = function () { return '<button type="button" class="btn btn-info" style="border-radius: 0px"  onclick="disabledNumber(this)">' + arguments[0] + '</button>' }
+        var spans = function () { return '<span style="white-space:pre"> </span>' }
+
+
+        var listIotState = "listIotCardState.do"//批量查询路由
+        var getIotStateById = "getIotCardStateByIccid.do"//id查询路由
+        var activateCardUrl = "activateCard.do"//激活卡路由
+        var disabledNumberRoute = "disabledNumber.do"//停机保机与恢复
+        $(function () {
+            sessionStorage.getItem("type") == '1' ?
+                initAdminAuthorityManage(function () { lotCardStateSearch() }, '10') : lotCardStateSearch()
+        });
+        function getlotCardState(url, type) {//type为操作类型1为list查询，2为根据id查询，3为分页查询
+            zivenload.start(".wrap-container__box")
+            $.ajax({
+                type: "get",
+                url: url,
+                success: function (data) {
+                    (!data.msg || data.msg == 1) ? returnStatePage(data, type) : x0pAjaxError('query', data)
+                },
+                error: function (data) {
+                    x0pServerError(data)
+                },
+                complete: function () {
+                    zivenload.end()
+                }
+            });
+        }
+        function returnStatePage(data, type) {//重构页面
+            $('.no-existent').remove()
+            if (!data.msg) {
+                returnStateTable(data, type)
+                type === 3 ? '' : returnPagination(".lotCardState__page", data, type)//类型3操作无需重构分页按钮显示
+            } else {
+                $('.lotCardState__table').children('tr').remove();
+                $('.table').after("<div class='no-existent'>暂无数据</div>")
+            }
+
+        }
+        function returnStateTable(obj, type) {//构建table列表
+            var subs = '';
+            if (type == 1 || type == 3) {//操作类型判断
+                var o = obj.stateList
+                for (var i = 0; i < o.length; i++) {
+                    subs = subs + '<tr>'
+                        + '<td>' + o[i].number + '</td>'
+                        + '<td>' + o[i].iccid + '</td>'
+                        + '<td>' + o[i].state.productStatusName + '</td>'
+                        + '<td>'
+                    //按钮逻辑判断触发正确显示
+                    if (o[i].operation) {
+                        switch (o[i].state.productStatusCd) {
+                            case '1': subs = subs + defaultBtn("激活") + spans() + infoBtn("停机"); break;
+                            case '2': subs = subs + defaultBtn("激活") + spans() + infoBtn("复机"); break;
+                            case '19': subs = subs + activeBtn("激活"); break;
+                            default: subs = subs + defaultBtn("待处理"); break;
+                        }
+                    } else {
+                        subs = subs + defaultBtn("申请处理中")
+                    }
+                    subs = subs + '</td></tr>'
+                }
+                $(".lotCardState__table").children('tr').remove();//除列表原有数据显示
+                $(".lotCardState__table").html(subs)//形成新数据列表
+
+            } else {
+                subs = '<tr>'
+                    + '<td>' + obj.number + '</td>'
+                    + '<td>' + $(".lotCardState__search").val() + '</td>'
+                    + '<td>' + obj.state.productStatusName + '</td>'
+                    + '<td>'
+                //按钮逻辑判断触发正确显示
+                if (obj.operation) {
+                    switch (obj.state.productStatusCd) {
+                        case '1': subs = subs + defaultBtn("激活") + spans() + infoBtn("停机"); break;
+                        case '2': subs = subs + defaultBtn("激活") + spans() + infoBtn("复机"); break;
+                        case '19': subs = subs + activeBtn("激活"); break;
+                        default: subs = subs + defaultBtn("待处理"); break;
+                    }
+                } else {
+                    subs = subs + defaultBtn("申请处理中")
+                }
+                subs = subs + '</td></tr>'
+                $(".lotCardState__table").children('tr').remove();//除列表原有数据显示
+                $(".lotCardState__table").html(subs)//形成新数据列表
+            }
+
+        }
+        function changePage(n, e) {//分页按钮触发
+            updatePagination(e)
+            getlotCardState(baseUrl + listIotState + "?page=" + n, 3)
+        }
+        function lotCardStateSearch() {//搜索
+            $(".lotCardState__search").val() ? getlotCardState(baseUrl + getIotStateById + "?iccid=" + $(".lotCardState__search").val(), 2) : getlotCardState(baseUrl + listIotState + "?page=1", 1)
+        }
+        function activeStateAction(e) {//活卡激活确定提示按钮
+            arg1 = e.parentNode.parentNode.childNodes[0].innerText
+            arg2 = e.parentNode.parentNode.childNodes[1].innerText
+            x0p({
+                title: '提醒',
+                text: '是否激活该号卡？',
+                icon: 'info',
+                animationType: 'slideUp',
+                buttons: [
+                    {
+                        type: 'error',
+                        text: '取消'
+                    },
+                    {
+                        type: 'info',
+                        text: '确定',
+                        showLoading: true
+                    }
+                ]
+            }, function (button) {
+                if (button == 'info') {
+                    getActiveAction(arg1, arg2)//提交激活请求
+                }
+            });
+        }
+        function getActiveAction() {//活卡激活提交后台请求
+            args = "?iccid=" + arguments[1] + "&number=" + arguments[0]
+            URL = baseUrl + activateCardUrl + args
+            $.ajax({
+                url: URL,
+                type: "post",
+                success: function (data) {
+                    !data.msg ? x0pSuccessAndReload(function () { lotCardStateSearch() }, '请求成功') : x0pAjaxError('active', data)
+                    !data.msg ? getlotCardState(baseUrl + listIotState + "?page=1", 1) : ''//重新加载数据
+                },
+                error: function (data) {
+                    x0pServerError(data)
+                }
+            })
+        }
+        function disabledNumber(e) {//停机保机功能
+            x0p({
+                title: '提醒',
+                text: '是否将该号卡'+e.innerText+'？',
+                icon: 'info',
+                animationType: 'slideUp',
+                buttons: [
+                    {
+                        type: 'error',
+                        text: '取消'
+                    },
+                    {
+                        type: 'info',
+                        text: '确定',
+                        showLoading: true
+                    }
+                ]
+            }, function (button) {
+                if (button == 'info') {
+                    ActionDisableNumber(e)//提交激活请求
+                }
+            });
+        }
+        function ActionDisableNumber(e) {//停机保机请求
+            var arg0 = e.parentNode.parentNode.childNodes[0].innerText;
+            var arg1 = e.parentNode.parentNode.childNodes[1].innerText;
+            var arg3 = e.parentNode.parentNode.childNodes[2].innerText
+
+            arg3 = (arg3 == "在用" ? '19' : ' 20')
+            $.ajax({
+                type: "post",
+                url: baseUrl + disabledNumberRoute + "?iccid=" + arg1 + "&number=" + arg0 + "&operation=" + arg3,
+                success: function (data) {
+                    !data.msg ? x0pSuccessAndReload(function () { lotCardStateSearch() }, '请求成功') : x0pAjaxError(data)
+                    !data.msg ? getlotCardState(baseUrl + listIotState + "?page=1", 1) : ''//重新加载数据
+                },
+                error: function (data) {
+                    x0pServerError(data)
+                }
+            })
+        }
+    </script>
+    <!--分割线-->
+
+
+</body>
+
+</html>

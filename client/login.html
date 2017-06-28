@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>物联易充管理平台 - 登录</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<script type="text/javascript" src="assets/js/jquery.min.js"></script>
+		
+		<link rel="stylesheet" href="assets/css/loader-style.css">
+    	<link rel="stylesheet" href="assets/css/bootstrap.css">
+    	<link rel="stylesheet" href="assets/css/signin.css">
+
+        <link rel="stylesheet" href="assets/css/x0popup.min.css">
+        <link rel="stylesheet" href="css/base.css">
+
+        <style>
+            .p-error{
+                color: red;
+                margin: 5px 0;
+                text-align: left;
+            }
+            html{
+                width:100%;
+                height:100%;
+                max-height:100%;
+                min-height: 700px;
+                overflow-y: auto;
+            }
+            body{
+                background: url("imgs/login-bg.png");
+                background-size: 100% 100%;
+            }
+
+            .login-container{
+                width: 356px;
+                height: 443px;
+                margin: 118px auto 26px;
+                background-color: #fff;
+                border-radius: 4px;
+                box-shadow: 0 0 10px #584942;
+            }
+                .login-container-title{
+                    padding-top: 20px;
+                    margin-bottom: 20px;
+                    position: relative;
+                }
+                .login-container-title>img{
+                    width: 53px;
+                    height: 53px;
+                    display: block;
+                    margin: 0 auto;
+                }
+                .login-container-title>h2{
+                    font-family:'微软雅黑';
+                    font-size: 23px;
+                    color: #555555;
+                    margin: 10px auto 0px;
+                    text-align:center;
+                }
+                .login-container-title>h2+span{
+                    font-family:'黑体';
+                    font-size: 10px;
+                    color: #999999;
+                    background-color:#eeeeee;
+                    position: absolute;
+                    bottom: 2px;
+                    right: 32px;
+                    padding: 0 3px;
+                    border-radius: 3px;
+                }
+                .login-container-form{
+                    margin: 0px 12px;
+                }
+                .login-container-form>hr{
+                    width: 100%;
+                    height: 1px;
+                    color: #cecece;
+                    background-color: #eeeeee;
+                    transform: scaleY(0.5);
+                    margin-top:7px; /*解决ie和ff matgin-top不一致的问题*/
+                    margin:0px;
+                    border: 0px;
+                    border-top: 0px;
+                }
+                #login-form{
+                    margin-top: 30px;
+                    padding-left: 7px;
+                    padding-right: 7px;
+                }
+                #login-form label{
+                    color: #888888;
+                    font-size: 13px;
+                    font-family: '微软雅黑';
+                    font-weight: normal;
+                }
+                #login-form .form-group:nth-of-child(1){
+                    margin-bottom: 19px;
+                }
+                #login-form .checkbox{
+                    margin:0px;
+                }
+                .btn-login{
+                    color: #ffffff;
+                    font-family: '微软雅黑';
+                    font-size: 13px;
+                    background-color: #f88b00;
+                    width: 100%;
+                }
+                .btn-login:hover{
+                    cursor: pointer;
+                    color: #ffffff;
+                }
+                .submit-block{
+                    text-align: center;
+                    font-size: 13px;
+                    font-family: '微软雅黑';
+                }
+                a.a-register{
+                    color: #f88b00;
+                    text-decoration: underline;
+                }
+                .foot-copyright{
+                    text-align: center;
+                    color: #96938f;
+                    font-size: 10px;
+                }
+                .foot-copyright>p{
+                    margin: 0;
+                }
+        </style>
+	</head>
+
+	<body>
+        <div class="login-container">
+            <div class="login-container-title">
+                <img src="imgs/logo.png">
+                <h2>物联易充管理平台</h2><span>V1.0</span>
+            </div>
+            <div class="login-container-form">
+                <hr />
+                <form id="login-form">
+                    <div class="form-group control-group">
+                        <label for="inputUsernameEmail">用户名</label>
+                        <input type="text" id="inputUsername" name="inputUsername" class="form-control">
+                    </div>
+                    <div class="form-group control-group">
+                        <label for="inputPassword">密码</label>
+                        <input type="password" id="inputPassword" name="inputPassword" class="form-control">
+                    </div>
+                    <div class="checkbox">
+                        <label><input type="checkbox" id="input_remember_account"/>记住用户名</label>
+                    </div>
+                    <div class="submit-block">
+                        <p class="p-error">&nbsp;</p>
+                        <button class="btn btn-login" id="btn-login" type="button">登录</button>
+                        <p style="color: #999999; margin: 12px 0px;"></p>
+                        <a class="a-register" href="s-register.html">注册</a>
+                    </div>
+                    
+                </form>
+            </div>
+        </div>
+        <div class="foot-copyright">
+            <p>世纪龙信息网络有限责任公司版权所有 服务声明</p>
+        </div>
+
+    	<!-- MAIN EFFECT -->
+	    <script type="text/javascript" src="assets/js/bootstrap.js"></script>
+	    <script type="text/javascript" src="assets/js/app.js"></script>
+	    <script type="text/javascript" src="assets/js/load.js"></script>
+	    <script type="text/javascript" src="assets/js/main.js"></script>
+
+        <script type="text/javascript" src="assets/js/x0popup.min.js"></script>
+        <script type="text/javascript" src="js/public.js"></script>
+        <script src="js/mix.js"></script>
+
+	    <script type="text/javascript" src="js/login.js"></script>
+	</body>
+</html>
